@@ -23,7 +23,7 @@ public abstract class CodesResultatDAL {
 	/**
 	 * Echec de l'insertion d'un mail vide
 	 */
-	public static final int INSERT_MAIL_NULL=10002;
+	public static final int INSERT_MAIL_NULL=10003;
 	
 	
 	

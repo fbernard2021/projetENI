@@ -44,8 +44,23 @@ public class UtilisateursManager {
 	
 	public Utilisateurs selectionnerUtilisateurParPseudo(String pseudo, String motDePasse) throws BusinessException
 	{
-		Utilisateurs utilisateur = utilisateursDAO.selectByPseudo(pseudo, motDePasse);
+		BusinessException exception = new BusinessException();
+		Utilisateurs utilisateur = null;
 		
+		this.validerPseudo(pseudo, exception);
+		this.validerMotDePasse(motDePasse, exception);
+		
+		if(!exception.hasErreurs())
+		{
+			utilisateur = utilisateursDAO.selectByPseudo(pseudo, motDePasse);
+		}
+		
+		if(exception.hasErreurs())
+		{
+			throw exception;
+		}
+		
+
 		return utilisateur;
 	}
 	
@@ -56,5 +71,22 @@ public class UtilisateursManager {
 		return utilisateur;
 		
 	}
+	
+	private void validerPseudo(String pseudo, BusinessException exception)
+	{
+		if(pseudo.length() < 8)
+		{
+			exception.ajouterErreur(CodesResultatBLL.REGLE_TAILLE_PSEUDO_ERREUR);
+		}
+	}
+	
+	private void validerMotDePasse(String motDePasse, BusinessException exception)
+	{
+		if(motDePasse.length() < 8)
+		{
+			exception.ajouterErreur(CodesResultatBLL.REGLE_TAILLE_MDP_ERREUR);
+		}
+	}
+	
 
 }
