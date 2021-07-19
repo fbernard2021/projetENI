@@ -2,22 +2,23 @@ package fr.eni.encheres.bo;
 
 public class Utilisateurs {
 	
-
+	private int numUtilisateur;
 	private String pseudo;
 	private String nom;
 	private String prenom;
 	private String email;
-	private String motDePasse;
 	private String telephone;
 	private String rue;
 	private int codePostal;
 	private String ville;
+	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
 	
 	
-	public Utilisateurs(String pseudo, String nom, String prenom, String email, String motDePasse, String telephone, String rue, int codePostal, String ville, int credit, boolean administrateur)
+	public Utilisateurs(int numUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,String rue, int codePostal, String ville, String motDePasse,  int credit, int administrateur)
 	{
+		this.numUtilisateur = numUtilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -28,7 +29,39 @@ public class Utilisateurs {
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.credit = credit;
-		this.administrateur = administrateur;
+		
+		if(administrateur == 1)
+		{
+			this.administrateur = true;
+		}
+		else
+		{
+			this.administrateur = false;
+		}
+	}
+	
+	public Utilisateurs(String pseudo, String nom, String prenom, String email, String telephone,String rue, int codePostal, String ville, String motDePasse,  int credit, int administrateur)
+	{
+
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.motDePasse = motDePasse;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.credit = credit;
+		
+		if(administrateur == 1)
+		{
+			this.administrateur = true;
+		}
+		else
+		{
+			this.administrateur = false;
+		}
 	}
 	
 	
@@ -123,6 +156,18 @@ public class Utilisateurs {
 
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
+	}
+
+
+
+	public int getNumUtilisateur() {
+		return numUtilisateur;
+	}
+
+
+
+	public void setNumUtilisateur(int numUtilisateur) {
+		this.numUtilisateur = numUtilisateur;
 	}
 	
 
