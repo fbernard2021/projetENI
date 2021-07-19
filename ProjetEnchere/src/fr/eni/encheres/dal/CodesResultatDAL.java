@@ -16,9 +16,15 @@ public abstract class CodesResultatDAL {
 	public static final int INSERT_OBJET_ECHEC=10001;
 	
 	/**
-	 * Echec de l'insertion d'un avis à cause de la note
+	 * Echec de l'insertion d'un pseudo vide
 	 */
 	public static final int INSERT_PSEUDO_NULL=10002;
+	
+	/**
+	 * Echec de l'insertion d'un mail vide
+	 */
+	public static final int INSERT_MAIL_NULL=10002;
+	
 	
 	
 }
