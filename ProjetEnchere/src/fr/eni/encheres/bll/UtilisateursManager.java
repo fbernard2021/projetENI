@@ -3,6 +3,7 @@ package fr.eni.encheres.bll;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.Utilisateurs;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UtilisateursDAO;
@@ -21,7 +22,7 @@ public class UtilisateursManager {
 	
 	public Utilisateurs ajouter(String pseudo, String nom, String prenom,
 								String email, String telephone,String rue, int codePostal, 
-								String ville, String motDePasse,  int credit, int administrateur)
+								String ville, String motDePasse,  int credit, int administrateur) throws BusinessException
 	{
 		
 		Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
@@ -41,9 +42,9 @@ public class UtilisateursManager {
 		
 	}
 	
-	public Utilisateurs selectionnerUtilisateur(String pseudo)
+	public Utilisateurs selectionnerUtilisateur(String pseudo, String motDePasse) throws BusinessException
 	{
-		Utilisateurs utilisateur = utilisateursDAO.selectByPseudo(pseudo);
+		Utilisateurs utilisateur = utilisateursDAO.selectByPseudo(pseudo, motDePasse);
 		
 		return utilisateur;
 	}

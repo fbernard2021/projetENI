@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.Utilisateurs;
+
+
 
 
 public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
@@ -15,7 +18,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	private static final String selectAll = "SELECT * FROM Utilisateurs;";
 
 	
-	private static final String selectByPseudo = "SELECT * FROM Utilisateurs WHERE pseudo = ? ;";
+	private static final String selectByPseudo = "SELECT * FROM Utilisateurs WHERE pseudo = ? AND mot_de_passe = ?;";
 	
 	private static final String insert = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal"
 									   + ",ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?); ";
@@ -44,13 +47,20 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	
 
 	@Override
-	public Utilisateurs selectByPseudo(String pseudo) {
+	public Utilisateurs selectByPseudo(String pseudo, String motDePasse) throws BusinessException {
+		if(pseudo == null)
+		{
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_PSEUDO_NULL);
+			throw businessException;
+		}
 		Utilisateurs donnee = null;
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			
 			PreparedStatement pstmt = cnx.prepareStatement(selectByPseudo, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, pseudo);
+			pstmt.setString(2, motDePasse);
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if(rs.next())
@@ -66,7 +76,14 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	}
 
 	@Override
-	public void insert(Utilisateurs utilisateur) {
+	public void insert(Utilisateurs utilisateur) throws BusinessException {
+		if(utilisateur == null)
+		{
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
+			throw businessException;
+		}
+		
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			
@@ -97,8 +114,9 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 				utilisateur.setNumUtilisateur(rs.getInt(1));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			throw businessException;
 		}
 	}
 
