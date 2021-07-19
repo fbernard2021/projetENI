@@ -20,7 +20,7 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-				<form action="#">
+				<form action="/inscription" method="POST">
 					<div class="form-group">
 						<label for="pseudo">Pseudo :</label>
 						<input type="text" class="form-control" id="pseudo">
@@ -60,6 +60,21 @@
 					<div class="form-group">
 						<label for="mdpConfirm">Confirmation :</label>
 						<input type="password" class="form-control" id="mdpConfirm">
+					</div>
+					<div>
+						<h3>Administrateur :</h3>
+						<div class="form-check">
+  							<input class="form-check-input" type="radio" name="adm" id="flexRadioDefault1" value="1">
+  							<label class="form-check-label" for="flexRadioDefault1">
+   								 Oui
+  							</label>
+						</div>
+						<div class="form-check">
+  							<input class="form-check-input" type="radio" name="adm" id="flexRadioDefault2" value="0" checked>
+  							<label class="form-check-label" for="flexRadioDefault2">
+   								 Non
+ 							 </label>
+						</div>
 					</div>
 					<button type="submit" class="btn btn-default">Créer</button>
 				</form>
