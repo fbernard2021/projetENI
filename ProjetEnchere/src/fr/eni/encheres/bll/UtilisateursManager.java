@@ -42,11 +42,19 @@ public class UtilisateursManager {
 		
 	}
 	
-	public Utilisateurs selectionnerUtilisateur(String pseudo, String motDePasse) throws BusinessException
+	public Utilisateurs selectionnerUtilisateurParPseudo(String pseudo, String motDePasse) throws BusinessException
 	{
 		Utilisateurs utilisateur = utilisateursDAO.selectByPseudo(pseudo, motDePasse);
 		
 		return utilisateur;
+	}
+	
+	public Utilisateurs selectionnerUtilisateursParMail(String email, String motDePasse) throws BusinessException
+	{
+		Utilisateurs utilisateur = utilisateursDAO.selectByMail(email, motDePasse);
+		
+		return utilisateur;
+		
 	}
 
 }
