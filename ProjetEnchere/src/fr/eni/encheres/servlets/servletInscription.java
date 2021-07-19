@@ -40,11 +40,11 @@ public class servletInscription extends HttpServlet {
 		String email;
 		String telephone;
 		String rue;
-		int codePostal;
+		String codePostal;
 		String ville;
 		String motDePasse;
 		String confirmation;
-		int admin;
+		String admin;
 		int credit = 0;
 		
 		motDePasse = request.getParameter("mdp");
@@ -62,14 +62,17 @@ public class servletInscription extends HttpServlet {
 		email = request.getParameter("email");
 		telephone = request.getParameter("telephone");
 		rue = request.getParameter("rue");
-		codePostal = Integer.parseInt(request.getParameter("postal"));
+		codePostal = request.getParameter("postal");
 		ville = request.getParameter("ville");
-		admin = Integer.parseInt(request.getParameter("adm"));
+		admin = request.getParameter("adm");
+		
+		int codeP = Integer.parseInt(codePostal);
+		int adm = Integer.parseInt(admin);
 		
 		UtilisateursManager utilisateurManager = new UtilisateursManager();
 		
 		try {
-			Utilisateurs utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, admin);
+			Utilisateurs utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codeP, ville, motDePasse, credit,adm);
 			request.setAttribute("utilisateur", utilisateur);
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block

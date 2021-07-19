@@ -4,8 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 <title>Inscription</title>
 </head>
+
+
+
 <body>
 	<nav class="navbar navbar-default">
 		<div class ="container-fluid">
@@ -20,7 +27,7 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-				<form action="/inscription" method="POST">
+				<form action="<%=request.getContextPath()%>/inscription" method="POST">
 					<div class="form-group">
 						<label for="pseudo">Pseudo :</label>
 						<input type="text" class="form-control" id="pseudo">
