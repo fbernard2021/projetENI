@@ -70,8 +70,6 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			
-			//"INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?); "
-			
 			PreparedStatement pstmt = cnx.prepareStatement(insert, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, utilisateur.getPseudo());
 			pstmt.setString(2,utilisateur.getNom());
