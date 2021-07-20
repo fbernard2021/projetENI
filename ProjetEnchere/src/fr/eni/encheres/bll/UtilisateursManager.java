@@ -32,29 +32,40 @@ public class UtilisateursManager {
 		this.validerMotDePasse(motDePasse, exception);
 		this.validerPseudo(pseudo, exception);
 		
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		 md.update(motDePasse.getBytes());
-		 
-		 byte byteData[] = md.digest();
-		 
-		 StringBuffer sb = new StringBuffer();
-	     for (int i = 0; i < byteData.length; i++) {
-	    	 
-			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-	     }
 
 		Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, credit, administrateur);
 		
+		if(!exception.hasErreurs())
+		{
+		System.out.println("valide");
+		StringBuffer sb = this.SHA256(motDePasse);
 		utilisateursDAO.insert(utilisateur, sb.toString());
+		}
+		else
+		{
+			throw exception;
+		}
 		
 		return utilisateur;
 	}
 	
-	public List<Utilisateurs> selectionnerListeUtilisateurs()
+	public List<Utilisateurs> selectionnerListeUtilisateurs() throws BusinessException
 	{
+		BusinessException exception = new BusinessException();
+		
 		List<Utilisateurs> liste = new ArrayList<>();
 		
 		liste = utilisateursDAO.selectAll();
+		
+
+		if(!exception.hasErreurs())
+		{
+		this.validerListe(liste, exception);
+		}
+		else
+		{
+			throw exception;
+		}
 		
 		return liste;
 		
@@ -68,16 +79,7 @@ public class UtilisateursManager {
 		this.validerPseudo(pseudo, exception);
 		this.validerMotDePasse(motDePasse, exception);
 		
-		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		 md.update(motDePasse.getBytes());
-		 
-		 byte byteData[] = md.digest();
-		 
-		 StringBuffer sb = new StringBuffer();
-	     for (int i = 0; i < byteData.length; i++) {
-	    	 
-			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-	     }
+		StringBuffer sb = this.SHA256(motDePasse);
 		
 		if(!exception.hasErreurs())
 		{
@@ -110,5 +112,29 @@ public class UtilisateursManager {
 		}
 	}
 	
+	private void validerListe(List<Utilisateurs> liste, BusinessException exception)
+	{
+		if(liste == null)
+		{
+			exception.ajouterErreur(CodesResultatBLL.LISTE_UTILISATEURS_NULL);
+		}
+		
+	}
+	
+	private StringBuffer SHA256(String motDePasse) throws NoSuchAlgorithmException
+	{
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		 md.update(motDePasse.getBytes());
+		 
+		 byte byteData[] = md.digest();
+		 
+		 StringBuffer sb = new StringBuffer();
+	     for (int i = 0; i < byteData.length; i++) {
+	    	 
+			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+	     }
+		return sb;
+		
+	}
 
 }
