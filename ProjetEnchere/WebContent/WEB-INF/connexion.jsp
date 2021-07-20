@@ -29,11 +29,11 @@
 		<form action="${pageContext.request.contextPath}/connexion" method="post">
 		
 			<div class="form-group">
-				<label for="identifiant">Pseudo ou email : </label>
+				<label for="pseudo">Pseudo ou email : </label>
 				<input type="text"  class="form-control" name="pseudo" required/>
 			</div>
 			<div class="form-group">
-				<label for="pseudo">Mot de passe : </label>
+				<label for="mdp">Mot de passe : </label>
 				<input type="password"  class="form-control" name="mdp" required/>
 			</div>
 			<button type="submit" class="btn btn-default">Se connecter</button>

@@ -1,13 +1,10 @@
 package fr.eni.encheres.bll;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.Encheres;
-import fr.eni.encheres.bo.Utilisateurs;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.EncheresDAO;
 
