@@ -11,7 +11,7 @@
 	
 	<div align="center">
 	<h2> Page de connexion</h2>
-	<form action="">
+	<form action="${pageContext.request.contextPath}/connexion">
 	
 		<div class="form-group">
 			<label for="identifiant">Pseudo ou email : </label>
