@@ -11,19 +11,17 @@ public class Utilisateurs {
 	private String rue;
 	private int codePostal;
 	private String ville;
-	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
 	
 	
-	public Utilisateurs(int numUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,String rue, int codePostal, String ville, String motDePasse,  int credit, int administrateur)
+	public Utilisateurs(int numUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,String rue, int codePostal, String ville, int credit, int administrateur)
 	{
 		this.numUtilisateur = numUtilisateur;
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
-		this.motDePasse = motDePasse;
 		this.telephone = telephone;
 		this.rue = rue;
 		this.codePostal = codePostal;
@@ -40,14 +38,13 @@ public class Utilisateurs {
 		}
 	}
 	
-	public Utilisateurs(String pseudo, String nom, String prenom, String email, String telephone,String rue, int codePostal, String ville, String motDePasse,  int credit, int administrateur)
+	public Utilisateurs(String pseudo, String nom, String prenom, String email, String telephone,String rue, int codePostal, String ville, int credit, int administrateur)
 	{
 
 		this.pseudo = pseudo;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
-		this.motDePasse = motDePasse;
 		this.telephone = telephone;
 		this.rue = rue;
 		this.codePostal = codePostal;
@@ -146,17 +143,6 @@ public class Utilisateurs {
 		this.administrateur = administrateur;
 	}
 
-
-
-	public String getMotDePasse() {
-		return motDePasse;
-	}
-
-
-
-	public void setMotDePasse(String motDePasse) {
-		this.motDePasse = motDePasse;
-	}
 
 
 

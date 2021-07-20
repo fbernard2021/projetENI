@@ -25,6 +25,12 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int INSERT_MAIL_NULL=10003;
 	
+	/**
+	 * Echec de l'insertion d'un pseudo vide
+	 */
+	public static final int INSERT_MDP_NULL=10004;
+	
+	
 	
 	
 }
