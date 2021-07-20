@@ -24,8 +24,13 @@ public class UtilisateursManager {
 								String email, String telephone,String rue, int codePostal, 
 								String ville, String motDePasse,  int credit, int administrateur) throws BusinessException
 	{
+		
+		BusinessException exception = new BusinessException();
+		
+		this.validerMotDePasse(motDePasse, exception);
+		this.validerPseudo(pseudo, exception);
 
-		Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+		Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, credit, administrateur);
 		
 		utilisateursDAO.insert(utilisateur);
 		
@@ -42,7 +47,7 @@ public class UtilisateursManager {
 		
 	}
 	
-	public Utilisateurs selectionnerUtilisateurParPseudo(String pseudo, String motDePasse) throws BusinessException
+	public Utilisateurs connexion(String pseudo, String motDePasse) throws BusinessException
 	{
 		BusinessException exception = new BusinessException();
 		Utilisateurs utilisateur = null;
@@ -52,7 +57,7 @@ public class UtilisateursManager {
 		
 		if(!exception.hasErreurs())
 		{
-			utilisateur = utilisateursDAO.selectByPseudo(pseudo, motDePasse);
+			utilisateur = utilisateursDAO.confirmConnection(pseudo, motDePasse);
 		}
 		
 		if(exception.hasErreurs())
@@ -64,17 +69,10 @@ public class UtilisateursManager {
 		return utilisateur;
 	}
 	
-	public Utilisateurs selectionnerUtilisateursParMail(String email, String motDePasse) throws BusinessException
-	{
-		Utilisateurs utilisateur = utilisateursDAO.selectByMail(email, motDePasse);
-		
-		return utilisateur;
-		
-	}
-	
+
 	private void validerPseudo(String pseudo, BusinessException exception)
 	{
-		if(pseudo.length() < 8)
+		if(pseudo.length() < 8 || pseudo.length() >16)
 		{
 			exception.ajouterErreur(CodesResultatBLL.REGLE_TAILLE_PSEUDO_ERREUR);
 		}
@@ -82,7 +80,7 @@ public class UtilisateursManager {
 	
 	private void validerMotDePasse(String motDePasse, BusinessException exception)
 	{
-		if(motDePasse.length() < 8)
+		if(motDePasse.length() < 8 || motDePasse.length() >16)
 		{
 			exception.ajouterErreur(CodesResultatBLL.REGLE_TAILLE_MDP_ERREUR);
 		}
