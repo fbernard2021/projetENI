@@ -95,7 +95,9 @@ public class servletInscription extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		if(listeCodesErreur.size() > 0)
+			
+		
+		if(request.getAttribute("listeCodesErreur") != null || listeCodesErreur.size() > 0)
 		{
 			rd = request.getRequestDispatcher("/WEB-INF/Inscription.jsp");
 			rd.forward(request, response);
@@ -105,6 +107,7 @@ public class servletInscription extends HttpServlet {
 			rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 			rd.forward(request, response);
 		}
+		
 
 		
 		
