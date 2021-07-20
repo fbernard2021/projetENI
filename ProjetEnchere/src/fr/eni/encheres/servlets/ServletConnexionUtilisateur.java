@@ -2,11 +2,12 @@ package fr.eni.encheres.servlets;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.UtilisateursManager;
 import fr.eni.encheres.bo.Utilisateurs;
-import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,30 +37,37 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String identifiant = request.getParameter("pseudo");
         String mdp = request.getParameter("mdp");
-        Utilisateurs utilisateur;
+        RequestDispatcher rd = null;
+		List<Integer> listeCodesErreur=new ArrayList<>();
+
         
         
         UtilisateursManager utilisateursManager = new UtilisateursManager();
         try
         {
         	// vérifier les informations de connexion
-        	utilisateur = utilisateursManager.connexion(identifiant, mdp);
-       //     if (utilisateur.getPseudo() == identifiant || utilisateur.getEmail() == identifiant)
-       //     {
-            	System.out.println(utilisateur.getPseudo());
+            Utilisateurs utilisateur = utilisateursManager.connexion(identifiant, mdp);
+            
+            if(utilisateur == null)
+            {
+            	// envoyer un message d'erreur
+            	listeCodesErreur.add(CodesResultatServlets.ERROR_CONNEXION);
+                request.setAttribute("listeCodesErreur", listeCodesErreur);
+                
+            	rd = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
+            	rd.forward(request, response);
+            }
+
+            else if (utilisateur.getPseudo().compareTo(identifiant) == 0 ||  utilisateur.getEmail().compareTo(identifiant) == 0 )
+              {
             	HttpSession session = request.getSession();
                 session.setAttribute("utilisateur", utilisateur);
                 
                 // rediriger vers l'accueil
-                RequestDispatcher rdA = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
-        		rdA.forward(request, response);
-           // }
-          //  else
-          //  {
-            	// envoyer un message d'erreur
-            	String message = "Nom d'utilisateur et/ou mot de passe incorrect(s)";
-                request.setAttribute("message", message);
-    		//}
+                rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+        		rd.forward(request, response);
+             }
+
 		}
         catch (NoSuchAlgorithmException | BusinessException e)
         {
