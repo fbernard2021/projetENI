@@ -1,7 +1,6 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +40,7 @@ public class servletInscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		RequestDispatcher rd = null;
-		BusinessException exception = new BusinessException();
 		List<Integer> listeCodesErreur=new ArrayList<>();
-	    StringBuffer sb = new StringBuffer();
 		String pseudo;
 		String nom;
 		String prenom;

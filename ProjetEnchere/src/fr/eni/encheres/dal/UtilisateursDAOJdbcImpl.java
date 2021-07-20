@@ -19,7 +19,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	private static final String selectAll = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM Utilisateurs;";
 
 	
-	private static final String confirmConnection = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM Utilisateurs WHERE pseudo = ? AND mot_de_passe = ?;";
+	private static final String confirmConnection = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM Utilisateurs WHERE pseudo = ? OR email= ? AND mot_de_passe = ?;";
 	
 	
 	private static final String insert = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal"
@@ -49,8 +49,8 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	
 
 	@Override
-	public Utilisateurs confirmConnection(String pseudo, String motDePasse) throws BusinessException {
-		if(pseudo == null)
+	public Utilisateurs connection(String id, String motDePasse) throws BusinessException {
+		if(id == null)
 		{
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_PSEUDO_NULL);
@@ -67,7 +67,8 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		{
 			
 			PreparedStatement pstmt = cnx.prepareStatement(confirmConnection, PreparedStatement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1, pseudo);
+			pstmt.setString(1, id);
+			pstmt.setString(2, id);
 			pstmt.setString(2, motDePasse);
 			pstmt.executeQuery();
 			ResultSet rs = pstmt.getGeneratedKeys();

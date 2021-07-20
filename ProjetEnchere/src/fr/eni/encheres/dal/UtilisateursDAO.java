@@ -8,7 +8,7 @@ import fr.eni.encheres.bo.Utilisateurs;
 public interface UtilisateursDAO {
 	
 	public List<Utilisateurs> selectAll();
-	public Utilisateurs confirmConnection(String pseudo, String motDePasse) throws BusinessException;
+	public Utilisateurs connection(String id, String motDePasse) throws BusinessException;
 	void insert(Utilisateurs utilisateur, String motDePasse) throws BusinessException;
 
 }

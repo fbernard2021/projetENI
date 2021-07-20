@@ -82,7 +82,7 @@ public class UtilisateursManager {
 		
 		if(!exception.hasErreurs())
 		{
-			utilisateur = utilisateursDAO.confirmConnection(pseudo, sb.toString());
+			utilisateur = utilisateursDAO.connection(pseudo, sb.toString());
 		}
 		
 		if(exception.hasErreurs())
