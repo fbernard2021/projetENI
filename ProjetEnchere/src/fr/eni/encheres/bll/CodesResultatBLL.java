@@ -12,6 +12,8 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_TAILLE_MDP_ERREUR=20001;
 	
 	public static final int LISTE_UTILISATEURS_NULL=20002;
+	
+	public static final int LISTE_ENCHERES_NULL=20003;
 
 	
 	
