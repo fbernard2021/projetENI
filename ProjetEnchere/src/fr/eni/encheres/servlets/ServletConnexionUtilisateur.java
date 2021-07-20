@@ -39,14 +39,31 @@ public class ServletConnexionUtilisateur extends HttpServlet {
         String mdp = request.getParameter("mdp");
         RequestDispatcher rd = null;
 		List<Integer> listeCodesErreur=new ArrayList<>();
-
+        Utilisateurs utilisateur = null;
         
         
         UtilisateursManager utilisateursManager = new UtilisateursManager();
-        try
-        {
+
         	// vérifier les informations de connexion
-            Utilisateurs utilisateur = utilisateursManager.connexion(identifiant, mdp);
+
+			try {
+				utilisateur = utilisateursManager.connexion(identifiant, mdp);
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			}
+			
+			
+			
+			if(request.getAttribute("listeCodesErreur") != null)
+			{
+            	rd = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
+            	rd.forward(request, response);
+			}
             
             if(utilisateur == null)
             {
@@ -69,10 +86,7 @@ public class ServletConnexionUtilisateur extends HttpServlet {
              }
 
 		}
-        catch (NoSuchAlgorithmException | BusinessException e)
-        {
-        	throw new ServletException(e);
-		}
+
 	}
 
-}
+

@@ -73,15 +73,10 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			pstmt.setString(4, motDePasse);
 
 			ResultSet rs = pstmt.executeQuery();
+
 			while(rs.next())
 			{
-				System.out.println(rs.getString(1));
-				if(rs.getString(1) == null)
-				{
-					BusinessException businessException = new BusinessException();
-					businessException.ajouterErreur(CodesResultatDAL.UTILISATEUR_INCONNU);
-					throw businessException;
-				}
+
 				donnee =new Utilisateurs(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
 							rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getInt(10));
 			}
