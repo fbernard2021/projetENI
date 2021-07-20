@@ -88,7 +88,6 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
-			
 			PreparedStatement pstmt = cnx.prepareStatement(insert, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, utilisateur.getPseudo());
 			pstmt.setString(2,utilisateur.getNom());
@@ -100,7 +99,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			pstmt.setString(8, utilisateur.getVille());
 			pstmt.setString(9,utilisateur.getMotDePasse());
 			pstmt.setInt(10, utilisateur.getCredit());
-			if(utilisateur.isAdministrateur())
+			if(utilisateur.isAdministrateur() == true)
 			{
 				pstmt.setInt(11, 1);
 			}
@@ -108,7 +107,6 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			{
 				pstmt.setInt(11, 0);
 			}
-
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if(rs.next())
