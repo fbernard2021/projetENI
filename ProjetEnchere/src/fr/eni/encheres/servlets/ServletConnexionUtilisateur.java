@@ -1,6 +1,9 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
+import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.UtilisateursManager;
 import fr.eni.encheres.bo.Utilisateurs;
 import java.sql.SQLException;
@@ -15,7 +18,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class ServletConnexionUtilisateur
  */
-@WebServlet("/ServletConnexionUtilisateur")
+@WebServlet("/connexion")
 public class ServletConnexionUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -56,7 +59,7 @@ public class ServletConnexionUtilisateur extends HttpServlet {
                 request.setAttribute("message", message);
     		}
 		}
-        catch (SQLException | ClassNotFoundException e)
+        catch (NoSuchAlgorithmException | BusinessException e)
         {
         	throw new ServletException(e);
 		}

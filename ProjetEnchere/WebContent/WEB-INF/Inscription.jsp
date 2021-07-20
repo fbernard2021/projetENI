@@ -24,7 +24,7 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-				<form action="<%=request.getContextPath()%>/inscription" method="post">
+				<form action="${pageContext.request.contextPath}/inscription" method="post">
 					<div class="form-group">
 						<label for="pseudo">Pseudo :</label>
 						<input type="text" class="form-control" id="pseudo" name="pseudo">

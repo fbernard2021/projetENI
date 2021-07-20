@@ -1,6 +1,8 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,6 +37,7 @@ public class servletInscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+	    StringBuffer sb = new StringBuffer();
 		String pseudo;
 		String nom;
 		String prenom;
@@ -57,6 +60,8 @@ public class servletInscription extends HttpServlet {
 			rd2.forward(request, response);
 		}
 		
+	
+		
 		pseudo = request.getParameter("pseudo");
 		nom = request.getParameter("nom");
 		prenom = request.getParameter("prenom");
@@ -72,11 +77,12 @@ public class servletInscription extends HttpServlet {
 		UtilisateursManager utilisateurManager = new UtilisateursManager();
 		
 		try {
-			Utilisateurs utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit,admin);
+			Utilisateurs utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,motDePasse, credit,admin);
 			request.setAttribute("utilisateur", utilisateur);
-		} catch (BusinessException e) {
+		} catch (BusinessException | NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
 		}
 		System.out.println("ok");
 		RequestDispatcher rd3 = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
