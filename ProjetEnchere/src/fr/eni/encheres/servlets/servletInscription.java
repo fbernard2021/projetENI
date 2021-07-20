@@ -3,6 +3,8 @@ package fr.eni.encheres.servlets;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.UtilisateursManager;
 import fr.eni.encheres.bo.Utilisateurs;
+
 
 /**
  * Servlet implementation class servletInscription
@@ -37,6 +40,10 @@ public class servletInscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		RequestDispatcher rd = null;
+		System.out.println("ok");
+		BusinessException exception = new BusinessException();
+		List<Integer> listeCodesErreur=new ArrayList<>();
 	    StringBuffer sb = new StringBuffer();
 		String pseudo;
 		String nom;
@@ -56,39 +63,58 @@ public class servletInscription extends HttpServlet {
 		
 		if(motDePasse.compareTo(confirmation) != 0)
 		{
-			RequestDispatcher rd2 = request.getRequestDispatcher("/WEB-INF/Inscription.jsp");
-			rd2.forward(request, response);
+			listeCodesErreur.add(CodesResultatServlets.ERROR_MDP_CONFIRM);
+			request.setAttribute("listeCodesErreur", listeCodesErreur);
 		}
 		
-	
+		else
+		{
 		
-		pseudo = request.getParameter("pseudo");
-		nom = request.getParameter("nom");
-		prenom = request.getParameter("prenom");
-		email = request.getParameter("email");
-		telephone = request.getParameter("telephone");
-		rue = request.getParameter("rue");
-		codePostal =Integer.parseInt(request.getParameter("postal"));
-		ville = request.getParameter("ville");
-		admin =Integer.parseInt(request.getParameter("adm"));
+			pseudo = request.getParameter("pseudo");
+			nom = request.getParameter("nom");
+			prenom = request.getParameter("prenom");
+			email = request.getParameter("email");
+			telephone = request.getParameter("telephone");
+			rue = request.getParameter("rue");
+			codePostal =Integer.parseInt(request.getParameter("postal"));
+			ville = request.getParameter("ville");
+			admin =Integer.parseInt(request.getParameter("adm"));
 		
-
 		
-		UtilisateursManager utilisateurManager = new UtilisateursManager();
+			UtilisateursManager utilisateurManager = new UtilisateursManager();
 		
-		try {
-			Utilisateurs utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,motDePasse, credit,admin);
-			request.setAttribute("utilisateur", utilisateur);
-		} catch (BusinessException | NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
+			try {
+				Utilisateurs utilisateur =  utilisateurManager.ajouter(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,motDePasse, credit,admin);
+				request.setAttribute("utilisateur", utilisateur);
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		System.out.println("ok");
-		RequestDispatcher rd3 = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
-		rd3.forward(request, response);
+			
+		
+		if(request.getAttribute("listeCodesErreur") != null || listeCodesErreur.size() > 0)
+		{
+			rd = request.getRequestDispatcher("/WEB-INF/Inscription.jsp");
+			rd.forward(request, response);
+		}
+		else
+		{
+			rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+			rd.forward(request, response);
+		}
+		
+
 		
 		
 	}
+	
 
+	
+	
+	
 }
