@@ -12,7 +12,7 @@
 		<div class="row">
 		<div class="col-12">
 		<h2> Page de connexion</h2>
-		<form action="${pageContext.request.contextPath}/connexion">
+		<form action="${pageContext.request.contextPath}/connexion" method="post">
 		
 			<div class="form-group">
 				<label for="identifiant">Pseudo ou email : </label>
