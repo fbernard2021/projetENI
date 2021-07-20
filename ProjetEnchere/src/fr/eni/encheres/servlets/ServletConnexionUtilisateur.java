@@ -46,6 +46,7 @@ public class ServletConnexionUtilisateur extends HttpServlet {
         UtilisateursManager utilisateursManager = new UtilisateursManager();
         try
         {
+        	// commentaire
         	utilisateursManager.connexion(identifiant, mdp);
             if (utilisateursManager != null)
             {
