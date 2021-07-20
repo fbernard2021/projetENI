@@ -1,5 +1,7 @@
 package fr.eni.encheres.bll;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,17 +24,28 @@ public class UtilisateursManager {
 	
 	public Utilisateurs ajouter(String pseudo, String nom, String prenom,
 								String email, String telephone,String rue, int codePostal, 
-								String ville, String motDePasse,  int credit, int administrateur) throws BusinessException
+								String ville, String motDePasse,  int credit, int administrateur) throws BusinessException, NoSuchAlgorithmException
 	{
 		
 		BusinessException exception = new BusinessException();
 		
 		this.validerMotDePasse(motDePasse, exception);
 		this.validerPseudo(pseudo, exception);
+		
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		 md.update(motDePasse.getBytes());
+		 
+		 byte byteData[] = md.digest();
+		 
+		 StringBuffer sb = new StringBuffer();
+	     for (int i = 0; i < byteData.length; i++) {
+	    	 
+			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+	     }
 
 		Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, credit, administrateur);
 		
-		utilisateursDAO.insert(utilisateur);
+		utilisateursDAO.insert(utilisateur, sb.toString());
 		
 		return utilisateur;
 	}
@@ -47,7 +60,7 @@ public class UtilisateursManager {
 		
 	}
 	
-	public Utilisateurs connexion(String pseudo, String motDePasse) throws BusinessException
+	public Utilisateurs connexion(String pseudo, String motDePasse) throws BusinessException, NoSuchAlgorithmException
 	{
 		BusinessException exception = new BusinessException();
 		Utilisateurs utilisateur = null;
@@ -55,9 +68,20 @@ public class UtilisateursManager {
 		this.validerPseudo(pseudo, exception);
 		this.validerMotDePasse(motDePasse, exception);
 		
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		 md.update(motDePasse.getBytes());
+		 
+		 byte byteData[] = md.digest();
+		 
+		 StringBuffer sb = new StringBuffer();
+	     for (int i = 0; i < byteData.length; i++) {
+	    	 
+			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+	     }
+		
 		if(!exception.hasErreurs())
 		{
-			utilisateur = utilisateursDAO.confirmConnection(pseudo, motDePasse);
+			utilisateur = utilisateursDAO.confirmConnection(pseudo, sb.toString());
 		}
 		
 		if(exception.hasErreurs())

@@ -9,6 +9,6 @@ public interface UtilisateursDAO {
 	
 	public List<Utilisateurs> selectAll();
 	public Utilisateurs confirmConnection(String pseudo, String motDePasse) throws BusinessException;
-	public void insert(Utilisateurs utilisateur) throws BusinessException;
+	void insert(Utilisateurs utilisateur, String motDePasse) throws BusinessException;
 
 }

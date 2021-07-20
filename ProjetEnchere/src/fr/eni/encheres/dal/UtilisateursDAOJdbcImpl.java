@@ -82,8 +82,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		return donnee;
 	}
 
-	@Override
-	public void insert(Utilisateurs utilisateur) throws BusinessException {
+	public void insert(Utilisateurs utilisateur, String motDePasse) throws BusinessException {
 		if(utilisateur == null)
 		{
 			BusinessException businessException = new BusinessException();
@@ -102,6 +101,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			pstmt.setString(6, utilisateur.getRue());
 			pstmt.setInt(7, utilisateur.getCodePostal());
 			pstmt.setString(8, utilisateur.getVille());
+			pstmt.setString(9, motDePasse);
 			pstmt.setInt(10, utilisateur.getCredit());
 			if(utilisateur.isAdministrateur() == true)
 			{
