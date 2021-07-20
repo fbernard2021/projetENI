@@ -34,30 +34,32 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String identifiant = request.getParameter("identifiant");
+		String identifiant = request.getParameter("pseudo");
         String mdp = request.getParameter("mdp");
+        Utilisateurs utilisateur;
         
         
         UtilisateursManager utilisateursManager = new UtilisateursManager();
         try
         {
         	// vérifier les informations de connexion
-        	utilisateursManager.connexion(identifiant, mdp);
-            if (utilisateursManager != null)
-            {
+        	utilisateur = utilisateursManager.connexion(identifiant, mdp);
+       //     if (utilisateur.getPseudo() == identifiant || utilisateur.getEmail() == identifiant)
+       //     {
+            	System.out.println(utilisateur.getPseudo());
             	HttpSession session = request.getSession();
-                session.setAttribute("utilisateur", utilisateursManager);
+                session.setAttribute("utilisateur", utilisateur);
                 
                 // rediriger vers l'accueil
                 RequestDispatcher rdA = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
         		rdA.forward(request, response);
-            }
-            else
-            {
+           // }
+          //  else
+          //  {
             	// envoyer un message d'erreur
             	String message = "Nom d'utilisateur et/ou mot de passe incorrect(s)";
                 request.setAttribute("message", message);
-    		}
+    		//}
 		}
         catch (NoSuchAlgorithmException | BusinessException e)
         {
