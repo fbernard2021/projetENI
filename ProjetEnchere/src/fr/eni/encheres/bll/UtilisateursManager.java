@@ -24,7 +24,7 @@ public class UtilisateursManager {
 								String email, String telephone,String rue, int codePostal, 
 								String ville, String motDePasse,  int credit, int administrateur) throws BusinessException
 	{
-		
+
 		Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 		
 		utilisateursDAO.insert(utilisateur);
