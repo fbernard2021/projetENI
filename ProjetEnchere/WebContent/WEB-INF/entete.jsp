@@ -4,11 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	<nav class="navbar navbar-default">
 		<div class ="container-fluid">
-			<a class="navbar-brand" href="#">ENI-Enchères</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/accueil">ENI-Enchères</a>
 		</div>
 	</nav>
 </body>
