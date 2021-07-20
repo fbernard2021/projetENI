@@ -1,7 +1,6 @@
-
+package fr.eni.encheres.servlets;
 
 import java.io.IOException;
-import fr.eni.encheres.dal.UtilisateursDAO;
 import fr.eni.encheres.bll.UtilisateursManager;
 import fr.eni.encheres.bo.Utilisateurs;
 import java.sql.SQLException;
@@ -19,13 +18,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/ServletConnexionUtilisateur")
 public class ServletConnexionUtilisateur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    /**
-     * Default constructor. 
-     */
-    public ServletConnexionUtilisateur() {
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,15 +38,20 @@ public class ServletConnexionUtilisateur extends HttpServlet {
         UtilisateursManager utilisateursManager = new UtilisateursManager();
         try
         {
-        	// commentaire ici
+        	// vérifier les informations de connexion
         	utilisateursManager.connexion(identifiant, mdp);
             if (utilisateursManager != null)
             {
             	HttpSession session = request.getSession();
                 session.setAttribute("utilisateur", utilisateursManager);
+                
+                // rediriger vers l'accueil
+                RequestDispatcher rdA = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+        		rdA.forward(request, response);
             }
             else
             {
+            	// envoyer un message d'erreur
             	String message = "Nom d'utilisateur et/ou mot de passe incorrect(s)";
                 request.setAttribute("message", message);
     		}
