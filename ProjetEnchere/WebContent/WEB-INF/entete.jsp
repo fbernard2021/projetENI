@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
-
+	<nav class="navbar navbar-default">
+		<div class ="container-fluid">
+			<a class="navbar-brand" href="#">ENI-Enchères</a>
+		</div>
+	</nav>
 </body>
 </html>

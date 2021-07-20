@@ -14,11 +14,8 @@
 
 
 <body>
-	<nav class="navbar navbar-default">
-		<div class ="container-fluid">
-			<a class="navbar-brand" href="#">ENI-Enchères</a>
-		</div>
-	</nav>
+	<%@ include file = "entete.jsp" %>
+	
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-6 offset-3">
