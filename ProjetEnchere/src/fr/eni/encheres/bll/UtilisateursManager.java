@@ -37,7 +37,6 @@ public class UtilisateursManager {
 		
 		if(!exception.hasErreurs())
 		{
-		System.out.println("valide");
 		StringBuffer sb = this.SHA256(motDePasse);
 		utilisateursDAO.insert(utilisateur, sb.toString());
 		}

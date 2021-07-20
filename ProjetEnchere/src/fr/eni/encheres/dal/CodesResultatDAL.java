@@ -30,6 +30,10 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int INSERT_MDP_NULL=10004;
 	
+	public static final int UTILISATEUR_INCONNU=10005;
+	
+	public static final int INSERT_USER_ECHEC=10006;
+	
 	
 	
 	

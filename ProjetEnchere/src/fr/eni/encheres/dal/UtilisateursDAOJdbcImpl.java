@@ -3,6 +3,7 @@ package fr.eni.encheres.dal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,14 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			pstmt.setString(2, motDePasse);
 			pstmt.executeQuery();
 			ResultSet rs = pstmt.getGeneratedKeys();
+			rs.last();
+			if(rs.getRow() == 0)
+			{
+				BusinessException businessException = new BusinessException();
+				businessException.ajouterErreur(CodesResultatDAL.UTILISATEUR_INCONNU);
+				throw businessException;
+			}
+			rs.first();
 			if(rs.next())
 			{
 				donnee =new Utilisateurs(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),

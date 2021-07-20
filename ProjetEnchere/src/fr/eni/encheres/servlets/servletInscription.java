@@ -41,7 +41,6 @@ public class servletInscription extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		RequestDispatcher rd = null;
-		System.out.println("ok");
 		BusinessException exception = new BusinessException();
 		List<Integer> listeCodesErreur=new ArrayList<>();
 	    StringBuffer sb = new StringBuffer();
