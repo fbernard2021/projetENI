@@ -6,10 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
-<!-- Bootstrap core CSS -->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
 <title>Inscription</title>
 </head>
 

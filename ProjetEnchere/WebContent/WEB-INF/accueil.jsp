@@ -8,6 +8,7 @@
 <title>Accueil</title>
 </head>
 <body>
+<%@ include file = "entete.jsp" %>
 	<h1>Liste des enchères</h1>
 	
 	<c:if test="${!empty encheres}">
@@ -24,7 +25,7 @@
 						</div><div class="row">
 						<% compteur = 1; %>
 					</c:when>
-					<c:otherwise}">
+					<c:otherwise>
 						<% compteur ++; %>
 					</c:otherwise>
 				</c:choose>
