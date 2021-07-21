@@ -79,6 +79,7 @@ public class ServletConnexionUtilisateur extends HttpServlet {
               {
             	HttpSession session = request.getSession();
                 session.setAttribute("utilisateur", utilisateur);
+                session.setAttribute("connexion", "true");
                 
                 // rediriger vers l'accueil
                 rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");

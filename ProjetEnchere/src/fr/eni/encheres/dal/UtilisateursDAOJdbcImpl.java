@@ -34,11 +34,12 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			
 			PreparedStatement pstmt = cnx.prepareStatement(selectAll, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.executeUpdate();
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next())
+			ResultSet rs = pstmt.executeQuery();
+
+			while(rs.next())
 			{
-				donnee.add(new Utilisateurs(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-							rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9), rs.getInt(10), rs.getInt(11)));
+				donnee.add(new Utilisateurs(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+							rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getInt(10)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
