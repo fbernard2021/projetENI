@@ -17,6 +17,9 @@ import fr.eni.encheres.bo.Utilisateurs;
 public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	
 	private static final String selectAll = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM UTILISATEURS;";
+	
+	
+	private static final String selectByPseudo = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM UTILISATEURS WHERE pseudo = ?;";
 
 	
 	private static final String confirmConnection = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ? OR email = ? AND mot_de_passe = ? ;";
@@ -129,6 +132,30 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
 			throw businessException;
 		}
+	}
+
+
+	@Override
+	public Utilisateurs selectByPseudo(String pseudo) {
+		
+		Utilisateurs donnee = null;
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			PreparedStatement pstmt = cnx.prepareStatement(selectByPseudo, PreparedStatement.RETURN_GENERATED_KEYS);
+			pstmt.setString(1, pseudo);
+			ResultSet rs = pstmt.executeQuery();
+
+			while(rs.next())
+			{
+				donnee = new Utilisateurs(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+							rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getInt(10));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return donnee;
 	}
 
 

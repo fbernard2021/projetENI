@@ -20,4 +20,6 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_TAILLE_NOM_ARTICLE_ERREUR=20005;
 	
 	public static final int REGLE_TAILLE_DESCRIPTION_ERREUR=20006;
+	
+	public static final int UTILISATEUR_NULL=20007;
 }

@@ -70,6 +70,27 @@ public class UtilisateursManager {
 		
 	}
 	
+	
+	public Utilisateurs selectionnerUtilisateur(String pseudo) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		
+		Utilisateurs utilisateur = null;
+		
+		utilisateur = utilisateursDAO.selectByPseudo(pseudo);
+		
+		this.validerUtilisateur(utilisateur, exception);
+		
+		if(exception.hasErreurs())
+		{
+			throw exception;
+		}
+		else
+		{
+			return utilisateur;
+		}
+	}
+	
 	public Utilisateurs connexion(String pseudo, String motDePasse) throws BusinessException, NoSuchAlgorithmException
 	{
 		BusinessException exception = new BusinessException();
@@ -118,6 +139,14 @@ public class UtilisateursManager {
 			exception.ajouterErreur(CodesResultatBLL.LISTE_UTILISATEURS_NULL);
 		}
 		
+	}
+	
+	private void validerUtilisateur(Utilisateurs utilisateur, BusinessException exception)
+	{
+		if(utilisateur == null)
+		{
+			exception.ajouterErreur(CodesResultatBLL.UTILISATEUR_NULL);
+		}
 	}
 	
 	private StringBuffer SHA256(String motDePasse) throws NoSuchAlgorithmException
