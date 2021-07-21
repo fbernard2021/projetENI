@@ -8,7 +8,7 @@
 <title>Accueil</title>
 </head>
 <body>
-<%@ include file = "entete.jsp" %>
+
 	<h1>Liste des enchères</h1>
 	
 	<c:if test="${!empty encheres}">

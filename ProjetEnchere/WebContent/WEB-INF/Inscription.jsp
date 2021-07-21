@@ -8,16 +8,13 @@
 <meta charset="UTF-8">
 <title>Inscription</title>
 </head>
-
-
-
 <body>
 	<%@ include file = "entete.jsp" %>
 	
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-6 offset-3">
-				<h1>Mon Profil</h1>
+				<h1>Inscription</h1>
 			</div>
 		</div>
 		
