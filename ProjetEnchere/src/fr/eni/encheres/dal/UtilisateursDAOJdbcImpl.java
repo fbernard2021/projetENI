@@ -3,13 +3,13 @@ package fr.eni.encheres.dal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.Utilisateurs;
+
 
 
 
@@ -27,6 +27,10 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	
 	private static final String insert = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal"
 									   + ",ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?); ";
+	
+	private static final String alterUser = "UPDATE UTILISATEURS"
+											  + "SET nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? ,mot_de_passe = ?"
+											  + "WHERE pseudo = ?";
 
 	@Override
 	public List<Utilisateurs> selectAll() {
@@ -156,6 +160,31 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			e.printStackTrace();
 		}
 		return donnee;
+	}
+
+
+	@Override
+	public void updateUser(Utilisateurs utilisateur, String motDePasse) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(alterUser);
+			
+			pstmt.setString(1, utilisateur.getNom());
+			pstmt.setString(2, utilisateur.getPrenom());
+			pstmt.setString(3, utilisateur.getEmail());
+			pstmt.setString(4, utilisateur.getTelephone());
+			pstmt.setString(5, utilisateur.getRue());
+			pstmt.setInt(6, utilisateur.getCodePostal());
+			pstmt.setString(7, utilisateur.getVille());
+			pstmt.setString(8, motDePasse);
+			pstmt.setString(9, utilisateur.getPseudo());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.ERREUR_MODIFICATION_UTILISATEUR);
+			throw businessException;
+		}
 	}
 
 

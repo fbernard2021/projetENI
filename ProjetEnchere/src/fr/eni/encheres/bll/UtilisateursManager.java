@@ -115,6 +115,35 @@ public class UtilisateursManager {
 		return utilisateur;
 	}
 	
+	
+	public Utilisateurs modifierProfil(Utilisateurs utilisateur, String motDePasse) throws BusinessException, NoSuchAlgorithmException
+	{
+		BusinessException exception = new BusinessException();
+		
+		this.validerUtilisateur(utilisateur, exception);
+		this.validerPseudo(utilisateur.getPseudo(), exception);
+		
+		if(motDePasse != null)
+		{
+			this.validerMotDePasse(motDePasse, exception);
+		}
+		
+		if(!exception.hasErreurs())
+		{
+			StringBuffer sb = this.SHA256(motDePasse);
+			utilisateursDAO.updateUser(utilisateur, sb.toString());
+		}
+		else
+		{
+			throw exception;
+		}
+		
+		return utilisateur;
+		
+	}
+	
+	
+	
 
 	private void validerPseudo(String pseudo, BusinessException exception)
 	{
