@@ -9,7 +9,7 @@
 <title>Connexion</title>
 </head>
 <body>
-
+	<%@ include file = "entete.jsp" %>
 	<div class="container">
 		<div class="row">
 		<div class="col-12">
