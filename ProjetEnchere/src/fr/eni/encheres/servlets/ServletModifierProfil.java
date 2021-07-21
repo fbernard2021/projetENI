@@ -40,6 +40,7 @@ public class ServletModifierProfil extends HttpServlet {
 		List<Integer> listeCodesErreur=new ArrayList<>();
 		HttpSession session = request.getSession();
 		Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateur");
+		System.out.println(utilisateur.getEmail());
 		
 		if(utilisateur == null)
 		{
@@ -50,7 +51,7 @@ public class ServletModifierProfil extends HttpServlet {
 		}
 		else
 		{
-			rd = request.getRequestDispatcher("/WEB-INF/utilisateur/modifierProfil.jsp");
+			rd = request.getRequestDispatcher("/WEB-INF/utilisateur/modifierprofil.jsp");
 			rd.forward(request, response);
 		}
 		
@@ -60,77 +61,106 @@ public class ServletModifierProfil extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings({ "unchecked", "unused" })
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		List<Integer> listeCodesErreur=new ArrayList<>();
 		HttpSession session = request.getSession();
-		Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateur");
-		
+		Utilisateurs utilisateurSession = (Utilisateurs)  session.getAttribute("utilisateur");
+		Utilisateurs utilisateur = new Utilisateurs();
+		utilisateur.clone(utilisateurSession);
+		String motDePasseActuel = request.getParameter("mdpAct");
+		String motDePasse = request.getParameter("newMdp");
+		String confirmation = request.getParameter("mdpConfirm");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
 		String email = request.getParameter("email");
 		String telephone = request.getParameter("telephone");
 		String rue = request.getParameter("rue");
-		int codePostal = Integer.parseInt(request.getParameter("codePostal"));
+		Integer codePostal = null;
 		String ville = request.getParameter("ville");
-		String motDePasse = request.getParameter("mdp");
 		
-		if(utilisateur == null)
+		if(motDePasse.compareTo(confirmation) != 0)
 		{
-			listeCodesErreur.add(CodesResultatServlets.PARAM_PSEUDO_NULL);
+			listeCodesErreur.add(CodesResultatServlets.ERROR_MDP_CONFIRM);
 			request.setAttribute("listeCodesErreur", listeCodesErreur);
 		}
 		else
 		{
-			if(utilisateur.getNom().compareTo(nom) != 0 && nom != null)
+		
+			if(request.getParameter("codePostal") != null)
 			{
-				utilisateur.setNom(nom);
+				codePostal = Integer.parseInt(request.getParameter("codePostal"));
 			}
-			if(utilisateur.getPrenom().compareTo(prenom) != 0 && prenom != null)
+		
+		
+			if(utilisateur == null)
 			{
-				utilisateur.setPrenom(prenom);
+				listeCodesErreur.add(CodesResultatServlets.PARAM_PSEUDO_NULL);
+				request.setAttribute("listeCodesErreur", listeCodesErreur);
 			}
-			if(utilisateur.getEmail().compareTo(email) != 0 && email != null)
+			else
 			{
-				utilisateur.setEmail(email);
+				if(utilisateur.getNom().compareTo(nom) != 0)
+				{
+					utilisateur.setNom(nom);
+				}
+				if(utilisateur.getPrenom().compareTo(prenom) != 0)
+				{
+					utilisateur.setPrenom(prenom);
+				}
+				if(utilisateur.getEmail().compareTo(email) != 0)
+				{
+					utilisateur.setEmail(email);
+				}
+				if(utilisateur.getTelephone().compareTo(telephone) != 0)
+				{
+					utilisateur.setTelephone(telephone);
+				}
+				if(utilisateur.getRue().compareTo(rue) != 0)
+				{
+					utilisateur.setRue(rue);
+				}
+				if((Integer) utilisateur.getCodePostal() != codePostal && codePostal != null)
+				{
+					utilisateur.setCodePostal(codePostal);
+				}
+				if(utilisateur.getVille().compareTo(ville) != 0)
+				{
+					utilisateur.setVille(ville);
+				}
 			}
-			if(utilisateur.getTelephone().compareTo(telephone) != 0 && telephone != null)
-			{
-				utilisateur.setTelephone(telephone);
-			}
-			if(utilisateur.getRue().compareTo(rue) != 0 && rue != null)
-			{
-				utilisateur.setRue(rue);
-			}
-			if(utilisateur.getCodePostal() != codePostal && (Integer) codePostal != null)
-			{
-				utilisateur.setCodePostal(codePostal);
-			}
-			if(utilisateur.getVille().compareTo(ville) != 0 && ville != null)
-			{
-				utilisateur.setVille(ville);
-			}
+
+		
+			UtilisateursManager utilisateurManager = new UtilisateursManager();
+		
+		
+				try {
+					utilisateurManager.modifierProfil(utilisateur,motDePasseActuel, motDePasse);
+					
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (BusinessException e) {
+					e.printStackTrace();
+					request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+				}
+
 		}
-		
-		UtilisateursManager utilisateurManager = new UtilisateursManager();
-		
-		
-			try {
-				utilisateurManager.modifierProfil(utilisateur, motDePasse);
-				session.setAttribute("utilisateur", utilisateur);
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (BusinessException e) {
-				e.printStackTrace();
-				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-			}
-
-
-			rd = request.getRequestDispatcher("/WEB-INF/utilisateur/modifierProfil.jsp");
-			rd.forward(request, response);
 			
+			if((List<Integer>)request.getAttribute("listeCodesErreur") == null)
+			{
+				System.out.println("oui");
+				session.setAttribute("utilisateur", utilisateur);
+			
+				if(motDePasse.compareTo("") != 0)
+				{
+					request.setAttribute("mdpOk", "true");
+				}
+			}
 		
+			
+		doGet(request, response);
 		
 	}
 

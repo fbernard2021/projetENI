@@ -14,6 +14,11 @@ public class Utilisateurs {
 	private int credit;
 	private boolean administrateur;
 	
+	public Utilisateurs()
+	{
+		
+	}
+	
 	
 	public Utilisateurs(int numUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,String rue, int codePostal, String ville, int credit, int administrateur)
 	{
@@ -61,7 +66,18 @@ public class Utilisateurs {
 		}
 	}
 	
-	
+	public void clone(Utilisateurs utilisateur)
+	{
+		this.pseudo = utilisateur.getPseudo();
+		this.nom = utilisateur.getNom();
+		this.prenom = utilisateur.getPrenom();
+		this.email = utilisateur.getEmail();
+		this.telephone = utilisateur.getTelephone();
+		this.rue = utilisateur.getRue();
+		this.codePostal = utilisateur.getCodePostal();
+		this.ville = utilisateur.getVille();
+		this.credit = utilisateur.getCredit();
+	}
 
 	public String getPseudo() {
 		return pseudo;

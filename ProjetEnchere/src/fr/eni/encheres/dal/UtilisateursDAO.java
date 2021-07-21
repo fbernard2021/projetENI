@@ -11,6 +11,6 @@ public interface UtilisateursDAO {
 	public Utilisateurs selectByPseudo(String pseudo);
 	public Utilisateurs connection(String id, String motDePasse) throws BusinessException;
 	public void insert(Utilisateurs utilisateur, String motDePasse) throws BusinessException;
-	public void updateUser(Utilisateurs utilisateur, String motDePasse) throws BusinessException;
+	public void updateUser(Utilisateurs utilisateur,String motDePasse ,String newMotDePasse) throws BusinessException;
 
 }

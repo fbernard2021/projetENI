@@ -116,22 +116,31 @@ public class UtilisateursManager {
 	}
 	
 	
-	public Utilisateurs modifierProfil(Utilisateurs utilisateur, String motDePasse) throws BusinessException, NoSuchAlgorithmException
+	public Utilisateurs modifierProfil(Utilisateurs utilisateur,String motDePasse, String newMotDePasse) throws BusinessException, NoSuchAlgorithmException
 	{
 		BusinessException exception = new BusinessException();
 		
-		this.validerUtilisateur(utilisateur, exception);
-		this.validerPseudo(utilisateur.getPseudo(), exception);
+		StringBuffer sb = new StringBuffer();
 		
-		if(motDePasse != null)
+		this.validerUtilisateur(utilisateur, exception);
+		this.validerMotDePasse(motDePasse, exception);
+		
+		StringBuffer sb2 = this.SHA256(motDePasse);
+		
+		if(newMotDePasse != "")
 		{
-			this.validerMotDePasse(motDePasse, exception);
+			this.validerMotDePasse(newMotDePasse, exception);
+			sb = this.SHA256(newMotDePasse);
+		}
+		else
+		{
+			sb.append("null");
 		}
 		
 		if(!exception.hasErreurs())
 		{
-			StringBuffer sb = this.SHA256(motDePasse);
-			utilisateursDAO.updateUser(utilisateur, sb.toString());
+			
+			utilisateursDAO.updateUser(utilisateur,sb2.toString(), sb.toString());
 		}
 		else
 		{
