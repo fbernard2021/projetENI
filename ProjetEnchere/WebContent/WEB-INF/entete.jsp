@@ -12,6 +12,7 @@
 	<nav class="navbar navbar-default">
 		<div class ="container-fluid">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}/accueil">ENI-Enchères</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/connexion">Se connecter</a>
 		</div>
 	</nav>
 </body>
