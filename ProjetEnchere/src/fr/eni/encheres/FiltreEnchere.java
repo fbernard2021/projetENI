@@ -40,7 +40,7 @@ public class FiltreEnchere implements Filter {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpSession session = httpRequest.getSession();
-		if(session.getAttribute("connexion") != "true")
+		if(session.getAttribute("utilisateur") == null)
 		{
 			RequestDispatcher rd = request.getRequestDispatcher("/connexion");
 			rd.forward(httpRequest, response);
