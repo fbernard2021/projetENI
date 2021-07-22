@@ -11,15 +11,17 @@
 
 	<h1>Liste des enchères</h1>
 	
-	<c:if test="${!empty encheres}">
+	<c:if test="${!empty articles}">
 		<div class="container">
 			<% int compteur = 1; %>
 			<div class="row">
-			<c:forEach var="e" items="${encheres}">
-				
-					<div class="col">
-						${v.toString()}
-					</div>
+			<c:forEach var="a" items="${articles}">
+				<div class="col">
+					<h3>${a.nomArticle}</h3>
+					<h4>Prix : ${a.prixVente}</h4>
+					<h4>Fin de l'enchère : ${a.dateFinEnchere}</h4>
+					<h4>Vendeur :</h4>
+				</div>
 				<c:choose>
 					<c:when test="${compteur = 2}">
 						</div><div class="row">
@@ -30,9 +32,9 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-		</div>
+		</div></div>
 	</c:if>
-	<c:if test="${empty encheres }">
+	<c:if test="${empty articles}">
 		<h3>Aucune enchère en cours</h3>
 	</c:if>
 </body>

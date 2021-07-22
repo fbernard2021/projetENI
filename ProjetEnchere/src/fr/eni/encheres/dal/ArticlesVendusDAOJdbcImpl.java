@@ -28,17 +28,16 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 		List<ArticlesVendus> donneesArticles = new ArrayList<>();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
-			
-			PreparedStatement pstmt = cnx.prepareStatement(selectAll, PreparedStatement.RETURN_GENERATED_KEYS);
+			// à changer complètement
+			PreparedStatement pstmt = cnx.prepareStatement(selectAll);
 			pstmt.executeUpdate();
-			ResultSet rs = pstmt.getGeneratedKeys();
+			ResultSet rs = pstmt.executeQuery();
 			if(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(0), rs.getString(1), rs.getString(2),
 						rs.getDate(3), rs.getDate(4),rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8)));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return donneesArticles;
@@ -50,7 +49,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			
-			PreparedStatement pstmt = cnx.prepareStatement(selectById, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = cnx.prepareStatement(selectById);
 			pstmt.setInt(1, numArticle);
 			ResultSet rs = pstmt.executeQuery();
 

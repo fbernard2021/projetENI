@@ -20,9 +20,8 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			
-			PreparedStatement pstmt = cnx.prepareStatement(selectAll, PreparedStatement.RETURN_GENERATED_KEYS);
-			pstmt.executeUpdate();
-			ResultSet rs = pstmt.getGeneratedKeys();
+			PreparedStatement pstmt = cnx.prepareStatement(selectAll);
+			ResultSet rs = pstmt.executeQuery();
 			if(rs.next())
 			{
 				donneesEncheres.add(new Encheres(rs.getInt(0), rs.getInt(1), rs.getDate(2), rs.getInt(3)));
