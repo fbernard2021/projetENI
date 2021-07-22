@@ -43,7 +43,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			
-			PreparedStatement pstmt = cnx.prepareStatement(selectAll, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = cnx.prepareStatement(selectAll);
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.executeQuery();
 
@@ -78,7 +78,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			
-			PreparedStatement pstmt = cnx.prepareStatement(confirmConnection, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = cnx.prepareStatement(confirmConnection);
 			pstmt.setString(1, id);
 			pstmt.setString(2, motDePasse);
 			pstmt.setString(3, id);
@@ -162,7 +162,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			
-			PreparedStatement pstmt = cnx.prepareStatement(selectByPseudo, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = cnx.prepareStatement(selectByPseudo);
 			pstmt.setString(1, pseudo);
 			ResultSet rs = pstmt.executeQuery();
 
