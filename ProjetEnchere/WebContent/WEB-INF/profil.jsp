@@ -10,7 +10,7 @@
 </head>
 <body>
 
-
+	<%@ include file = "entete.jsp" %>
 	
 	<div class="container">
 		<div class="row justify-content-center">

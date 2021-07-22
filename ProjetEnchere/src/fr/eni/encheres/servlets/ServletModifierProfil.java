@@ -78,7 +78,7 @@ public class ServletModifierProfil extends HttpServlet {
 		String email = request.getParameter("email");
 		String telephone = request.getParameter("telephone");
 		String rue = request.getParameter("rue");
-		Integer codePostal = null;
+		int codePostal = Integer.parseInt(request.getParameter("postal")) ;
 		String ville = request.getParameter("ville");
 		
 		if(motDePasse.compareTo(confirmation) != 0)
@@ -126,7 +126,7 @@ public class ServletModifierProfil extends HttpServlet {
 				{
 					utilisateur.setRue(rue);
 				}
-				if((Integer) utilisateur.getCodePostal() != codePostal && codePostal != null)
+				if( utilisateur.getCodePostal() != codePostal)
 				{
 					utilisateur.setCodePostal(codePostal);
 				}
