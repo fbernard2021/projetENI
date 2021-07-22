@@ -24,4 +24,6 @@ public abstract class CodesResultatBLL {
 	public static final int UTILISATEUR_NULL=20007;
 	
 	public static final int ARTICLE_NULL=20008;
+
+	public static final int ERREUR_CREDIT_NEGATIF = 20009;
 }

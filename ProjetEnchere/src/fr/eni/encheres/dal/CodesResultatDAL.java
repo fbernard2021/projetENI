@@ -39,6 +39,8 @@ public abstract class CodesResultatDAL {
 	public static final int INSERT_MAIL_ECHEC = 10008;
 	
 	public static final int INSERT_PSEUDO_ECHEC = 10009;
+
+	public static final int ERREUR_DELETE_USER = 10010;
 	
 	
 	

@@ -152,6 +152,28 @@ public class UtilisateursManager {
 		
 	}
 	
+	public void supprimerProfil(Utilisateurs utilisateur, String motDePasse) throws BusinessException, NoSuchAlgorithmException
+	{
+		BusinessException exception = new BusinessException();
+		
+		StringBuffer sb = new StringBuffer();
+		
+		this.validerUtilisateur(utilisateur, exception);
+		this.validerPseudo(motDePasse, exception);
+		this.validerMotDePasse(motDePasse, exception);
+		
+		sb = this.SHA256(motDePasse);
+		
+		if(!exception.hasErreurs())
+		{
+			utilisateursDAO.deleteUser(utilisateur, sb.toString());
+		}
+		else
+		{
+			throw exception;
+		}
+	}
+	
 	
 	
 
@@ -160,6 +182,14 @@ public class UtilisateursManager {
 		if(pseudo.length() < 8 || pseudo.length() >16)
 		{
 			exception.ajouterErreur(CodesResultatBLL.REGLE_TAILLE_PSEUDO_ERREUR);
+		}
+	}
+	
+	private void validerCredit(int credit, BusinessException exception)
+	{
+		if(credit < 0)
+		{
+			exception.ajouterErreur(CodesResultatBLL.ERREUR_CREDIT_NEGATIF);
 		}
 	}
 	

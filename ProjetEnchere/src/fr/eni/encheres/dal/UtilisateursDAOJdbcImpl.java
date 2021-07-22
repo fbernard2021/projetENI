@@ -35,6 +35,9 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	private static final String alterUser = "UPDATE UTILISATEURS "
 			  							  + "SET pseudo = ? , nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? "
 			  							  + "WHERE pseudo = ? AND mot_de_passe = ? ;";
+	
+	private static final String deleteUser = "DELETE FROM UTILISATEURS where pseudo = ? AND mot_de_passe = ? ;";
+	
 
 	@Override
 	public List<Utilisateurs> selectAll() {
@@ -232,6 +235,25 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			businessException.ajouterErreur(CodesResultatDAL.ERREUR_MODIFICATION_UTILISATEUR);
 			throw businessException;
 		}
+	}
+
+
+	@Override
+	public void deleteUser(Utilisateurs utilisateur, String motDePasse) throws BusinessException {
+		try(Connection cnx = ConnectionProvider.getConnection();) 
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(deleteUser);
+			pstmt.setString(1, utilisateur.getPseudo());
+			pstmt.setString(2, motDePasse);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.ERREUR_DELETE_USER);
+			throw businessException;
+		}
+		
 	}
 
 
