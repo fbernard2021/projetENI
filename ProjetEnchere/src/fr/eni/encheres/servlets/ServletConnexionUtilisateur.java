@@ -58,22 +58,22 @@ public class ServletConnexionUtilisateur extends HttpServlet {
 			}
 			
 			
-			
-			if(request.getAttribute("listeCodesErreur") != null)
-			{
-            	rd = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
-            	rd.forward(request, response);
-			}
-            
             if(utilisateur == null)
             {
             	// envoyer un message d'erreur
             	listeCodesErreur.add(CodesResultatServlets.ERROR_CONNEXION);
                 request.setAttribute("listeCodesErreur", listeCodesErreur);
                 
+            }
+			
+			
+			
+			if(request.getAttribute("listeCodesErreur") != null)
+			{
             	rd = request.getRequestDispatcher("/WEB-INF/connexion.jsp");
             	rd.forward(request, response);
-            }
+			}
+
 
             else if (utilisateur.getPseudo().compareTo(identifiant) == 0 ||  utilisateur.getEmail().compareTo(identifiant) == 0 )
               {
