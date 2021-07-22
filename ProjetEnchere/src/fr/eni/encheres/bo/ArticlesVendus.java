@@ -12,6 +12,7 @@ public class ArticlesVendus {
 	private int prixVente;
 	private int numUtilisateur;
 	private int numCategorie;
+	private String pseudo;
 	
 	public ArticlesVendus(int numArticle, String nomArticle, String description, Date dateDebutEnchere,
 			Date dateFinEnchere, int prixInitial, int prixVente,int numUtilisateur, int numCategorie)
@@ -25,6 +26,17 @@ public class ArticlesVendus {
 		this.prixVente = prixVente;
 		this.numUtilisateur = numUtilisateur;
 		this.numCategorie = numCategorie;
+	}
+	
+	public ArticlesVendus(int numArticle, String nomArticle, String description, Date dateFinEnchere,
+			 int prixVente,String pseudo)
+	{
+		this.numArticle = numArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateFinEnchere = dateFinEnchere;
+		this.prixVente = prixVente;
+		this.pseudo = pseudo;
 	}
 
 	public int getNumArticle()

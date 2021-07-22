@@ -20,7 +20,10 @@
 					<h3>${a.nomArticle}</h3>
 					<h4>Prix : ${a.prixVente}</h4>
 					<h4>Fin de l'enchère : ${a.dateFinEnchere}</h4>
-					<h4>Vendeur :</h4>
+					<h4>Vendeur : 
+					<a href="${pageContext.request.contextPath}/profil?pseudo=${a.pseudo}">
+					${a.pseudo}</a>
+					</h4>
 				</div>
 				<c:choose>
 					<c:when test="${compteur = 2}">

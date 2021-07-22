@@ -31,8 +31,7 @@ public class ServletAccueil extends HttpServlet {
 		
 		try
 		{
-			articles.selectionnerListeArticlesVendus();
-			request.setAttribute("articles", articles);
+			request.setAttribute("articles", articles.selectionnerListeArticlesVendus());
 		}
 		catch (BusinessException e)
 		{
