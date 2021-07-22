@@ -30,10 +30,10 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 									   + ",ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?); ";
 	
 	private static final String alterUserWithNewMdp = "UPDATE UTILISATEURS "
-											  + "SET nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? ,mot_de_passe = ? "
+											  + "SET pseudo = ? , nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? ,mot_de_passe = ? "
 											  + "WHERE pseudo = ? AND mot_de_passe = ? ;";
 	private static final String alterUser = "UPDATE UTILISATEURS "
-			  							  + "SET nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? "
+			  							  + "SET pseudo = ? , nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? "
 			  							  + "WHERE pseudo = ? AND mot_de_passe = ? ;";
 
 	@Override
@@ -137,7 +137,19 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			}
 		} catch (SQLException e) {
 			BusinessException businessException = new BusinessException();
+			if(e.getMessage().contains("uc_utilisateur_mail"))
+			{
+				businessException.ajouterErreur(CodesResultatDAL.INSERT_MAIL_ECHEC);
+				throw businessException;
+			}
+			if(e.getMessage().contains("uc_utilisateur_pseudo"))
+			{
+				businessException.ajouterErreur(CodesResultatDAL.INSERT_PSEUDO_ECHEC);
+				throw businessException;
+			}
+
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
+			
 			throw businessException;
 		}
 	}
@@ -168,7 +180,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 
 
 	@Override
-	public void updateUser(Utilisateurs utilisateur,String motDePasse ,String newMotDePasse) throws BusinessException {
+	public void updateUser(Utilisateurs utilisateur,String motDePasse ,String newMotDePasse, String ancienPseudo) throws BusinessException {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = null;
@@ -177,29 +189,31 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			{
 				
 				pstmt = cnx.prepareStatement(alterUser);
-				pstmt.setString(1, utilisateur.getNom());
-				pstmt.setString(2, utilisateur.getPrenom());
-				pstmt.setString(3, utilisateur.getEmail());
-				pstmt.setString(4, utilisateur.getTelephone());
-				pstmt.setString(5, utilisateur.getRue());
-				pstmt.setInt(6, utilisateur.getCodePostal());
-				pstmt.setString(7, utilisateur.getVille());
-				pstmt.setString(8, utilisateur.getPseudo());
-				pstmt.setString(9, motDePasse);
+				pstmt.setString(1, utilisateur.getPseudo());
+				pstmt.setString(2, utilisateur.getNom());
+				pstmt.setString(3, utilisateur.getPrenom());
+				pstmt.setString(4, utilisateur.getEmail());
+				pstmt.setString(5, utilisateur.getTelephone());
+				pstmt.setString(6, utilisateur.getRue());
+				pstmt.setInt(7, utilisateur.getCodePostal());
+				pstmt.setString(8, utilisateur.getVille());
+				pstmt.setString(9, ancienPseudo);
+				pstmt.setString(10, motDePasse);
 			}
 			else
 			{
 				pstmt = cnx.prepareStatement(alterUserWithNewMdp);
-				pstmt.setString(1, utilisateur.getNom());
-				pstmt.setString(2, utilisateur.getPrenom());
-				pstmt.setString(3, utilisateur.getEmail());
-				pstmt.setString(4, utilisateur.getTelephone());
-				pstmt.setString(5, utilisateur.getRue());
-				pstmt.setInt(6, utilisateur.getCodePostal());
-				pstmt.setString(7, utilisateur.getVille());
-				pstmt.setString(8, newMotDePasse);
-				pstmt.setString(9, utilisateur.getPseudo());
-				pstmt.setString(10, motDePasse);
+				pstmt.setString(1, utilisateur.getPseudo());
+				pstmt.setString(2, utilisateur.getNom());
+				pstmt.setString(3, utilisateur.getPrenom());
+				pstmt.setString(4, utilisateur.getEmail());
+				pstmt.setString(5, utilisateur.getTelephone());
+				pstmt.setString(6, utilisateur.getRue());
+				pstmt.setInt(7, utilisateur.getCodePostal());
+				pstmt.setString(8, utilisateur.getVille());
+				pstmt.setString(9, newMotDePasse);
+				pstmt.setString(10, ancienPseudo);
+				pstmt.setString(11, motDePasse);
 			}
 				
 			
@@ -210,6 +224,10 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			if(e.getMessage().contains("uc_utilisateur_mail"))
 			{
 				businessException.ajouterErreur(CodesResultatDAL.INSERT_MAIL_ECHEC);
+			}
+			if(e.getMessage().contains("uc_utilisateur_pseudo"))
+			{
+				businessException.ajouterErreur(CodesResultatDAL.INSERT_PSEUDO_ECHEC);
 			}
 			businessException.ajouterErreur(CodesResultatDAL.ERREUR_MODIFICATION_UTILISATEUR);
 			throw businessException;

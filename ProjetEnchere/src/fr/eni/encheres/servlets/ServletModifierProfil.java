@@ -40,7 +40,7 @@ public class ServletModifierProfil extends HttpServlet {
 		List<Integer> listeCodesErreur=new ArrayList<>();
 		HttpSession session = request.getSession();
 		Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateur");
-		System.out.println(utilisateur.getEmail());
+
 		
 		if(utilisateur == null)
 		{
@@ -71,6 +71,7 @@ public class ServletModifierProfil extends HttpServlet {
 		utilisateur.clone(utilisateurSession);
 		String motDePasseActuel = request.getParameter("mdpAct");
 		String motDePasse = request.getParameter("newMdp");
+		String pseudo = request.getParameter("pseudo");
 		String confirmation = request.getParameter("mdpConfirm");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -101,6 +102,10 @@ public class ServletModifierProfil extends HttpServlet {
 			}
 			else
 			{
+				if(utilisateur.getPseudo().compareTo(pseudo) != 0)
+				{
+					utilisateur.setPseudo(pseudo);
+				}
 				if(utilisateur.getNom().compareTo(nom) != 0)
 				{
 					utilisateur.setNom(nom);
@@ -136,7 +141,7 @@ public class ServletModifierProfil extends HttpServlet {
 		
 		
 				try {
-					utilisateurManager.modifierProfil(utilisateur,motDePasseActuel, motDePasse);
+					utilisateurManager.modifierProfil(utilisateur,motDePasseActuel, motDePasse, utilisateurSession.getPseudo());
 					
 				} catch (NoSuchAlgorithmException e) {
 					// TODO Auto-generated catch block
@@ -150,7 +155,7 @@ public class ServletModifierProfil extends HttpServlet {
 			
 			if((List<Integer>)request.getAttribute("listeCodesErreur") == null)
 			{
-				System.out.println("oui");
+				
 				session.setAttribute("utilisateur", utilisateur);
 			
 				if(motDePasse.compareTo("") != 0)

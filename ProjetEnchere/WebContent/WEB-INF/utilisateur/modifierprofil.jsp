@@ -46,18 +46,21 @@
 		<div class="row">
 			<div class="col-12">
 				<form action="${pageContext.request.contextPath}/utilisateur/modifierProfil" method="post">
-
+					<div class="form-group">
+						<label for="pseudo">pseudo :</label>
+						<input type="text" class="form-control" id="pseudo" name="pseudo" value="${sessionScope.utilisateur.getPseudo()}" required>
+					</div>
 					<div class="form-group">
 						<label for="nom">Nom :</label>
-						<input type="text" class="form-control" id="nom" name="nom" value="${sessionScope.utilisateur.getNom()}">
+						<input type="text" class="form-control" id="nom" name="nom" value="${sessionScope.utilisateur.getNom()}" required>
 					</div>
 					<div class="form-group">
 						<label for="prenom">Prénom :</label>
-						<input type="text" class="form-control" id="prenom" name="prenom" value="${sessionScope.utilisateur.getPrenom()}">
+						<input type="text" class="form-control" id="prenom" name="prenom" value="${sessionScope.utilisateur.getPrenom()}" required>
 					</div>
 					<div class="form-group">
 						<label for="email">Email :</label>
-						<input type="email" class="form-control" id="email" name="email" value="${sessionScope.utilisateur.getEmail()}">
+						<input type="email" class="form-control" id="email" name="email" value="${sessionScope.utilisateur.getEmail()}" required>
 					</div>
 					<div class="form-group">
 						<label for="telephone">Téléphone :</label>
@@ -65,15 +68,15 @@
 					</div>
 					<div class="form-group">
 						<label for="rue">Rue :</label>
-						<input type="text" class="form-control" id="rue" name="rue" value="${sessionScope.utilisateur.getRue()}">
+						<input type="text" class="form-control" id="rue" name="rue" value="${sessionScope.utilisateur.getRue()}" required>
 					</div>
 					<div class="form-group">
 						<label for="postal">Code postale :</label>
-						<input type="text" class="form-control" id="postal" name="postal" value="${sessionScope.utilisateur.getCodePostal()}">
+						<input type="text" class="form-control" id="postal" name="postal" value="${sessionScope.utilisateur.getCodePostal()}" required>
 					</div>
 					<div class="form-group">
 						<label for="ville">Ville :</label>
-						<input type="text" class="form-control" id="ville" name="ville" value="${sessionScope.utilisateur.getVille()}">
+						<input type="text" class="form-control" id="ville" name="ville" value="${sessionScope.utilisateur.getVille()}" required>
 					</div>
 					<div class="form-group">
 						<label for="mdp">Mot de passe Actuel :</label>
