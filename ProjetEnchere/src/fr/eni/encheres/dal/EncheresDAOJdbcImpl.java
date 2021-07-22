@@ -22,7 +22,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			
 			PreparedStatement pstmt = cnx.prepareStatement(selectAll);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next())
+			while(rs.next())
 			{
 				donneesEncheres.add(new Encheres(rs.getInt(0), rs.getInt(1), rs.getDate(2), rs.getInt(3)));
 			}

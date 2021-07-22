@@ -17,7 +17,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_Vendus;";
 
 	private static final String selectAccueil = "SELECT no_article, nom_article, description, date_fin_encheres,"
-			+ "prix_vente, pseudo FROM Articles_Vendus a INNER JOIN Utilisateurs u"
+			+ "prix_vente, pseudo FROM Articles_Vendus a INNER JOIN Utilisateurs u "
 			+ "ON a.no_utilisateur = u.no_utilisateur;";
 	
 	private static final String selectById = "SELECT no_article, nom_article, description, date_debut_encheres,"
@@ -33,9 +33,9 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(selectAll);
-			pstmt.executeUpdate();
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next())
+			
+			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
 						rs.getDate(4), rs.getDate(5),rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getInt(9)));
@@ -51,9 +51,8 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(selectAccueil);
-			pstmt.executeUpdate();
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next())
+			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
 						rs.getDate(4),rs.getInt(5), rs.getString(6)));

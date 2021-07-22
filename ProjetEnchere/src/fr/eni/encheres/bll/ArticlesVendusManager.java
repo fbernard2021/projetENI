@@ -39,7 +39,27 @@ public class ArticlesVendusManager {
 		}
 		
 		return liste;
+	}
+	
+	public List<ArticlesVendus> selectionnerListeArticlesAccueil() throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
 		
+		List<ArticlesVendus> liste = new ArrayList<>();
+		
+		liste = articlesVendusDAO.selectAccueil();
+		
+
+		if(!exception.hasErreurs())
+		{
+		this.validerListe(liste, exception);
+		}
+		else
+		{
+			throw exception;
+		}
+		
+		return liste;
 	}
 	
 	public ArticlesVendus selectionnerunArticle(int numArticle) throws BusinessException

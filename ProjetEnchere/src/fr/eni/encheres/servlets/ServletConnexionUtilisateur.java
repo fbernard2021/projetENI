@@ -83,8 +83,7 @@ public class ServletConnexionUtilisateur extends HttpServlet {
                 session.setAttribute("connexion", "true");
                 
                 // rediriger vers l'accueil
-                rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
-        		rd.forward(request, response);
+                response.sendRedirect(request.getContextPath()+"/accueil");
              }
 
 		}

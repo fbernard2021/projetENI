@@ -119,5 +119,15 @@ public class ArticlesVendus {
 	{
 		this.numCategorie = numCategorie;
 	}
+
+	public String getPseudo()
+	{
+		return pseudo;
+	}
+	public void setPseudo(String pseudo)
+	{
+		this.pseudo = pseudo;
+	}
+	
 	
 }
