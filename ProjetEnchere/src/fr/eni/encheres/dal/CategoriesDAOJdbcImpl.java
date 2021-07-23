@@ -13,6 +13,7 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 	
 	
 	private static final String selectAll = "SELECT libelle FROM CATEGORIES;";
+	private static final String selectNumCategorie = "SELECT no_categorie FROM CATEGORIES WHERE libelle = ? ;";
 
 	@Override
 	public List<Categories> selectAll() {
@@ -34,6 +35,29 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 		}
 		
 		return liste;
+	}
+
+	@Override
+	public int selectNumCategorie(String libelle) {
+		int num = 0;
+		
+		try(Connection cnx = ConnectionProvider.getConnection()) 
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(selectNumCategorie);
+			pstmt.setString(1, libelle);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				num = rs.getInt(1);
+			}
+		
+		}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		
+		return num;
 	}
 
 }

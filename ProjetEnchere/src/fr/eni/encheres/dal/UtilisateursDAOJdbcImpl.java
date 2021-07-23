@@ -23,7 +23,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	private static final String selectByPseudo = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM UTILISATEURS WHERE pseudo = ?;";
 
 	
-	private static final String confirmConnection = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ? OR email = ? AND mot_de_passe = ? ;";
+	private static final String confirmConnection = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ? OR email = ? AND mot_de_passe = ? ;";
 	
 	
 	private static final String insert = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal"
@@ -91,8 +91,8 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			while(rs.next())
 			{
 
-				donnee =new Utilisateurs(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
-							rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getInt(10));
+				donnee =new Utilisateurs(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
+							rs.getString(7), rs.getInt(8), rs.getString(9), rs.getInt(10), rs.getInt(11));
 			}
 
 		} catch (SQLException e) {

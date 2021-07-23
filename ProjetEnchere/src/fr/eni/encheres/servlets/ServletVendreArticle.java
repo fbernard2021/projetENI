@@ -1,6 +1,8 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.BusinessException;
+import fr.eni.encheres.bll.ArticlesVendusManager;
 import fr.eni.encheres.bll.CategoriesManager;
+import fr.eni.encheres.bo.ArticlesVendus;
 import fr.eni.encheres.bo.Categories;
 import fr.eni.encheres.bo.Utilisateurs;
 
@@ -71,8 +75,50 @@ public class ServletVendreArticle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		BusinessException exception = new BusinessException();
+		CategoriesManager categoriesManager = new CategoriesManager();
+		ArticlesVendusManager articleVenduManager = new ArticlesVendusManager();
+		HttpSession session = request.getSession();
+		Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateur");
+		ArticlesVendus articleVendu = null;
+		List<Integer> listeCodesErreur = new ArrayList<>();
+		String article = request.getParameter("article");
+		String description = request.getParameter("description");
+		String categorie = request.getParameter("categorie");
+		int numCategorie;
+		int prix =Integer.parseInt(request.getParameter("prix"));
+		String debutEnchereStr = request.getParameter("dateDebut");
+		String finEnchereStr = request.getParameter("dateFin");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date debutEnchere = null;
+		Date finEnchere = null;
+		String rue = request.getParameter("rue");
+		int codePostal = Integer.parseInt(request.getParameter("postal"));
+		String ville = request.getParameter("ville");
+		
+		try {
+			debutEnchere = sdf.parse(debutEnchereStr);
+			finEnchere = sdf.parse(finEnchereStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			listeCodesErreur.add(CodesResultatServlets.ERREUR_FORMAT_DATE);
+			request.setAttribute("listeCodesErreur", listeCodesErreur);
+		}
+		
+		try {
+			numCategorie = categoriesManager.selectionnerNumeroCategorie(categorie);
+			articleVendu = articleVenduManager.ajouterArticle(article, description, debutEnchere, finEnchere, prix, utilisateur.getNumUtilisateur() , numCategorie);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+		}
+		
+		if(request.getAttribute("listeCodesErreur") != null)
+		{
+			
+		}
+		
+		
 	}
 
 }

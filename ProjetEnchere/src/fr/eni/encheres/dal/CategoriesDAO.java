@@ -7,5 +7,6 @@ import fr.eni.encheres.bo.Categories;
 public interface CategoriesDAO {
 	
 	public List<Categories> selectAll();
+	public int selectNumCategorie(String libelle);
 
 }
