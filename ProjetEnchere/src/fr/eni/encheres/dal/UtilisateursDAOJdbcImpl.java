@@ -47,7 +47,6 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		{
 			
 			PreparedStatement pstmt = cnx.prepareStatement(selectAll);
-			pstmt.executeUpdate();
 			ResultSet rs = pstmt.executeQuery();
 
 			while(rs.next())

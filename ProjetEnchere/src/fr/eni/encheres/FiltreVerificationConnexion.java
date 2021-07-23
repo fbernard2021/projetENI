@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class FiltreEnchere
  */
-@WebFilter(urlPatterns ="/enchere/*",
+@WebFilter(urlPatterns ={"/enchere/*", "/deconnexion"},
 dispatcherTypes = {
 		   				DispatcherType.REQUEST,
 		   				DispatcherType.INCLUDE,
@@ -25,7 +25,7 @@ dispatcherTypes = {
 		   				DispatcherType.ERROR
 					  }
 )
-public class FiltreEnchere implements Filter {
+public class FiltreVerificationConnexion implements Filter {
 
 
 
