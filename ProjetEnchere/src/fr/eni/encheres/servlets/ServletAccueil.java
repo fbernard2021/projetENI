@@ -32,6 +32,7 @@ public class ServletAccueil extends HttpServlet {
 		ArticlesVendusManager articles = new ArticlesVendusManager();
 		CategoriesManager categories = new CategoriesManager();
 		
+		// on récupère les catégories pour les afficher dans le select
 		try
 		{
 			request.setAttribute("categories", categories.selectionnerCategories());
@@ -42,6 +43,7 @@ public class ServletAccueil extends HttpServlet {
             request.setAttribute("listeCodesErreur", listeCodesErreur);
 		}
 		
+		// on récupère tous les articles
 		try
 		{
 			request.setAttribute("articles", articles.selectionnerListeArticlesAccueil());
@@ -63,7 +65,9 @@ public class ServletAccueil extends HttpServlet {
 	{
 		List<Integer> listeCodesErreur=new ArrayList<>();
 		ArticlesVendusManager articlesParCategorie = new ArticlesVendusManager();
+		CategoriesManager categories = new CategoriesManager();
 		
+		// on récupère la catégorie choisie et on l'utilise comme paramètre pour récup les articles concernés
 		try
 		{
 			String nomCategorie = request.getParameter("nomCategorie");
@@ -72,6 +76,17 @@ public class ServletAccueil extends HttpServlet {
 		catch (BusinessException e)
 		{
 			listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_CATEGORIE_NULL);
+            request.setAttribute("listeCodesErreur", listeCodesErreur);
+		}
+
+		// on remet les catégorie dans le select
+		try
+		{
+			request.setAttribute("categories", categories.selectionnerCategories());
+		}
+		catch (BusinessException e)
+		{
+			listeCodesErreur.add(CodesResultatBLL.LISTE_CATEGORIES_NULL);
             request.setAttribute("listeCodesErreur", listeCodesErreur);
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");

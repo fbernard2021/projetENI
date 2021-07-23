@@ -19,14 +19,14 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie FROM Articles_Vendus;";
 
 	private static final String selectAccueil = "SELECT no_article, nom_article, description, date_fin_encheres,"
-			+ "prix_vente, pseudo FROM Articles_Vendus a INNER JOIN Utilisateurs u "
-			+ "ON a.no_utilisateur = u.no_utilisateur;";
+			+ " prix_vente, pseudo FROM Articles_Vendus a INNER JOIN Utilisateurs u"
+			+ " ON a.no_utilisateur = u.no_utilisateur;";
 	
 	private static final String selectListeParCategorie = "SELECT no_article, nom_article, description, date_fin_encheres,"
-			+ "prix_vente, pseudo FROM Articles_Vendus a "
-			+ "INNER JOIN Utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
-			+ "INNER JOIN Categories c ON a.no_categorie = c.no_categorie"
-			+ "WHERE a.no_categorie =?;";
+			+ "prix_vente, pseudo FROM Articles_Vendus a"
+			+ " INNER JOIN Utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
+			+ " INNER JOIN Categories c ON a.no_categorie = c.no_categorie"
+			+ " WHERE c.libelle=?;";
 	
 	private static final String selectById = "SELECT no_article, nom_article, description, date_debut_encheres,"
 			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie"
