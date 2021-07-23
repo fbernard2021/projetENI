@@ -41,6 +41,8 @@ public abstract class CodesResultatDAL {
 	public static final int INSERT_PSEUDO_ECHEC = 10009;
 
 	public static final int ERREUR_DELETE_USER = 10010;
+
+	public static final int ERREUR_ARTICLE_INTROUVABLE = 10011;
 	
 	
 	

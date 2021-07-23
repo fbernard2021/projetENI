@@ -15,6 +15,14 @@ public class Retraits {
 		this.ville = ville;
 	}
 
+	public Retraits(String rue, int codePostal, String ville)
+	{
+		this.numArticle = numArticle;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+	}
+
 	public int getNumArticle() {
 		return numArticle;
 	}

@@ -18,8 +18,10 @@ import javax.servlet.http.HttpSession;
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticlesVendusManager;
 import fr.eni.encheres.bll.CategoriesManager;
+import fr.eni.encheres.bll.RetraitsManager;
 import fr.eni.encheres.bo.ArticlesVendus;
 import fr.eni.encheres.bo.Categories;
+import fr.eni.encheres.bo.Retraits;
 import fr.eni.encheres.bo.Utilisateurs;
 
 /**
@@ -75,27 +77,36 @@ public class ServletVendreArticle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		BusinessException exception = new BusinessException();
+		List<Integer> listeCodesErreur = new ArrayList<>();
 		CategoriesManager categoriesManager = new CategoriesManager();
 		ArticlesVendusManager articleVenduManager = new ArticlesVendusManager();
+		RetraitsManager retraitManager = new RetraitsManager();
 		HttpSession session = request.getSession();
-		Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateur");
-		ArticlesVendus articleVendu = null;
-		List<Integer> listeCodesErreur = new ArrayList<>();
+		
+		
+		
 		String article = request.getParameter("article");
 		String description = request.getParameter("description");
 		String categorie = request.getParameter("categorie");
-		int numCategorie;
+		
 		int prix =Integer.parseInt(request.getParameter("prix"));
 		String debutEnchereStr = request.getParameter("dateDebut");
 		String finEnchereStr = request.getParameter("dateFin");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		Date debutEnchere = null;
-		Date finEnchere = null;
 		String rue = request.getParameter("rue");
 		int codePostal = Integer.parseInt(request.getParameter("postal"));
 		String ville = request.getParameter("ville");
 		
+		
+		ArticlesVendus articleVendu = null;
+		
+		Retraits retrait = new Retraits(rue, codePostal, ville);
+		
+		
+		Date debutEnchere = null;
+		Date finEnchere = null;
 		try {
 			debutEnchere = sdf.parse(debutEnchereStr);
 			finEnchere = sdf.parse(finEnchereStr);
@@ -106,8 +117,12 @@ public class ServletVendreArticle extends HttpServlet {
 		}
 		
 		try {
-			numCategorie = categoriesManager.selectionnerNumeroCategorie(categorie);
+			int numCategorie = categoriesManager.selectionnerNumeroCategorie(categorie);
+			Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateur");
 			articleVendu = articleVenduManager.ajouterArticle(article, description, debutEnchere, finEnchere, prix, utilisateur.getNumUtilisateur() , numCategorie);
+			retrait.setNumArticle(articleVendu.getNumArticle());
+			retraitManager.ajouterRetrait(retrait);
+			
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());

@@ -21,4 +21,9 @@ public abstract class DAOFactory {
 	{
 		return new CategoriesDAOJdbcImpl();
 	}
+	
+	public static RetraitsDAO getRetraitsDAO()
+	{
+		return new RetraitsDAOJdbcImpl();
+	}
 }

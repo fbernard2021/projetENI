@@ -31,4 +31,10 @@ public abstract class CodesResultatBLL {
 
 
 	public static final int ERREUR_CATEGORIE_NULL = 20013;
+
+
+	public static final int RETRAIT_NULL = 20014;
+
+
+	public static final int NUM_ARTICLE_INTROUVABLE = 20015;
 }
