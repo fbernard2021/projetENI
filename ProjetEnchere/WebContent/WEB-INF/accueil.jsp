@@ -9,10 +9,21 @@
 <%@ include file = "entete.jsp" %>
 </head>
 <body>
-
-
 	<h1>Liste des enchères</h1>
 	<c:if test="${!empty articles}">
+	
+		<form action="${pageContext.request.contextPath}/accueil" method="post">
+		 <div class="form-group">
+            <label for="categories">Catégories :</label>
+            <select class="form-control" id="categories" name="categories">
+            	<c:forEach var="c" items="${categories}">
+                	<option value="${c.getNomCategorie()}"><h4>${c.getNomCategorie()}</h4></option>
+               	</c:forEach>
+            </select>
+            <button type="submit" class="btn btn-default">Rechercher</button>
+        </div>
+        </form>
+	
 		<div class="container">
 			<% int compteur = 1; %>
 			<div class="row">

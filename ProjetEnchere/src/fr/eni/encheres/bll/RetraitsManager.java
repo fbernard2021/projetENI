@@ -1,3 +1,4 @@
+
 package fr.eni.encheres.bll;
 
 import fr.eni.encheres.BusinessException;

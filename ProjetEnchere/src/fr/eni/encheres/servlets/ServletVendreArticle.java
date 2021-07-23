@@ -85,16 +85,11 @@ public class ServletVendreArticle extends HttpServlet {
 		RetraitsManager retraitManager = new RetraitsManager();
 		HttpSession session = request.getSession();
 		
-		
-		
+	
 		String article = request.getParameter("article");
 		String description = request.getParameter("description");
 		String categorie = request.getParameter("categorie");
-		
 		int prix =Integer.parseInt(request.getParameter("prix"));
-		String debutEnchereStr = request.getParameter("dateDebut");
-		String finEnchereStr = request.getParameter("dateFin");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		String rue = request.getParameter("rue");
 		int codePostal = Integer.parseInt(request.getParameter("postal"));
 		String ville = request.getParameter("ville");
@@ -104,7 +99,9 @@ public class ServletVendreArticle extends HttpServlet {
 		
 		Retraits retrait = new Retraits(rue, codePostal, ville);
 		
-		
+		String debutEnchereStr = request.getParameter("dateDebut");
+		String finEnchereStr = request.getParameter("dateFin");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date debutEnchere = null;
 		Date finEnchere = null;
 		try {

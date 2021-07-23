@@ -15,14 +15,14 @@ public class ArticlesVendus {
 	private String pseudo;
 	
 	public ArticlesVendus(String nomArticle, String description, Date dateDebutEnchere,
-			Date dateFinEnchere, int prixInitial, int numUtilisateur, int numCategorie)
+			Date dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
 	{
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEnchere = dateDebutEnchere;
 		this.dateFinEnchere = dateFinEnchere;
 		this.prixInitial = prixInitial;
-		this.prixVente = prixInitial;
+		this.prixVente = prixInitial;;
 		this.numUtilisateur = numUtilisateur;
 		this.numCategorie = numCategorie;
 	}
