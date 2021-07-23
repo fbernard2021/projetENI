@@ -34,7 +34,7 @@ public class ServletDeconnexion extends HttpServlet {
 		
 		RequestDispatcher rd = null;
 		
-		if(session.getAttribute("connexion") == "true")
+		if(session.getAttribute("utilisateur") != null)
 		{
 			session.setAttribute("connexion", "false");
 			session.setAttribute("utilisateur", null);

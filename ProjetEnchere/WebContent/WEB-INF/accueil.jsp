@@ -6,9 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Accueil</title>
+<%@ include file = "entete.jsp" %>
 </head>
 <body>
-	<%@ include file = "entete.jsp" %>
+
 
 	<h1>Liste des enchères</h1>
 	<c:if test="${!empty articles}">

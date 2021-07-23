@@ -11,10 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.CategoriesManager;
 import fr.eni.encheres.bo.Categories;
+import fr.eni.encheres.bo.Utilisateurs;
 
 /**
  * Servlet implementation class ServletVendreArticle
@@ -39,7 +41,6 @@ public class ServletVendreArticle extends HttpServlet {
 		List<Categories> listeCategories = new ArrayList<>();
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		RequestDispatcher rd = null;
-		Date date = new Date();
 
 		
 		CategoriesManager categoriesManager = new CategoriesManager();

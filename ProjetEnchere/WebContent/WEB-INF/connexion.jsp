@@ -5,11 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+
 <title>Connexion</title>
+<%@ include file = "entete.jsp" %>
 </head>
 <body>
-	<%@ include file = "entete.jsp" %>
 	<div class="container">
 		<div class="row">
 		<div class="col-12">

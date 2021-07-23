@@ -11,7 +11,12 @@
 <body>
 	<nav class="navbar navbar-default">
 		<div class ="container-fluid">
-			<a class="navbar-brand" href="#">ENI-Enchères</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/accueil">
+				<img src="../images/logo.jpg" alt="Logo" style="width:40px;">
+				ENI-Enchères
+			</a>
+			
+			
 		</div>
 	</nav>
 </body>

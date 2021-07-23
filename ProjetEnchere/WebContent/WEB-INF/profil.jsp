@@ -7,11 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Profil</title>
+<%@ include file = "entete.jsp" %>
 </head>
 <body>
 
-	<%@ include file = "entete.jsp" %>
-	
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-6 offset-3">

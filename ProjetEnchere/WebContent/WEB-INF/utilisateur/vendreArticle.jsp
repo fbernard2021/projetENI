@@ -5,7 +5,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="now" value="<%=new Date()%>"/>
+<c:set var="tomorrow" value="<%=new Date(new Date().getTime() + 60*60*24*1000)%>"/>
 <fmt:formatDate value="${now}" var="date" pattern="yyyy-MM-dd"/>
+<fmt:formatDate value="${tomorrow}" var="demain" pattern="yyyy-MM-dd"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,6 +53,25 @@
 						<label for="dateDebut">Début de l'enchère :</label>
 						<input type="date" id="dateDebut" name="dateDebut" value="${date}" min="${date}" >
 					</div>
+					<div class="form-group">
+						<label for="dateFin">Fin de l'enchère :</label>
+						<input type="date" id="dateFin" name="dateFin" value="${demain}" min="${demain}" >
+					</div>
+					<fieldset class="border p-2">
+   						<legend  class="w-auto">Retrait</legend>
+   						<div class="form-group">
+							<label for="rue">rue :</label>
+							<input type="text" id="rue" name="rue" value="${sessionScope.utilisateur.getRue()}" required>
+						</div>
+   						<div class="form-group">
+							<label for="postal">Code postal :</label>
+							<input type="text" id="postal" name="postal" value="${sessionScope.utilisateur.getCodePostal()}" required>
+						</div>
+   						<div class="form-group">
+							<label for="ville">Ville :</label>
+							<input type="text" id="ville" name="ville" value="${sessionScope.utilisateur.getVille()}" required>
+						</div>
+					</fieldset>
 					</form>
 				</div>
 			</div>
