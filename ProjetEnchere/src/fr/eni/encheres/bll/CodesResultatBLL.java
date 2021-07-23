@@ -28,4 +28,7 @@ public abstract class CodesResultatBLL {
 	public static final int ERREUR_CREDIT_NEGATIF = 20009;
 
 	public static final int LISTE_CATEGORIES_NULL = 20010;
+
+
+	public static final int ERREUR_CATEGORIE_NULL = 20013;
 }

@@ -47,7 +47,7 @@
 					</div>
 					<div class="form-group">
 						<label for="prix">Mise à prix :</label>
-						<input type="number" id="prix" name="prix" min="1" max="10000">
+						<input type="number" id="prix" name="prix" min="1" max="10000" required>
 					</div>
 					<div class="form-group">
 						<label for="dateDebut">Début de l'enchère :</label>
@@ -72,6 +72,7 @@
 							<input type="text" id="ville" name="ville" value="${sessionScope.utilisateur.getVille()}" required>
 						</div>
 					</fieldset>
+					<button type="submit" class="btn btn-default">Enregistrer</button>
 					</form>
 				</div>
 			</div>

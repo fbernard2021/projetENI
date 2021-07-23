@@ -40,12 +40,40 @@ public class CategoriesManager {
 		}
 	}
 	
+	public int selectionnerNumeroCategorie(String libelle) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		int num = 0;
+		
+		this.verifierNom(libelle, exception);
+		
+		num = categoriesDAO.selectNumCategorie(libelle);
+		
+		if(exception.hasErreurs())
+		{
+			throw exception;
+		}
+		else
+		{
+		return num;
+		}
+		
+	}
+	
 	
 	private void verifierListe(List<Categories> listeCategories, BusinessException exception)
 	{
 		if(listeCategories == null)
 		{
 			exception.ajouterErreur(CodesResultatBLL.LISTE_CATEGORIES_NULL);
+		}
+	}
+	
+	private void verifierNom(String libelle, BusinessException exception)
+	{
+		if(libelle == null)
+		{
+			exception.ajouterErreur(CodesResultatBLL.ERREUR_CATEGORIE_NULL);
 		}
 	}
 	
