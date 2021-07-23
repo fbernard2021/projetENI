@@ -15,7 +15,7 @@
 		<form action="${pageContext.request.contextPath}/accueil" method="post">
 		 <div class="form-group">
             <label for="categories">Catégories :</label>
-            <select class="form-control" id="categories" name="categories">
+            <select class="form-control" id="categories" name="nomCategorie">
             	<c:forEach var="c" items="${categories}">
                 	<option value="${c.getNomCategorie()}"><h4>${c.getNomCategorie()}</h4></option>
                	</c:forEach>
