@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +32,9 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie"
 			+ " FROM Articles_Vendus WHERE no_article=?;";
 	
-	private static final String insertArticle = "INSERT INTO ARTICLES_VENDUS"
+	private static final String insertArticle = "INSERT INTO ARTICLES_VENDUS "
 			+ "(nom_article, description, date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,"
-			+ " no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+			+ " no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?);";
 	@Override
 	public List<ArticlesVendus> selectAll()
 	{
@@ -129,11 +130,15 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			PreparedStatement pstmt = cnx.prepareStatement(insertArticle, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, article.getNomArticle());
 			pstmt.setString(2,article.getDescription());
-			pstmt.setDate(3, (Date) article.getDateDebutEnchere());
-			pstmt.setDate(4, (Date) article.getDateFinEnchere());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String dateDebutStr = sdf.format(article.getDateDebutEnchere());
+			String dateFinStr = sdf.format(article.getDateFinEnchere());
+			pstmt.setDate(3,  Date.valueOf(dateDebutStr));
+			pstmt.setDate(4, Date.valueOf(dateFinStr));
 			pstmt.setInt(5, article.getPrixInitial());
-			pstmt.setInt(6, article.getNumUtilisateur());
-			pstmt.setInt(7, article.getNumCategorie());
+			pstmt.setInt(6, article.getPrixVente());
+			pstmt.setInt(7, article.getNumUtilisateur());
+			pstmt.setInt(8, article.getNumCategorie());
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			

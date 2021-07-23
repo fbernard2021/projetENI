@@ -78,6 +78,7 @@ public class ServletVendreArticle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		RequestDispatcher rd = null;
 		BusinessException exception = new BusinessException();
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		CategoriesManager categoriesManager = new CategoriesManager();
@@ -88,7 +89,7 @@ public class ServletVendreArticle extends HttpServlet {
 	
 		String article = request.getParameter("article");
 		String description = request.getParameter("description");
-		String categorie = request.getParameter("categorie");
+		String categorie = request.getParameter("categories");
 		int prix =Integer.parseInt(request.getParameter("prix"));
 		String rue = request.getParameter("rue");
 		int codePostal = Integer.parseInt(request.getParameter("postal"));
@@ -101,7 +102,7 @@ public class ServletVendreArticle extends HttpServlet {
 		
 		String debutEnchereStr = request.getParameter("dateDebut");
 		String finEnchereStr = request.getParameter("dateFin");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date debutEnchere = null;
 		Date finEnchere = null;
 		try {
@@ -127,7 +128,13 @@ public class ServletVendreArticle extends HttpServlet {
 		
 		if(request.getAttribute("listeCodesErreur") != null)
 		{
-			
+			rd = request.getRequestDispatcher("/accueil");
+			rd.forward(request, response);
+		}
+		else
+		{
+			rd = request.getRequestDispatcher("/utilisateur/afficherArticle");
+			rd.forward(request, response);
 		}
 		
 		

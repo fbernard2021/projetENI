@@ -31,7 +31,7 @@
 					<form action="${pageContext.request.contextPath}/utilisateur/vendreArticle" method="post">
 					<div class="form-group">
 						<label for="nom">Article :</label>
-						<input type="text" class="form-control" id="nom" name="nom" required>
+						<input type="text" class="form-control" id="nom" name="article" required>
 					</div>
 					<div class="form-group">
 						<label for="description">Description :</label>
@@ -39,7 +39,7 @@
 					</div>
 					<div class="form-group">
 						<label for="categories">Catégories :</label>
-						<select class="form-control" id="categories" name="description">
+						<select class="form-control" id="categories" name="categories">
 						<c:forEach  items="${listeCategories}" var="liste">
 							<option value="${liste.getNomCategorie()}">${liste.getNomCategorie()}</option>
 						</c:forEach>
