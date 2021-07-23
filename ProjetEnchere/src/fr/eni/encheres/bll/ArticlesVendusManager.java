@@ -1,7 +1,7 @@
 package fr.eni.encheres.bll;
 
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +61,26 @@ public class ArticlesVendusManager {
 		
 		return liste;
 	}
+	public List<ArticlesVendus> selectionnerListeArticlesParCategorie(String nomCategorie) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		
+		List<ArticlesVendus> liste = new ArrayList<>();
+		
+		liste = articlesVendusDAO.selectListeParCategorie(nomCategorie);
+		
+
+		if(!exception.hasErreurs())
+		{
+		this.validerListe(liste, exception);
+		}
+		else
+		{
+			throw exception;
+		}
+		
+		return liste;
+	}
 	
 	public ArticlesVendus selectionnerunArticle(int numArticle) throws BusinessException
 	{
@@ -82,8 +102,8 @@ public class ArticlesVendusManager {
 		}
 	}
 	
-	public ArticlesVendus ajouterArticle(int numArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int prixInitial, int prixVente, int numUtilisateur, int numCategorie) throws BusinessException
+	public ArticlesVendus ajouterArticle(String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int prixInitial, int numUtilisateur, int numCategorie) throws BusinessException
 	{
 		BusinessException exception = new BusinessException();
 		
@@ -91,7 +111,7 @@ public class ArticlesVendusManager {
 		this.validerDescription(description, exception);
 		
 
-		ArticlesVendus article = new ArticlesVendus(numArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, prixVente, numUtilisateur, numCategorie);
+		ArticlesVendus article = new ArticlesVendus(nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, numUtilisateur, numCategorie);
 		
 		if(!exception.hasErreurs())
 		{

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticlesVendusManager;
+import fr.eni.encheres.bll.CategoriesManager;
 import fr.eni.encheres.bll.CodesResultatBLL;
 
 /**
@@ -25,9 +26,21 @@ public class ServletAccueil extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		List<Integer> listeCodesErreur=new ArrayList<>();
 		ArticlesVendusManager articles = new ArticlesVendusManager();
+		CategoriesManager categories = new CategoriesManager();
+		
+		try
+		{
+			request.setAttribute("categories", categories.selectionnerCategories());
+		}
+		catch (BusinessException e)
+		{
+			listeCodesErreur.add(CodesResultatBLL.LISTE_CATEGORIES_NULL);
+            request.setAttribute("listeCodesErreur", listeCodesErreur);
+		}
 		
 		try
 		{
@@ -35,7 +48,7 @@ public class ServletAccueil extends HttpServlet {
 		}
 		catch (BusinessException e)
 		{
-			listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_VENDUS_NULL);
+			listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_ACCUEIl_NULL);
             request.setAttribute("listeCodesErreur", listeCodesErreur);
 		}
 		
@@ -46,9 +59,23 @@ public class ServletAccueil extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		List<Integer> listeCodesErreur=new ArrayList<>();
+		ArticlesVendusManager articlesParCategorie = new ArticlesVendusManager();
+		
+		try
+		{
+			String nomCategorie = request.getParameter("nomCategorie");
+			request.setAttribute("articles", articlesParCategorie.selectionnerListeArticlesParCategorie(nomCategorie));
+		}
+		catch (BusinessException e)
+		{
+			listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_CATEGORIE_NULL);
+            request.setAttribute("listeCodesErreur", listeCodesErreur);
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+		rd.forward(request, response);
 	}
 
 }
