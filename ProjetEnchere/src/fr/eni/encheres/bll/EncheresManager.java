@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.encheres.BusinessException;
+import fr.eni.encheres.bo.ArticlesVendus;
 import fr.eni.encheres.bo.Encheres;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.EncheresDAO;
@@ -39,11 +40,44 @@ public class EncheresManager {
 		
 	}
 	
+	
+	public Encheres selectionnerDerniereEnchere(ArticlesVendus article) throws BusinessException
+	{
+		Encheres enchere = null;
+		BusinessException exception = new BusinessException();		
+		enchere = encheresDAO.selectLastEnchere(article.getNumArticle());
+		
+		if(enchere != null)
+		{
+			this.validerMontant(enchere, article, exception);
+		}
+		
+		if(!exception.hasErreurs())
+		{
+			return enchere;
+		}
+		else
+		{
+			throw exception;
+		}
+		
+		
+	}
+	
 	private void validerListe(List<Encheres> liste, BusinessException exception)
 	{
 		if(liste == null)
 		{
 			exception.ajouterErreur(CodesResultatBLL.LISTE_ENCHERES_NULL);
+		}
+		
+	}
+	
+	private void validerMontant(Encheres enchere, ArticlesVendus article, BusinessException exception)
+	{
+		if(enchere.getMontantEnchere() <= article.getPrixInitial())
+		{
+			exception.ajouterErreur(CodesResultatBLL.ERREUR_PRIX_NON_VALIDE);
 		}
 		
 	}

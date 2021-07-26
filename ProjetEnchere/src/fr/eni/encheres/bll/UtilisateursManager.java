@@ -91,6 +91,46 @@ public class UtilisateursManager {
 		}
 	}
 	
+	
+	public Utilisateurs selectionnerUtilisateur(int id) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		
+		Utilisateurs utilisateur = null;
+		
+		utilisateur = utilisateursDAO.selectById(id);
+		
+		this.validerUtilisateur(utilisateur, exception);
+		
+		if(exception.hasErreurs())
+		{
+			throw exception;
+		}
+		else
+		{
+			return utilisateur;
+		}
+	}
+	
+	public String selectionnerPseudo(int id) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		
+		String pseudo = utilisateursDAO.selectPseudoById(id) ;
+		
+		this.validerPseudo(pseudo, exception);
+		
+		if(!exception.hasErreurs())
+		{
+		return pseudo;
+		}
+		else
+		{
+			throw exception;
+		}
+		
+	}
+	
 	public Utilisateurs connexion(String pseudo, String motDePasse) throws BusinessException, NoSuchAlgorithmException
 	{
 		BusinessException exception = new BusinessException();
@@ -167,6 +207,22 @@ public class UtilisateursManager {
 		if(!exception.hasErreurs())
 		{
 			utilisateursDAO.deleteUser(utilisateur, sb.toString());
+		}
+		else
+		{
+			throw exception;
+		}
+	}
+	
+	public void modifierCredit(Utilisateurs utilisateur) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		
+		this.validerCredit(utilisateur.getCredit(), exception);
+		
+		if(!exception.hasErreurs())
+		{
+			utilisateursDAO.updateCredit(utilisateur);
 		}
 		else
 		{

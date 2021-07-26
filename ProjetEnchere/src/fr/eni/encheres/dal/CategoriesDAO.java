@@ -8,5 +8,6 @@ public interface CategoriesDAO {
 	
 	public List<Categories> selectAll();
 	public int selectNumCategorie(String libelle);
+	public String selectNomCategorie(int num);
 
 }

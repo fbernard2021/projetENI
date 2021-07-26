@@ -14,6 +14,7 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 	
 	private static final String selectAll = "SELECT libelle FROM CATEGORIES;";
 	private static final String selectNumCategorie = "SELECT no_categorie FROM CATEGORIES WHERE libelle = ? ;";
+	private static final String selectNomCategorie = "SELECT libelle FROM CATEGORIES WHERE no_categorie = ? ;";
 
 	@Override
 	public List<Categories> selectAll() {
@@ -58,6 +59,29 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 		}
 		
 		return num;
+	}
+
+	@Override
+	public String selectNomCategorie(int num) {
+		String nom = null;
+		
+		try(Connection cnx = ConnectionProvider.getConnection()) 
+		{
+			PreparedStatement pstmt = cnx.prepareStatement(selectNomCategorie);
+			pstmt.setInt(1, num);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				nom = rs.getString(1);
+			}
+		
+		}catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		
+		return nom;
 	}
 
 }

@@ -40,4 +40,7 @@ public abstract class CodesResultatBLL {
 
 
 	public static final int NUM_ARTICLE_INTROUVABLE = 20015;
+
+
+	public static final int ERREUR_PRIX_NON_VALIDE = 20016;
 }

@@ -14,15 +14,42 @@ public class ArticlesVendus {
 	private int numCategorie;
 	private String pseudo;
 	
-	public ArticlesVendus(String nomArticle, String description, Date dateDebutEnchere,
+//	 nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie 
+	
+	public ArticlesVendus(int numArticle, String nomArticle, String description, Date dateDebutEnchere,
 			Date dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
+	{
+		this.numArticle = numArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEnchere = dateDebutEnchere;
+		this.dateFinEnchere = dateFinEnchere;
+		this.prixInitial = prixInitial;
+		this.numUtilisateur = numUtilisateur;
+		this.numCategorie = numCategorie;
+	}
+	
+	public ArticlesVendus( String nomArticle, String description, Date dateDebutEnchere,
+			Date dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
+	{
+		this.numArticle = numArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEnchere = dateDebutEnchere;
+		this.dateFinEnchere = dateFinEnchere;
+		this.prixInitial = prixInitial;
+		this.numUtilisateur = numUtilisateur;
+		this.numCategorie = numCategorie;
+	}
+	
+	public ArticlesVendus(String nomArticle, String description, Date dateDebutEnchere,
+			Date dateFinEnchere, int prixInitial, int prixVente, int numUtilisateur, int numCategorie)
 	{
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEnchere = dateDebutEnchere;
 		this.dateFinEnchere = dateFinEnchere;
 		this.prixInitial = prixInitial;
-		this.prixVente = prixInitial;;
 		this.numUtilisateur = numUtilisateur;
 		this.numCategorie = numCategorie;
 	}

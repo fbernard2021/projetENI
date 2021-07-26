@@ -11,11 +11,10 @@ import java.util.List;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.ArticlesVendus;
-import fr.eni.encheres.bo.Encheres;
-import fr.eni.encheres.bo.Utilisateurs;
+
 
 public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
-	private static final String selectAll = "SELECT nom_article, description, date_debut_encheres,"
+	private static final String selectAll = "SELECT no_article, nom_article, description, date_debut_encheres,"
 			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie FROM Articles_Vendus;";
 
 	private static final String selectAccueil = "SELECT no_article, nom_article, description, date_fin_encheres,"
@@ -29,7 +28,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			+ " WHERE c.libelle=?;";
 	
 	private static final String selectById = "SELECT no_article, nom_article, description, date_debut_encheres,"
-			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie"
+			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie "
 			+ " FROM Articles_Vendus WHERE no_article=?;";
 	
 	private static final String insertArticle = "INSERT INTO ARTICLES_VENDUS "
@@ -46,8 +45,8 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			
 			while(rs.next())
 			{
-				donneesArticles.add(new ArticlesVendus(rs.getString(1), rs.getString(2),
-						rs.getDate(3), rs.getDate(4),rs.getInt(5), rs.getInt(6), rs.getInt(7)));
+				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
+						rs.getDate(4), rs.getDate(5),rs.getInt(6), rs.getInt(7), rs.getInt(8)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,8 +106,11 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 
 			while(rs.next())
 			{
-				unArticle = new ArticlesVendus(rs.getString(1), rs.getString(2),
-						rs.getDate(3), rs.getDate(4),rs.getInt(5), rs.getInt(6), rs.getInt(7));
+				
+			
+				
+				unArticle = new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
+						rs.getDate(4), rs.getDate(5),rs.getInt(6), rs.getInt(7), rs.getInt(8));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

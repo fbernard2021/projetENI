@@ -60,6 +60,29 @@ public class CategoriesManager {
 		
 	}
 	
+	public String selectionnerNomCategorie(int num) throws BusinessException
+	{
+		
+		BusinessException exception = new BusinessException();
+		String nom;
+		
+		
+		nom = categoriesDAO.selectNomCategorie(num);
+		
+		this.verifierNom(nom, exception);
+		
+		if(!exception.hasErreurs())
+		{
+			return nom;
+		}
+		else
+		{
+			throw exception;
+		}
+		
+		
+	}
+	
 	
 	private void verifierListe(List<Categories> listeCategories, BusinessException exception)
 	{

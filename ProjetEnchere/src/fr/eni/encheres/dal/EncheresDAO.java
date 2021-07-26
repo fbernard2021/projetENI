@@ -6,4 +6,5 @@ import fr.eni.encheres.bo.Encheres;
 
 public interface EncheresDAO {
 	public List<Encheres> selectAll();
+	public Encheres selectLastEnchere(int numArticle);
 }

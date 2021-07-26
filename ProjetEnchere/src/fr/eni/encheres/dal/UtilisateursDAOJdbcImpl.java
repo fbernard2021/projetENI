@@ -21,7 +21,10 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	
 	
 	private static final String selectByPseudo = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM UTILISATEURS WHERE pseudo = ?;";
+	
+	private static final String selectByid = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM UTILISATEURS WHERE no_utilisateur = ?;";
 
+	private static final String selectPseudoByid = "SELECT pseudo FROM UTILISATEURS WHERE no_utilisateur = ?;";
 	
 	private static final String confirmConnection = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ? OR email = ? AND mot_de_passe = ? ;";
 	
@@ -35,6 +38,9 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 	private static final String alterUser = "UPDATE UTILISATEURS "
 			  							  + "SET pseudo = ? , nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? "
 			  							  + "WHERE pseudo = ? AND mot_de_passe = ? ;";
+	
+	private static final String updateCredit = "UPDATE UTILISATEURS SET credit = ? WHERE pseudo = ? ;";
+			
 	
 	private static final String deleteUser = "DELETE FROM UTILISATEURS where pseudo = ? AND mot_de_passe = ? ;";
 	
@@ -251,6 +257,69 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			BusinessException businessException = new BusinessException();
 			businessException.ajouterErreur(CodesResultatDAL.ERREUR_DELETE_USER);
 			throw businessException;
+		}
+		
+	}
+
+
+	@Override
+	public Utilisateurs selectById(int id) {
+		Utilisateurs donnee = null;
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			PreparedStatement pstmt = cnx.prepareStatement(selectByid);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+
+			while(rs.next())
+			{
+				donnee = new Utilisateurs(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),
+							rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getInt(10));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return donnee;
+	}
+
+
+	public String selectPseudoById(int id) {
+		String donnee = null;
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			PreparedStatement pstmt = cnx.prepareStatement(selectByid);
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+
+			while(rs.next())
+			{
+				donnee = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return donnee;
+	}
+
+
+	@Override
+	public void updateCredit(Utilisateurs utilisateur) {
+		
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			PreparedStatement pstmt = cnx.prepareStatement(updateCredit);
+			pstmt.setInt(1, utilisateur.getCredit());
+			pstmt.setString(2, utilisateur.getPseudo());
+			ResultSet rs = pstmt.executeQuery();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}

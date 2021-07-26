@@ -13,6 +13,8 @@ import fr.eni.encheres.bo.Encheres;
 public class EncheresDAOJdbcImpl implements EncheresDAO {
 	
 	private static final String selectAll = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM Encheres;";
+	private static final String selectLastEnchere = "SELECT TOP 1 no_utilisateur, no_article, date_enchere, montant_enchere FROM Encheres "
+			+ "ORDER BY date_enchere DESC";
 
 	@Override
 	public List<Encheres> selectAll() {
@@ -32,5 +34,27 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		}
 		return donneesEncheres;
 	}
+
+	public Encheres selectLastEnchere(int numArticle) {
+		Encheres enchere = null;
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			PreparedStatement pstmt = cnx.prepareStatement(selectLastEnchere);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				enchere = new Encheres(rs.getInt(0), rs.getInt(1), rs.getDate(2), rs.getInt(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return enchere;
+	}
+
+
 
 }
