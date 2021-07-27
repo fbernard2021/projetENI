@@ -14,12 +14,12 @@ import fr.eni.encheres.bo.Encheres;
 public class EncheresDAOJdbcImpl implements EncheresDAO {
 	
 	private static final String selectAll = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES;";
-	private static final String selectLastEnchere = "SELECT TOP 1 no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES "
+	private static final String selectLastEnchere = "SELECT TOP 1 no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES WHERE no_article = ? "
 			+ "ORDER BY date_enchere DESC ;";
-	private static final String insert = "INSERT INTO ENCHERES VALUES (?, ?, GETDATE(), ?);";
+	private static final String insert = "INSERT INTO ENCHERES VALUES (?, ?, ?, ?);";
 	private static final String selectByID = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere  FROM ENCHERES WHERE no_utilisateur = ? "
 			+ "AND no_article = ? ;"; 
-	private static final String updateEnchere = "UPDATE ENCHERES SET date_enchere = GETDATE() , montant_enchere = ? WHERE no_utilisateur = ? AND "
+	private static final String updateEnchere = "UPDATE ENCHERES SET date_enchere = ? , montant_enchere = ? WHERE no_utilisateur = ? AND "
 			+ "no_article = ? ;";
 
 	@Override
@@ -32,7 +32,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
-				donneesEncheres.add(new Encheres(rs.getInt(0), rs.getInt(1), rs.getDate(2), rs.getInt(3)));
+				donneesEncheres.add(new Encheres(rs.getInt(0), rs.getInt(1), rs.getDate(2).toLocalDate(), rs.getInt(3)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -47,10 +47,11 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		{
 			
 			PreparedStatement pstmt = cnx.prepareStatement(selectLastEnchere);
+			pstmt.setInt(1, numArticle);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
-				enchere = new Encheres(rs.getInt(1), rs.getInt(2), rs.getDate(3), rs.getInt(4));
+				enchere = new Encheres(rs.getInt(1), rs.getInt(2), rs.getDate(3).toLocalDate(), rs.getInt(4));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -70,7 +71,8 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(insert);
 			pstmt.setInt(1, enchere.getNumUtilisateur());
 			pstmt.setInt(2, enchere.getNumArticle());
-			pstmt.setInt(3, enchere.getMontantEnchere());
+			pstmt.setDate(3,Date.valueOf(enchere.getDateEnchere()));
+			pstmt.setInt(4, enchere.getMontantEnchere());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -92,7 +94,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
-				enchere1 = new Encheres(rs.getInt(1),rs.getInt(2),rs.getDate(3), rs.getInt(4));
+				enchere1 = new Encheres(rs.getInt(1),rs.getInt(2),rs.getDate(3).toLocalDate(), rs.getInt(4));
 			}
 			
 		} catch (SQLException e) {
@@ -109,9 +111,10 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		{
 			
 			PreparedStatement pstmt = cnx.prepareStatement(updateEnchere);
-			pstmt.setInt(1, enchere.getMontantEnchere());
-			pstmt.setInt(2, enchere.getNumUtilisateur());
-			pstmt.setInt(3, enchere.getNumArticle());
+			pstmt.setDate(1, Date.valueOf(enchere.getDateEnchere()));
+			pstmt.setInt(2, enchere.getMontantEnchere());
+			pstmt.setInt(3, enchere.getNumUtilisateur());
+			pstmt.setInt(4, enchere.getNumArticle());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {

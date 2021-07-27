@@ -1,6 +1,7 @@
 package fr.eni.encheres.servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -115,7 +116,7 @@ public class ServletAfficherArticle extends HttpServlet {
 		String pseudoMeilleureOffre = null;
 		Utilisateurs utilisateurMeilleureOffre = null;
 		Encheres nouvelEnchere = null;
-		Date date = new Date();
+		LocalDate date = LocalDate.now();
 		
 		UtilisateursManager utilisateurManager = new UtilisateursManager();
 		EncheresManager enchereManager = new EncheresManager();

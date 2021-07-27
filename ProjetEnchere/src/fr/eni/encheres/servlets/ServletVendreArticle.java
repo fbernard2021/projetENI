@@ -3,6 +3,8 @@ package fr.eni.encheres.servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,19 +102,9 @@ public class ServletVendreArticle extends HttpServlet {
 		
 		Retraits retrait = new Retraits(rue, codePostal, ville);
 		
-		String debutEnchereStr = request.getParameter("dateDebut");
-		String finEnchereStr = request.getParameter("dateFin");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date debutEnchere = null;
-		Date finEnchere = null;
-		try {
-			debutEnchere = sdf.parse(debutEnchereStr);
-			finEnchere = sdf.parse(finEnchereStr);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesResultatServlets.ERREUR_FORMAT_DATE);
-			request.setAttribute("listeCodesErreur", listeCodesErreur);
-		}
+
+		LocalDate debutEnchere = LocalDate.parse(request.getParameter("dateDebut"));
+		LocalDate finEnchere = LocalDate.parse(request.getParameter("dateFin"));
 		
 		try {
 			int numCategorie = categoriesManager.selectionnerNumeroCategorie(categorie);

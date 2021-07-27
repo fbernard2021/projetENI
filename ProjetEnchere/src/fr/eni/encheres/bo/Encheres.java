@@ -1,14 +1,15 @@
 package fr.eni.encheres.bo;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Encheres {
 	private int numUtilisateur;
 	private int numArticle;
-	private Date dateEnchere;
+	private LocalDate dateEnchere;
 	private int montantEnchere;
 	
-	public Encheres(int numUtilisateur, int numArticle, Date dateEnchere, int montantEnchere)
+	public Encheres(int numUtilisateur, int numArticle, LocalDate dateEnchere, int montantEnchere)
 	{
 		this.numUtilisateur = numUtilisateur;
 		this.numArticle = numArticle;
@@ -34,11 +35,11 @@ public class Encheres {
 		this.numArticle = numArticle;
 	}
 
-	public Date getDateEnchere()
+	public LocalDate getDateEnchere()
 	{
 		return dateEnchere;
 	}
-	public void setDateEnchere(Date dateEnchere)
+	public void setDateEnchere(LocalDate dateEnchere)
 	{
 		this.dateEnchere = dateEnchere;
 	}

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4), rs.getDate(5),rs.getInt(6), rs.getInt(7), rs.getInt(8)));
+						rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), rs.getInt(8)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -76,7 +77,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4),rs.getInt(5), rs.getString(6)));
+						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -96,7 +97,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4),rs.getInt(5), rs.getString(6)));
+						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -121,7 +122,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			
 				
 				unArticle = new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4), rs.getDate(5),rs.getInt(6), rs.getInt(7), rs.getInt(8));
+						rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), rs.getInt(8));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -142,7 +143,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4),rs.getInt(5), rs.getString(6)));
+						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -162,7 +163,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4),rs.getInt(5), rs.getString(6)));
+						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getString(6)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -184,11 +185,8 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			PreparedStatement pstmt = cnx.prepareStatement(insertArticle, PreparedStatement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, article.getNomArticle());
 			pstmt.setString(2,article.getDescription());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String dateDebutStr = sdf.format(article.getDateDebutEnchere());
-			String dateFinStr = sdf.format(article.getDateFinEnchere());
-			pstmt.setDate(3,  Date.valueOf(dateDebutStr));
-			pstmt.setDate(4, Date.valueOf(dateFinStr));
+			pstmt.setDate(3, Date.valueOf(article.getDateDebutEnchere()));
+			pstmt.setDate(4, Date.valueOf(article.getDateFinEnchere()));
 			pstmt.setInt(5, article.getPrixInitial());
 			pstmt.setInt(6, article.getPrixVente());
 			pstmt.setInt(7, article.getNumUtilisateur());

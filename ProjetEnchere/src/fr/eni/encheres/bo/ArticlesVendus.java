@@ -1,13 +1,14 @@
 package fr.eni.encheres.bo;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ArticlesVendus {
 	private int numArticle;
 	private String nomArticle;
 	private String description;
-	private Date dateDebutEnchere;
-	private Date dateFinEnchere;
+	private LocalDate dateDebutEnchere;
+	private LocalDate dateFinEnchere;
 	private int prixInitial;
 	private int prixVente;
 	private int numUtilisateur;
@@ -16,8 +17,8 @@ public class ArticlesVendus {
 	
 //	 nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie 
 	
-	public ArticlesVendus(int numArticle, String nomArticle, String description, Date dateDebutEnchere,
-			Date dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
+	public ArticlesVendus(int numArticle, String nomArticle, String description, LocalDate dateDebutEnchere,
+			LocalDate dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
 	{
 		this.numArticle = numArticle;
 		this.nomArticle = nomArticle;
@@ -29,8 +30,8 @@ public class ArticlesVendus {
 		this.numCategorie = numCategorie;
 	}
 	
-	public ArticlesVendus( String nomArticle, String description, Date dateDebutEnchere,
-			Date dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
+	public ArticlesVendus( String nomArticle, String description, LocalDate dateDebutEnchere,
+			LocalDate dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
 	{
 
 		this.nomArticle = nomArticle;
@@ -42,8 +43,8 @@ public class ArticlesVendus {
 		this.numCategorie = numCategorie;
 	}
 	
-	public ArticlesVendus(String nomArticle, String description, Date dateDebutEnchere,
-			Date dateFinEnchere, int prixInitial, int prixVente, int numUtilisateur, int numCategorie)
+	public ArticlesVendus(String nomArticle, String description, LocalDate dateDebutEnchere,
+			LocalDate dateFinEnchere, int prixInitial, int prixVente, int numUtilisateur, int numCategorie)
 	{
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -54,7 +55,7 @@ public class ArticlesVendus {
 		this.numCategorie = numCategorie;
 	}
 	
-	public ArticlesVendus(int numArticle, String nomArticle, String description, Date dateFinEnchere,
+	public ArticlesVendus(int numArticle, String nomArticle, String description, LocalDate dateFinEnchere,
 			 int prixVente,String pseudo)
 	{
 		this.numArticle = numArticle;
@@ -92,20 +93,20 @@ public class ArticlesVendus {
 		this.description = description;
 	}
 
-	public Date getDateDebutEnchere()
+	public LocalDate getDateDebutEnchere()
 	{
 		return dateDebutEnchere;
 	}
-	public void setDateDebutEnchere(Date dateDebutEnchere)
+	public void setDateDebutEnchere(LocalDate dateDebutEnchere)
 	{
 		this.dateDebutEnchere = dateDebutEnchere;
 	}
 
-	public Date getDateFinEnchere()
+	public LocalDate getDateFinEnchere()
 	{
 		return dateFinEnchere;
 	}
-	public void setDateFinEnchere(Date dateFinEnchere)
+	public void setDateFinEnchere(LocalDate dateFinEnchere)
 	{
 		this.dateFinEnchere = dateFinEnchere;
 	}

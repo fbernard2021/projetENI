@@ -36,59 +36,59 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-8 offset-2">
-				<p>Article : ${articleVendu.getNomArticle()}</p>
+				<p>Article : ${articleVendu.nomArticle}</p>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-8 offset-2">
-				<p>Description : ${articleVendu.getDescription()}</p>
+				<p>Description : ${articleVendu.description}</p>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-8 offset-2">
-				<p>Catégories : ${articleVendu.getNumCategorie()}</p>
+				<p>Catégories : ${nomCategorie}</p>
 			</div>
 		</div>
 		<c:if test="${!empty enchere}">
-		<input type="hidden" name="meilleureOffre" value="<c:out value='${enchere.getMontantEnchere()}' />" />
+		<input type="hidden" name="meilleureOffre" value="<c:out value='${enchere.montantEnchere}' />" />
 		<input type="hidden" name="pseudoMeilleureOffre" value="<c:out value='${pseudoMeilleureOffre}' />" />
 		<div class="row justify-content-center">
 			<div class="col-8 offset-2">
-				<p>Meilleur offre par ${pseudoMeilleureOffre} : ${enchere.getMontantEnchere()}</p>
+				<p>Meilleur offre par ${pseudoMeilleureOffre} : ${enchere.montantEnchere}</p>
 			</div>
 		</div>
 		</c:if>
 		<div class="row justify-content-center">
 			<div class="col-8 offset-2">
-				<p>Mise à prix : ${articleVendu.getPrixInitial()}</p>
+				<p>Mise à prix : ${articleVendu.prixInitial}</p>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-8 offset-2">
-				<p>Début de l'enchère : ${articleVendu.getDateDebutEnchere()}</p>
+				<p>Début de l'enchère : ${articleVendu.dateDebutEnchere}</p>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-8 offset-2">
-				<p>Fin de l'enchère : ${articleVendu.getDateFinEnchere()}</p>
+				<p>Fin de l'enchère : ${articleVendu.dateFinEnchere}</p>
 			</div>
 		</div>
 		<div class="row justify-content-center">
 			<div class="col-8 offset-2">
-				<p>Adresse : ${retrait.getRue()} ${retrait.getCodePostal()} ${retrait.getVille()}</p>
+				<p>Adresse : ${retrait.rue} ${retrait.codePostal} ${retrait.ville}</p>
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="prix">Ma proposition :</label>
 			<c:if test="${!empty enchere}">
-			<input type="number" id="prix" name="offre" min="${enchere.getMontantEnchere()+1}"  required>
+			<input type="number" id="prix" name="offre" min="${enchere.montantEnchere+1}"  required>
 			</c:if>
 			<c:if test="${empty enchere}">
-			<input type="number" id="prix" name="offre" min="${articleVendu.getPrixInitial()+1}"  required>
+			<input type="number" id="prix" name="offre" min="${articleVendu.prixInitial+1}"  required>
 			</c:if>
 		</div>
-		<input type="hidden" name="id" value="<c:out value='${articleVendu.getNumArticle()}' />" />
+		<input type="hidden" name="id" value="<c:out value='${articleVendu.numArticle}' />" />
 		
 		<button type="submit" class="btn btn-default">Enchérir</button>
 		

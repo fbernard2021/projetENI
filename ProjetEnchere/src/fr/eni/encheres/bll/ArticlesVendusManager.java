@@ -1,6 +1,7 @@
 package fr.eni.encheres.bll;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,8 +135,8 @@ public class ArticlesVendusManager {
 		}
 	}
 	
-	public ArticlesVendus ajouterArticle(String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int prixInitial, int numUtilisateur, int numCategorie) throws BusinessException
+	public ArticlesVendus ajouterArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, int prixInitial, int numUtilisateur, int numCategorie) throws BusinessException
 	{
 		BusinessException exception = new BusinessException();
 		
