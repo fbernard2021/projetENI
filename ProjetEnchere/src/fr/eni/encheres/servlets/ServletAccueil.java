@@ -103,7 +103,7 @@ public class ServletAccueil extends HttpServlet {
 		else
 		{
 			// JUSTE CATEGORIE
-			if(request.getParameter("recherche") == null)
+			if(request.getParameter("recherche") == "")
 			{
 				try
 				{
