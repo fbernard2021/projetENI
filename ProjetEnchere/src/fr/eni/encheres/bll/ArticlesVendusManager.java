@@ -31,14 +31,12 @@ public class ArticlesVendusManager {
 
 		if(!exception.hasErreurs())
 		{
-		this.validerListe(liste, exception);
+			return liste;
 		}
 		else
 		{
 			throw exception;
 		}
-		
-		return liste;
 	}
 	
 	public List<ArticlesVendus> selectionnerListeArticlesAccueil() throws BusinessException
@@ -52,14 +50,12 @@ public class ArticlesVendusManager {
 
 		if(!exception.hasErreurs())
 		{
-		this.validerListe(liste, exception);
+			return liste;
 		}
 		else
 		{
 			throw exception;
 		}
-		
-		return liste;
 	}
 	public List<ArticlesVendus> selectionnerListeArticlesParCategorie(String nomCategorie) throws BusinessException
 	{
@@ -72,14 +68,12 @@ public class ArticlesVendusManager {
 
 		if(!exception.hasErreurs())
 		{
-		this.validerListe(liste, exception);
+			return liste;
 		}
 		else
 		{
 			throw exception;
 		}
-		
-		return liste;
 	}
 	
 	public ArticlesVendus selectionnerunArticle(int numArticle) throws BusinessException
@@ -113,14 +107,12 @@ public class ArticlesVendusManager {
 
 		if(!exception.hasErreurs())
 		{
-		this.validerListe(liste, exception);
+			return liste;
 		}
 		else
 		{
 			throw exception;
 		}
-		
-		return liste;
 	}
 	
 	public List<ArticlesVendus> rechercherArticlesSansCategorie(String recherche) throws BusinessException
@@ -130,18 +122,16 @@ public class ArticlesVendusManager {
 		List<ArticlesVendus> liste = new ArrayList<>();
 		
 		liste = articlesVendusDAO.rechercherArticlesSansCategorie(recherche);
-		
+		this.validerListe(liste, exception);
 
 		if(!exception.hasErreurs())
 		{
-		this.validerListe(liste, exception);
+			return liste;
 		}
 		else
 		{
 			throw exception;
 		}
-		
-		return liste;
 	}
 	
 	public ArticlesVendus ajouterArticle(String nomArticle, String description, Date dateDebutEncheres,
@@ -193,7 +183,7 @@ public class ArticlesVendusManager {
 	
 	private void validerListe(List<ArticlesVendus> liste, BusinessException exception)
 	{
-		if(liste == null)
+		if(liste == null || liste.isEmpty())
 		{
 			exception.ajouterErreur(CodesResultatBLL.LISTE_ARTICLES_VENDUS_NULL);
 		}
