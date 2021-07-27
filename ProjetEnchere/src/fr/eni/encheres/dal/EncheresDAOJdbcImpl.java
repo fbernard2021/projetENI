@@ -19,7 +19,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	private static final String insert = "INSERT INTO ENCHERES VALUES (?, ?, GETDATE(), ?);";
 	private static final String selectByID = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere  FROM ENCHERES WHERE no_utilisateur = ? "
 			+ "AND no_article = ? ;"; 
-	private static final String updateEnchere = "UPDATE ENCHERES SET date_enchere = ? AND montant_enchere = ? WHERE no_utilisateur = ? AND "
+	private static final String updateEnchere = "UPDATE ENCHERES SET date_enchere = GETDATE() , montant_enchere = ? WHERE no_utilisateur = ? AND "
 			+ "no_article = ? ;";
 
 	@Override
@@ -109,10 +109,9 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		{
 			
 			PreparedStatement pstmt = cnx.prepareStatement(updateEnchere);
-			pstmt.setDate(1, (Date) enchere.getDateEnchere());
-			pstmt.setInt(2, enchere.getMontantEnchere());
-			pstmt.setInt(3, enchere.getNumUtilisateur());
-			pstmt.setInt(4, enchere.getNumArticle());
+			pstmt.setInt(1, enchere.getMontantEnchere());
+			pstmt.setInt(2, enchere.getNumUtilisateur());
+			pstmt.setInt(3, enchere.getNumArticle());
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {

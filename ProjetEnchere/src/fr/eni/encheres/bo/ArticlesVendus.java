@@ -32,7 +32,7 @@ public class ArticlesVendus {
 	public ArticlesVendus( String nomArticle, String description, Date dateDebutEnchere,
 			Date dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
 	{
-		this.numArticle = numArticle;
+
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEnchere = dateDebutEnchere;

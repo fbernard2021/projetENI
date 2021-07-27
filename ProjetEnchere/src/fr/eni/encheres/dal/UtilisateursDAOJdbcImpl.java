@@ -315,7 +315,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(updateCredit);
 			pstmt.setInt(1, utilisateur.getCredit());
 			pstmt.setString(2, utilisateur.getPseudo());
-			ResultSet rs = pstmt.executeQuery();
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

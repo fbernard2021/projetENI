@@ -92,16 +92,10 @@ public class ServletAfficherArticle extends HttpServlet {
 			}
 		}
 
-		if(request.getAttribute("listeCodesErreur") != null)
-		{
-			rd = request.getRequestDispatcher("/accueil");
-			rd.forward(request, response);
-		}
-		else
-		{
+
 			rd = request.getRequestDispatcher("/WEB-INF/utilisateur/afficherArticle.jsp");
 			rd.forward(request, response);
-		}
+		
 		
 	}
 
@@ -154,7 +148,7 @@ public class ServletAfficherArticle extends HttpServlet {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}
 		
-		
+		doGet(request, response);
 	}
 
 }
