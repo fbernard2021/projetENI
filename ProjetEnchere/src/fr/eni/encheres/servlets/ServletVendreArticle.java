@@ -133,8 +133,7 @@ public class ServletVendreArticle extends HttpServlet {
 		}
 		else
 		{
-			rd = request.getRequestDispatcher("/utilisateur/afficherArticle?id="+articleVendu.getNumArticle());
-			rd.forward(request, response);
+			response.sendRedirect(request.getContextPath()+"/utilisateur/afficherArticle?id="+articleVendu.getNumArticle());
 		}
 		
 		
