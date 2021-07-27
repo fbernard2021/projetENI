@@ -43,4 +43,7 @@ public abstract class CodesResultatBLL {
 
 
 	public static final int ERREUR_PRIX_NON_VALIDE = 20016;
+
+
+	public static final int ERREUR_ENCHERES_NULL = 20017;
 }

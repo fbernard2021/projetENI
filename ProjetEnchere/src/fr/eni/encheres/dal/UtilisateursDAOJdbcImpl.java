@@ -290,7 +290,7 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			
-			PreparedStatement pstmt = cnx.prepareStatement(selectByid);
+			PreparedStatement pstmt = cnx.prepareStatement(selectPseudoByid);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 

@@ -2,6 +2,7 @@ package fr.eni.encheres.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bll.ArticlesVendusManager;
@@ -108,18 +110,26 @@ public class ServletAfficherArticle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int offre = (int) request.getAttribute("offre");
-		int articleId = (int) request.getAttribute("id");
+		
+		HttpSession session = request.getSession();
+		Utilisateurs utilisateurTemp = (Utilisateurs) session.getAttribute("utilisateur");
+		Utilisateurs utilisateur = new Utilisateurs();
+		utilisateur.clone(utilisateurTemp);
+		int offre = Integer.parseInt(request.getParameter("offre"));
+		int articleId = Integer.parseInt(request.getParameter("id"));
 		int meilleureOffre;
 		String pseudoMeilleureOffre = null;
 		Utilisateurs utilisateurMeilleureOffre = null;
+		Encheres nouvelEnchere = null;
+		Date date = new Date();
 		
 		UtilisateursManager utilisateurManager = new UtilisateursManager();
+		EncheresManager enchereManager = new EncheresManager();
 		
-		if(request.getAttribute("meilleureOffre") != null)
+		if(request.getParameter("meilleureOffre") != null)
 		{
-			meilleureOffre = (int) request.getAttribute("meilleureOffre");
-			pseudoMeilleureOffre = (String) request.getAttribute("pseudoMeilleureOffre");
+			meilleureOffre = Integer.parseInt(request.getParameter("meilleureOffre"));
+			pseudoMeilleureOffre = request.getParameter("pseudoMeilleureOffre");
 			try {
 				utilisateurMeilleureOffre = utilisateurManager.selectionnerUtilisateur(pseudoMeilleureOffre);
 				utilisateurMeilleureOffre.setCredit(utilisateurMeilleureOffre.getCredit()+ meilleureOffre);
@@ -131,6 +141,20 @@ public class ServletAfficherArticle extends HttpServlet {
 			}
 			
 		}
+		
+		utilisateur.setCredit(utilisateur.getCredit()-offre);
+		try {
+			utilisateurManager.modifierCredit(utilisateur);
+			nouvelEnchere = new Encheres(utilisateur.getNumUtilisateur(),articleId, date, offre);
+			enchereManager.insererEnchere(nouvelEnchere);
+			
+			
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+		}
+		
+		
 	}
 
 }

@@ -68,6 +68,7 @@ public class Utilisateurs {
 	
 	public void clone(Utilisateurs utilisateur)
 	{
+		this.numUtilisateur = utilisateur.getNumUtilisateur();
 		this.pseudo = utilisateur.getPseudo();
 		this.nom = utilisateur.getNom();
 		this.prenom = utilisateur.getPrenom();

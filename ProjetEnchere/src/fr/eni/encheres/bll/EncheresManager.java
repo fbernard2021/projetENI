@@ -64,6 +64,45 @@ public class EncheresManager {
 		
 	}
 	
+	public void insererEnchere(Encheres enchere) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		
+		Encheres encherePrecedente = null;
+		
+		this.validerEnchere(enchere, exception);
+		
+		encherePrecedente = encheresDAO.selectByID(enchere);
+		
+		
+		if(!exception.hasErreurs())
+		{
+			if(encherePrecedente == null)
+			{
+				encheresDAO.insert(enchere);
+			}
+			else
+			{
+				encheresDAO.updateEnchere(enchere);
+			}
+		}
+		else
+		{
+			throw exception;
+		}
+		
+		
+	}
+	
+	
+	private void validerEnchere(Encheres enchere, BusinessException exception)
+	{
+		if(enchere == null)
+		{
+			exception.ajouterErreur(CodesResultatBLL.ERREUR_ENCHERES_NULL);
+		}
+	}
+	
 	private void validerListe(List<Encheres> liste, BusinessException exception)
 	{
 		if(liste == null)

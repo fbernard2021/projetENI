@@ -82,7 +82,7 @@
 		<div class="form-group">
 			<label for="prix">Ma proposition :</label>
 			<c:if test="${!empty enchere}">
-			<input type="number" id="prix" name="offre" min="${enchere.getMontantEnchere()+1} "  required>
+			<input type="number" id="prix" name="offre" min="${enchere.getMontantEnchere()+1}"  required>
 			</c:if>
 			<c:if test="${empty enchere}">
 			<input type="number" id="prix" name="offre" min="${articleVendu.getPrixInitial()+1}"  required>

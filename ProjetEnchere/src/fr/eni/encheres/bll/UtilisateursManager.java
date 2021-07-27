@@ -116,6 +116,8 @@ public class UtilisateursManager {
 	{
 		BusinessException exception = new BusinessException();
 		
+		
+		
 		String pseudo = utilisateursDAO.selectPseudoById(id) ;
 		
 		this.validerPseudo(pseudo, exception);
