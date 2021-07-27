@@ -102,6 +102,48 @@ public class ArticlesVendusManager {
 		}
 	}
 	
+	public List<ArticlesVendus> rechercherArticlesAvecCategorie(String recherche, String nomCategorie) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		
+		List<ArticlesVendus> liste = new ArrayList<>();
+		
+		liste = articlesVendusDAO.rechercherArticlesParCategorie(recherche, nomCategorie);
+		
+
+		if(!exception.hasErreurs())
+		{
+		this.validerListe(liste, exception);
+		}
+		else
+		{
+			throw exception;
+		}
+		
+		return liste;
+	}
+	
+	public List<ArticlesVendus> rechercherArticlesSansCategorie(String recherche) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		
+		List<ArticlesVendus> liste = new ArrayList<>();
+		
+		liste = articlesVendusDAO.rechercherArticlesSansCategorie(recherche);
+		
+
+		if(!exception.hasErreurs())
+		{
+		this.validerListe(liste, exception);
+		}
+		else
+		{
+			throw exception;
+		}
+		
+		return liste;
+	}
+	
 	public ArticlesVendus ajouterArticle(String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int prixInitial, int numUtilisateur, int numCategorie) throws BusinessException
 	{

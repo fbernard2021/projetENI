@@ -50,7 +50,7 @@ public class ServletAccueil extends HttpServlet {
 		}
 		catch (BusinessException e)
 		{
-			listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_ACCUEIl_NULL);
+			listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_ACCUEIL_NULL);
             request.setAttribute("listeCodesErreur", listeCodesErreur);
 		}
 		
@@ -64,19 +64,73 @@ public class ServletAccueil extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		List<Integer> listeCodesErreur=new ArrayList<>();
-		ArticlesVendusManager articlesParCategorie = new ArticlesVendusManager();
+		ArticlesVendusManager articles = new ArticlesVendusManager();
 		CategoriesManager categories = new CategoriesManager();
 		
-		// on récupère la catégorie choisie et on l'utilise comme paramètre pour récup les articles concernés
-		try
+		// Si aucune catégorie n'est sélectionnée
+		if(request.getParameter("nomCategorie") == "toutesCategories")
 		{
-			String nomCategorie = request.getParameter("nomCategorie");
-			request.setAttribute("articles", articlesParCategorie.selectionnerListeArticlesParCategorie(nomCategorie));
+			// JUSTE RECHERCHE
+			if(request.getParameter("recherche") != null)
+			{
+				try
+				{
+					String recherche = request.getParameter("recherche");
+					request.setAttribute("articles", articles.rechercherArticlesSansCategorie(recherche));
+				}
+				catch (BusinessException e)
+				{
+					listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_RECHERCHE_SIMPLE_NULL);
+		            request.setAttribute("listeCodesErreur", listeCodesErreur);
+				}
+			}
+			// NI RECHERCHE NI CATEGORIE
+			else
+			{
+				try
+				{
+					request.setAttribute("articles", articles.selectionnerListeArticlesAccueil());
+				}
+				catch (BusinessException e)
+				{
+					listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_ACCUEIL_NULL);
+		            request.setAttribute("listeCodesErreur", listeCodesErreur);
+				}
+			}
 		}
-		catch (BusinessException e)
+		
+		// Si une catégorie est sélectionnée
+		else
 		{
-			listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_CATEGORIE_NULL);
-            request.setAttribute("listeCodesErreur", listeCodesErreur);
+			// JUSTE CATEGORIE
+			if(request.getParameter("recherche") == "")
+			{
+				try
+				{
+					String nomCategorie = request.getParameter("nomCategorie");
+					request.setAttribute("articles", articles.selectionnerListeArticlesParCategorie(nomCategorie));
+				}
+				catch (BusinessException e)
+				{
+					listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_CATEGORIE_NULL);
+		            request.setAttribute("listeCodesErreur", listeCodesErreur);
+				}
+			}
+			// RECHERCHE ET CATEGORIE
+			else
+			{
+				try
+				{
+					String recherche = request.getParameter("recherche");
+					String nomCategorie = request.getParameter("nomCategorie");
+					request.setAttribute("articles", articles.rechercherArticlesAvecCategorie(recherche, nomCategorie));
+				}
+				catch (BusinessException e)
+				{
+					listeCodesErreur.add(CodesResultatBLL.LISTE_ARTICLES_RECHERCHE_AVEC_CATEGORIE_NULL);
+			        request.setAttribute("listeCodesErreur", listeCodesErreur);
+				}
+			}
 		}
 
 		// on remet les catégorie dans le select

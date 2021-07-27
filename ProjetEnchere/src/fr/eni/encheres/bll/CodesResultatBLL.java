@@ -29,7 +29,7 @@ public abstract class CodesResultatBLL {
 
 	public static final int LISTE_CATEGORIES_NULL = 20010;
 	
-	public static final int LISTE_ARTICLES_ACCUEIl_NULL = 20011;
+	public static final int LISTE_ARTICLES_ACCUEIL_NULL = 20011;
 	
 	public static final int LISTE_ARTICLES_CATEGORIE_NULL = 20012;
 	
@@ -38,12 +38,15 @@ public abstract class CodesResultatBLL {
 
 	public static final int RETRAIT_NULL = 20014;
 
-
 	public static final int NUM_ARTICLE_INTROUVABLE = 20015;
-
 
 	public static final int ERREUR_PRIX_NON_VALIDE = 20016;
 
-
 	public static final int ERREUR_ENCHERES_NULL = 20017;
+	
+	public static final int LISTE_ARTICLES_RECHERCHE_SIMPLE_NULL = 20018;
+	
+	public static final int LISTE_ARTICLES_RECHERCHE_AVEC_CATEGORIE_NULL = 20019;
+	
+	
 }

@@ -10,12 +10,14 @@
 </head>
 <body>
 	<h1>Liste des enchères</h1>
-	<c:if test="${!empty articles}">
+	
 	
 		<form action="${pageContext.request.contextPath}/accueil" method="post">
 		 <div class="form-group">
+		 	<input class="form-control" id="recherche" name="recherche"/>
             <label for="categories">Catégories :</label>
             <select class="form-control" id="categories" name="nomCategorie">
+            	<option value="toutesCategories"><h4>Toutes les catégories</h4></option>
             	<c:forEach var="c" items="${categories}">
                 	<option value="${c.getNomCategorie()}"><h4>${c.getNomCategorie()}</h4></option>
                	</c:forEach>
@@ -23,14 +25,14 @@
             <button type="submit" class="btn btn-default">Rechercher</button>
         </div>
         </form>
-	
+	<c:if test="${!empty articles}">
 		<div class="container">
 			<% int compteur = 1; %>
 			<div class="row">
 			<c:forEach var="a" items="${articles}">
 				<div class="col">
 					<h3>${a.getNomArticle()}</h3>
-					<h4>Prix : ${a.getPrixVente()}</h4>
+					<h4>Prix : ${a.getPrixVente()} crédits</h4>
 					<h4>Fin de l'enchère : ${a.getDateFinEnchere()}</h4>
 					<h4>Vendeur : 
 					<a href="${pageContext.request.contextPath}/profil?pseudo=${a.getPseudo()}">
