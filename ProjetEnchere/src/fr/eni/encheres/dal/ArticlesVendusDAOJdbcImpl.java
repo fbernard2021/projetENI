@@ -31,12 +31,12 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			+ "prix_vente, pseudo FROM Articles_Vendus a"
 			+ " INNER JOIN Utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
 			+ " INNER JOIN Categories c ON a.no_categorie = c.no_categorie"
-			+ " WHERE c.libelle=? AND a.nom_article like %?%;";
+			+ " WHERE c.libelle=? AND a.nom_article like ?;";
 	
 	private static final String rechercherArticlesSansCategorie = "SELECT no_article, nom_article, description, date_fin_encheres,"
 			+ "prix_vente, pseudo FROM Articles_Vendus a"
 			+ " INNER JOIN Utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
-			+ " WHERE a.nom_article like %?%;";
+			+ " WHERE a.nom_article like ?;";
 	
 	private static final String selectById = "SELECT no_article, nom_article, description, date_debut_encheres,"
 			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie "
@@ -137,7 +137,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(rechercherArticlesParCategorie);
 			pstmt.setString(1, nomCategorie);
-			pstmt.setString(2, recherche);
+			pstmt.setString(2, "%"+recherche+"%");
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -157,7 +157,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(rechercherArticlesSansCategorie);
-			pstmt.setString(1, recherche);
+			pstmt.setString(1, "%"+recherche+"%");
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{

@@ -68,7 +68,7 @@ public class ServletAccueil extends HttpServlet {
 		CategoriesManager categories = new CategoriesManager();
 		
 		// Si aucune catégorie n'est sélectionnée
-		if(request.getParameter("nomCategorie") == "toutesCategories")
+		if(request.getParameter("nomCategorie").equals("toutesCategories"))
 		{
 			// JUSTE RECHERCHE
 			if(request.getParameter("recherche") != null)
@@ -103,7 +103,7 @@ public class ServletAccueil extends HttpServlet {
 		else
 		{
 			// JUSTE CATEGORIE
-			if(request.getParameter("recherche") == "")
+			if(request.getParameter("recherche").equals(""))
 			{
 				try
 				{

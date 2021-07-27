@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="fr.eni.encheres.messages.LecteurMessage" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -12,9 +13,9 @@
 	<h1>Liste des enchères</h1>
 	
 	
-		<form action="${pageContext.request.contextPath}/accueil" method="post">
-		 <div class="form-group">
-		 	<input class="form-control" id="recherche" name="recherche"/>
+	<form action="${pageContext.request.contextPath}/accueil" method="post">
+		<div class="form-group">
+			<input class="form-control" id="recherche" name="recherche"/>
             <label for="categories">Catégories :</label>
             <select class="form-control" id="categories" name="nomCategorie">
             	<option value="toutesCategories"><h4>Toutes les catégories</h4></option>
@@ -24,19 +25,33 @@
             </select>
             <button type="submit" class="btn btn-default">Rechercher</button>
         </div>
-        </form>
+	</form>
+        
+    <c:if test="${!empty listeCodesErreur}">
+		<div class="alert alert-danger" role="alert">
+			<strong>Erreur!</strong>
+			<ul>
+				<c:forEach var="code" items="${listeCodesErreur}">
+					<li>${LecteurMessage.getMessageErreur(code)}</li>
+				</c:forEach>
+			</ul>
+		</div>
+	</c:if>    
+        
 	<c:if test="${!empty articles}">
 		<div class="container">
 			<% int compteur = 1; %>
 			<div class="row">
 			<c:forEach var="a" items="${articles}">
 				<div class="col">
-					<h3>${a.getNomArticle()}</h3>
+					<a href="${pageContext.request.contextPath}/utilisateur/afficherArticle?id=${a.getNumArticle()}">
+						<h3>${a.getNomArticle()}</h3>
+					</a>
 					<h4>Prix : ${a.getPrixVente()} crédits</h4>
 					<h4>Fin de l'enchère : ${a.getDateFinEnchere()}</h4>
 					<h4>Vendeur : 
 					<a href="${pageContext.request.contextPath}/profil?pseudo=${a.getPseudo()}">
-					${a.getPseudo()}</a>
+						${a.getPseudo()}</a>
 					</h4>
 				</div>
 				<c:choose>
