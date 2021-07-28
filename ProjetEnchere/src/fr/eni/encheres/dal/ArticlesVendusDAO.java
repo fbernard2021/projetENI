@@ -10,6 +10,7 @@ public interface ArticlesVendusDAO {
 	public List<ArticlesVendus> selectAccueil();
 	public List<ArticlesVendus> selectListeParCategorie(String nomCategorie);
 	public ArticlesVendus selectById(int numArticle);
+	public List<ArticlesVendus> selectByUser(int numUser);
 	public List<ArticlesVendus> rechercherArticlesParCategorie(String recherche, String nomCategorie);
 	public List<ArticlesVendus> rechercherArticlesSansCategorie(String recherche);
 	public void insertArticle(ArticlesVendus article) throws BusinessException;

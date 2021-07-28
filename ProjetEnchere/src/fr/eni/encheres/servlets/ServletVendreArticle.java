@@ -87,6 +87,8 @@ public class ServletVendreArticle extends HttpServlet {
 		ArticlesVendusManager articleVenduManager = new ArticlesVendusManager();
 		RetraitsManager retraitManager = new RetraitsManager();
 		HttpSession session = request.getSession();
+		LocalDate dateActuel = LocalDate.now();
+		String etatVente = null;
 		
 	
 		String article = request.getParameter("article");
@@ -106,10 +108,19 @@ public class ServletVendreArticle extends HttpServlet {
 		LocalDate debutEnchere = LocalDate.parse(request.getParameter("dateDebut"));
 		LocalDate finEnchere = LocalDate.parse(request.getParameter("dateFin"));
 		
+		if(debutEnchere.isAfter(dateActuel))
+		{
+			etatVente = "NC";
+		}
+		else if (debutEnchere.equals(dateActuel))
+		{
+			etatVente = "EC";
+		}
+		
 		try {
 			int numCategorie = categoriesManager.selectionnerNumeroCategorie(categorie);
 			Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateur");
-			articleVendu = articleVenduManager.ajouterArticle(article, description, debutEnchere, finEnchere, prix, utilisateur.getNumUtilisateur() , numCategorie);
+			articleVendu = articleVenduManager.ajouterArticle(article, description, debutEnchere, finEnchere, prix, utilisateur.getNumUtilisateur() , numCategorie, etatVente);
 			retrait.setNumArticle(articleVendu.getNumArticle());
 			retraitManager.ajouterRetrait(retrait);
 			

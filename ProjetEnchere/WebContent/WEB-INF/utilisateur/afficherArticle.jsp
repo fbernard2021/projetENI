@@ -31,6 +31,25 @@
 			</div>
 		</c:if>
 
+	<c:if test="${articleVendu.etatVente == 'ET'}">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-8 offset-2">
+					<c:if test="${utilisateur.pseudo != pseudoMeilleureOffre}">
+						<h2>${pseudoMeilleureOffre} a remporté l'enchère</h2>
+					</c:if>
+					<c:if test="${utilisateur.pseudo == pseudoMeilleureOffre}">
+						<h2>Vous avez remporté l'enchère</h2>
+					</c:if>
+				</div>
+			</div>
+		</div>
+	
+	
+	
+	</c:if>
+
+
 	<c:if test="${!empty articleVendu}">
 	<form action="${pageContext.request.contextPath}/utilisateur/afficherArticle" method="post">
 	<div class="container">
@@ -54,7 +73,12 @@
 		<input type="hidden" name="pseudoMeilleureOffre" value="<c:out value='${pseudoMeilleureOffre}' />" />
 		<div class="row justify-content-center">
 			<div class="col-8 offset-2">
+			<c:if test="${utilisateur.pseudo != pseudoMeilleureOffre}">
 				<p>Meilleur offre par ${pseudoMeilleureOffre} : ${enchere.montantEnchere}</p>
+			</c:if>
+			<c:if test="${utilisateur.pseudo == pseudoMeilleureOffre}">
+				<p>Meilleur offre par vous : ${enchere.montantEnchere}</p>
+			</c:if>
 			</div>
 		</div>
 		</c:if>
@@ -78,7 +102,7 @@
 				<p>Adresse : ${retrait.rue} ${retrait.codePostal} ${retrait.ville}</p>
 			</div>
 		</div>
-		
+		<c:if test="${articleVendu.etatVente == 'EC'}">
 		<div class="form-group">
 			<label for="prix">Ma proposition :</label>
 			<c:if test="${!empty enchere}">
@@ -92,7 +116,7 @@
 		
 		<button type="submit" class="btn btn-default">Enchérir</button>
 		
-		
+		</c:if>
 		
 	</div>
 

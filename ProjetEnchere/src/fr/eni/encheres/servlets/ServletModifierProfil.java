@@ -80,6 +80,7 @@ public class ServletModifierProfil extends HttpServlet {
 		String rue = request.getParameter("rue");
 		int codePostal = Integer.parseInt(request.getParameter("postal")) ;
 		String ville = request.getParameter("ville");
+		int credit = Integer.parseInt(request.getParameter("credit"));
 		
 		if(motDePasse.compareTo(confirmation) != 0)
 		{
@@ -133,6 +134,10 @@ public class ServletModifierProfil extends HttpServlet {
 				if(utilisateur.getVille().compareTo(ville) != 0)
 				{
 					utilisateur.setVille(ville);
+				}
+				if( utilisateur.getCredit() != credit)
+				{
+					utilisateur.setCredit(credit);
 				}
 			}
 

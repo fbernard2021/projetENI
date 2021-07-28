@@ -14,11 +14,12 @@ public class ArticlesVendus {
 	private int numUtilisateur;
 	private int numCategorie;
 	private String pseudo;
+	private String etatVente;
 	
 //	 nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie 
 	
 	public ArticlesVendus(int numArticle, String nomArticle, String description, LocalDate dateDebutEnchere,
-			LocalDate dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
+			LocalDate dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie, String etatVente)
 	{
 		this.numArticle = numArticle;
 		this.nomArticle = nomArticle;
@@ -28,10 +29,11 @@ public class ArticlesVendus {
 		this.prixInitial = prixInitial;
 		this.numUtilisateur = numUtilisateur;
 		this.numCategorie = numCategorie;
+		this.etatVente = etatVente;
 	}
 	
 	public ArticlesVendus( String nomArticle, String description, LocalDate dateDebutEnchere,
-			LocalDate dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie)
+			LocalDate dateFinEnchere, int prixInitial,int numUtilisateur, int numCategorie, String etatVente)
 	{
 
 		this.nomArticle = nomArticle;
@@ -41,6 +43,7 @@ public class ArticlesVendus {
 		this.prixInitial = prixInitial;
 		this.numUtilisateur = numUtilisateur;
 		this.numCategorie = numCategorie;
+		this.etatVente = etatVente;
 	}
 	
 	public ArticlesVendus(String nomArticle, String description, LocalDate dateDebutEnchere,
@@ -154,6 +157,14 @@ public class ArticlesVendus {
 	public void setPseudo(String pseudo)
 	{
 		this.pseudo = pseudo;
+	}
+
+	public String getEtatVente() {
+		return etatVente;
+	}
+
+	public void setEtatVente(String etatVente) {
+		this.etatVente = etatVente;
 	}
 	
 	

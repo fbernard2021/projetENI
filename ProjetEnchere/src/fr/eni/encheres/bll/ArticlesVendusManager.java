@@ -97,6 +97,26 @@ public class ArticlesVendusManager {
 		}
 	}
 	
+	public List<ArticlesVendus> selectionnerParNumeroUtilisateur(int numeroUtilisateur) throws BusinessException
+	{
+		BusinessException exception = new BusinessException();
+		
+		List<ArticlesVendus> listeArticle = null;
+		
+		listeArticle = articlesVendusDAO.selectByUser(numeroUtilisateur);
+		
+		this.validerListe(listeArticle, exception);
+		
+		if(exception.hasErreurs())
+		{
+			throw exception;
+		}
+		else
+		{
+			return listeArticle;
+		}
+	}
+	
 	public List<ArticlesVendus> rechercherArticlesAvecCategorie(String recherche, String nomCategorie) throws BusinessException
 	{
 		BusinessException exception = new BusinessException();
@@ -136,7 +156,7 @@ public class ArticlesVendusManager {
 	}
 	
 	public ArticlesVendus ajouterArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, int prixInitial, int numUtilisateur, int numCategorie) throws BusinessException
+			LocalDate dateFinEncheres, int prixInitial, int numUtilisateur, int numCategorie, String etatVente) throws BusinessException
 	{
 		BusinessException exception = new BusinessException();
 		
@@ -144,7 +164,7 @@ public class ArticlesVendusManager {
 		this.validerDescription(description, exception);
 		
 
-		ArticlesVendus article = new ArticlesVendus(nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, numUtilisateur, numCategorie);
+		ArticlesVendus article = new ArticlesVendus(nomArticle, description, dateDebutEncheres, dateFinEncheres, prixInitial, numUtilisateur, numCategorie, etatVente);
 		
 		if(!exception.hasErreurs())
 		{

@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.BusinessException;
+import fr.eni.encheres.bll.ArticlesVendusManager;
 import fr.eni.encheres.bll.UtilisateursManager;
+import fr.eni.encheres.bo.ArticlesVendus;
 import fr.eni.encheres.bo.Utilisateurs;
 
 /**
@@ -67,6 +69,8 @@ public class ServletSuppressionCompte extends HttpServlet {
 		HttpSession session = request.getSession();
 		String motDePasse = request.getParameter("mdp");
 		Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateur");
+		List<ArticlesVendus> listeArticles = null;
+		int countArticleVente = 0;
 		
 		
 		if(utilisateur == null)
@@ -77,7 +81,23 @@ public class ServletSuppressionCompte extends HttpServlet {
 		else
 		{
 			UtilisateursManager utilisateurManager = new UtilisateursManager();
-			
+			ArticlesVendusManager articlesVendusManager = new ArticlesVendusManager();
+			try {
+				listeArticles =  articlesVendusManager.selectionnerParNumeroUtilisateur(utilisateur.getNumUtilisateur());
+			} catch (BusinessException e1) {
+				e1.printStackTrace();
+				request.setAttribute("listeCodesErreur", e1.getListeCodesErreur());
+			}
+
+			for(ArticlesVendus article : listeArticles)
+			{
+				if(article.getEtatVente().equals("EC") || article.getEtatVente().equals("NC"))
+				{
+					countArticleVente +=1;
+				}
+			}
+			if(countArticleVente == 0)
+			{
 			
 				try {
 					utilisateurManager.supprimerProfil(utilisateur, motDePasse);
@@ -88,21 +108,25 @@ public class ServletSuppressionCompte extends HttpServlet {
 					e.printStackTrace();
 					request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 				}
-
+			}
+			else
+			{
+				listeCodesErreur.add(CodesResultatServlets.ERREUR_ARTICLE_EN_VENTE);
+				request.setAttribute("listeCodesErreur", listeCodesErreur);
+			}
 			
-		}
-		if((List<Integer>)request.getAttribute("listeCodesErreur") == null)
+		
+		if(request.getAttribute("listeCodesErreur") == null)
 		{
 
 			session.setAttribute("utilisateur", null);
-			session.setAttribute("connexion", "false");
 			
 		}
 		
 		response.sendRedirect(request.getContextPath()+"/accueil");
 		
 		
-		
+		}
 		
 			
 	}

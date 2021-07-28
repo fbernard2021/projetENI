@@ -33,10 +33,10 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 									   + ",ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?); ";
 	
 	private static final String alterUserWithNewMdp = "UPDATE UTILISATEURS "
-											  + "SET pseudo = ? , nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? ,mot_de_passe = ? "
+											  + "SET pseudo = ? , nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? , credit = ?,mot_de_passe = ? "
 											  + "WHERE pseudo = ? AND mot_de_passe = ? ;";
 	private static final String alterUser = "UPDATE UTILISATEURS "
-			  							  + "SET pseudo = ? , nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? "
+			  							  + "SET pseudo = ? , nom = ? ,prenom = ? ,email = ? ,telephone = ? ,rue = ? ,code_postal = ? ,ville = ? ,credit = ? "
 			  							  + "WHERE pseudo = ? AND mot_de_passe = ? ;";
 	
 	private static final String updateCredit = "UPDATE UTILISATEURS SET credit = ? WHERE pseudo = ? ;";
@@ -205,8 +205,9 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 				pstmt.setString(6, utilisateur.getRue());
 				pstmt.setInt(7, utilisateur.getCodePostal());
 				pstmt.setString(8, utilisateur.getVille());
-				pstmt.setString(9, ancienPseudo);
-				pstmt.setString(10, motDePasse);
+				pstmt.setInt(9, utilisateur.getCredit());
+				pstmt.setString(10, ancienPseudo);
+				pstmt.setString(11, motDePasse);
 			}
 			else
 			{
@@ -219,9 +220,10 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 				pstmt.setString(6, utilisateur.getRue());
 				pstmt.setInt(7, utilisateur.getCodePostal());
 				pstmt.setString(8, utilisateur.getVille());
-				pstmt.setString(9, newMotDePasse);
-				pstmt.setString(10, ancienPseudo);
-				pstmt.setString(11, motDePasse);
+				pstmt.setInt(9, utilisateur.getCredit());
+				pstmt.setString(10, newMotDePasse);
+				pstmt.setString(11, ancienPseudo);
+				pstmt.setString(12, motDePasse);
 			}
 				
 			
