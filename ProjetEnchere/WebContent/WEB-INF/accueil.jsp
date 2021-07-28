@@ -27,18 +27,7 @@
         </div>
 	</form>
         
-    <c:if test="${!empty listeCodesErreur}">
-		<div class="alert alert-danger" role="alert">
-			<strong>Erreur!</strong>
-			<ul>
-				<c:forEach var="code" items="${listeCodesErreur}">
-					<li>${LecteurMessage.getMessageErreur(code)}</li>
-				</c:forEach>
-			</ul>
-		</div>
-	</c:if>    
-        
-	<c:if test="${!empty articles}">
+    <c:if test="${!empty articles}">
 		<div class="container">
 			<% int compteur = 1; %>
 			<div class="row">
@@ -67,7 +56,16 @@
 		</div></div>
 	</c:if>
 	<c:if test="${empty articles}">
-		<h3>Aucune enchère en cours</h3>
+		<c:if test="${!empty listeCodesErreur}">
+			<div class="alert alert-danger" role="alert">
+				<strong>Échec de la recherche</strong>
+				<ul>
+					<c:forEach var="code" items="${listeCodesErreur}">
+						<li><h3>${LecteurMessage.getMessageErreur(code)}</h3></li>
+					</c:forEach>
+				</ul>
+			</div>
+		</c:if>
 	</c:if>
 </body>
 </html>
