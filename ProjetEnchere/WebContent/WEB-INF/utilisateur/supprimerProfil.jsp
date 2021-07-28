@@ -12,7 +12,7 @@
 
 	<%@ include file = "entete.jsp" %>
 	<div class="container">
-		<div class="row justify-content-center">
+		<div class="row justify-content">
 			<div class="col-6 offset-3">
 				<h1>Supprimer votre compte</h1>
 			</div>
@@ -29,13 +29,13 @@
 			  </ul>
 			</div>
 		</c:if>
-		
+		<div class="col-6 offset-3">
 			<form action="${pageContext.request.contextPath}/utilisateur/suppressionCompte" method="post">
 					<label for="mdp">Mot de passe : </label>
 					<input type="password"  class="form-control" name="mdp" required/>
-				</div>
 				<button type="submit" class="btn btn-default">Supprimer</button>
 			</form>
+		</div>
 
 	
 		

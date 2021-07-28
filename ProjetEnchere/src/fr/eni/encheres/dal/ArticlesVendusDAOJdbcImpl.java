@@ -16,7 +16,7 @@ import fr.eni.encheres.bo.ArticlesVendus;
 
 public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 	private static final String selectAll = "SELECT no_article, nom_article, description, date_debut_encheres,"
-			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie FROM Articles_Vendus;";
+			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie, etat_vente FROM Articles_Vendus;";
 
 	private static final String selectAccueil = "SELECT no_article, nom_article, description, date_fin_encheres,"
 			+ " prix_vente, pseudo FROM Articles_Vendus a INNER JOIN Utilisateurs u"
@@ -40,12 +40,17 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			+ " WHERE a.nom_article like ?;";
 	
 	private static final String selectById = "SELECT no_article, nom_article, description, date_debut_encheres,"
-			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie "
+			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie, etat_vente "
 			+ " FROM Articles_Vendus WHERE no_article=?;";
 	
 	private static final String insertArticle = "INSERT INTO ARTICLES_VENDUS "
 			+ "(nom_article, description, date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,"
-			+ " no_utilisateur, no_categorie) VALUES (?,?,?,?,?,?,?,?);";
+			+ " no_utilisateur, no_categorie, etat_vente) VALUES (?,?,?,?,?,?,?,?,?);";
+	
+	private static final String selectByUser = "SELECT no_article, nom_article, description, date_debut_encheres,"
+			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie, etat_vente "
+			+ " FROM Articles_Vendus WHERE no_utilisateur= ? ;";
+	
 	@Override
 	public List<ArticlesVendus> selectAll()
 	{
@@ -58,7 +63,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), rs.getInt(8)));
+						rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -122,7 +127,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			
 				
 				unArticle = new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), rs.getInt(8));
+						rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -191,6 +196,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			pstmt.setInt(6, article.getPrixVente());
 			pstmt.setInt(7, article.getNumUtilisateur());
 			pstmt.setInt(8, article.getNumCategorie());
+			pstmt.setString(9, article.getEtatVente());
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			
@@ -203,5 +209,26 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
 			throw businessException;
 		}
+	}
+
+	@Override
+	public List<ArticlesVendus> selectByUser(int numUser) {
+		List<ArticlesVendus> liste = new ArrayList<>();
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			PreparedStatement pstmt = cnx.prepareStatement(selectById);
+			pstmt.setInt(1, numUser);
+			ResultSet rs = pstmt.executeQuery();
+
+			while(rs.next())
+			{
+				liste.add( new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
+						rs.getDate(4).toLocalDate(), rs.getDate(5).toLocalDate(),rs.getInt(6), rs.getInt(7), rs.getInt(8), rs.getString(9)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return liste;
 	}
 }

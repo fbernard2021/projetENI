@@ -72,6 +72,15 @@
 				<p>Ville : ${profilAffiche.getVille()}</p>
 			</div>
 		</div>
+		<c:if test="${utilisateur.pseudo == profilAffiche.pseudo}">
+		<div class="row justify-content-center">
+			<div class="col-8 offset-2">
+			<a href="${pageContext.request.contextPath}/utilisateur/modifierProfil">
+				<button type="button" class="btn btn-primary">modifier le profil</button>
+			</a>
+			</div>
+		</div>
+		</c:if>
 				
 	</div>
 	</c:if>

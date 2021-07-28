@@ -44,7 +44,7 @@
 	
 	<c:if test="${!empty sessionScope.utilisateur }">
 		<div class="row">
-			<div class="col-12">
+			<div class="col-8 offset-2">
 				<form action="${pageContext.request.contextPath}/utilisateur/modifierProfil" method="post">
 					<div class="form-group">
 						<label for="pseudo">pseudo :</label>
@@ -77,6 +77,10 @@
 					<div class="form-group">
 						<label for="ville">Ville :</label>
 						<input type="text" class="form-control" id="ville" name="ville" value="${sessionScope.utilisateur.getVille()}" required>
+					</div>
+					<div class="form-group">
+						<label for="credit">Credit :</label>
+						<input type="number" id="credit" name="credit" min="0" value="${utilisateur.credit}"  required>
 					</div>
 					<div class="form-group">
 						<label for="mdp">Mot de passe Actuel :</label>
