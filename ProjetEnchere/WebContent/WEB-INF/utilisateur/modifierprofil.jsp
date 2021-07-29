@@ -43,9 +43,10 @@
 	
 	
 	<c:if test="${!empty sessionScope.utilisateur }">
-		<div class="row">
-			<div class="col-8 offset-2">
+
 				<form action="${pageContext.request.contextPath}/utilisateur/modifierProfil" method="post">
+				<div class="row">
+				<div class="col-6 offset-3">		
 					<div class="form-group">
 						<label for="pseudo">pseudo :</label>
 						<input type="text" class="form-control" id="pseudo" name="pseudo" value="${sessionScope.utilisateur.getPseudo()}" required>
@@ -94,11 +95,16 @@
 						<label for="mdp">Confirmation :</label>
 						<input type="password" class="form-control" id="mdp" name="mdpConfirm" >
 					</div>
+					</div>
+					</div>
 
-					<button type="submit" class="btn btn-default">Modifier</button>
+				<div class="row justify-content-center">
+				<div class="col-1">	
+					<button type="submit" class="btn btn-primary">Modifier</button>
+					</div>
+					</div>
 				</form>
-			</div>
-		</div>
+
 	</c:if>
 
 </body>

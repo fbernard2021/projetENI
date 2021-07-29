@@ -10,10 +10,12 @@
 <%@ include file = "entete.jsp" %>
 </head>
 <body>
+
 	<div class="container">
-		<div class="row">
-		<div class="col-12">
+		<div class="row justify-content-center">
+		<div class="col-6 offset-3">
 			<h2> Page de connexion</h2>
+
 			
 	      	<c:if test="${!empty listeCodesErreur}">
 				<div class="alert alert-danger" role="alert">
@@ -25,8 +27,12 @@
 				  </ul>
 				</div>
 			</c:if>
-			
+		</div>
+		</div>
+
 			<form action="${pageContext.request.contextPath}/connexion" method="post">
+			<div class="row justify-content">
+			<div class="col-6 offset-3">
 			
 				<div class="form-group">
 					<label for="pseudo">Pseudo ou email : </label>
@@ -36,13 +42,25 @@
 					<label for="mdp">Mot de passe : </label>
 					<input type="password"  class="form-control" name="mdp" required/>
 				</div>
-				<button type="submit" class="btn btn-default">Se connecter</button>
+			</div>
+			</div>
+				
+			<div class="row justify-content-center">
+			<div class="col-2">
+				<button type="submit" class="btn btn-primary">Se connecter</button>
+			</div>
+			</div>
 			</form>
-		</div>
-		</div>
-		<div class="row">
+
+
+			<div class="row justify-content-center">
+			<div class="col-2">
 			<a class="btn btn-primary" href="${pageContext.request.contextPath}/inscription">Créer un compte</a>
-		</div>
+			</div>
+			</div>
+		
 	</div>
+	
+
 </body>
 </html>
