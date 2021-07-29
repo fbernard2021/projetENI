@@ -13,7 +13,7 @@
 
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-6 offset-3">
+			<div class="col-1">
 				<h1>Profil</h1>
 			</div>
 		</div>
@@ -32,49 +32,51 @@
 		
 	<c:if test="${!empty profilAffiche}">
 	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Pseudo : ${profilAffiche.getPseudo()}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Nom : ${profilAffiche.getNom()}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Prénom : ${profilAffiche.getPrenom()}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Email : ${profilAffiche.getEmail()}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Téléphone : ${profilAffiche.getTelephone()}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Rue : ${profilAffiche.getRue()}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Code Postal : ${profilAffiche.getCodePostal()}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Ville : ${profilAffiche.getVille()}</p>
-			</div>
-		</div>
+	<div class="row justify-content-center">
+	<div class="col-8 offset-2">
+		<table class="table table-borderless">
+			<tbody>
+				<tr>
+					<th scope="row">Pseudo :</th>
+					<td>${profilAffiche.getPseudo()}</td>
+				</tr>
+				<tr>
+					<th scope="row">Nom :</th>
+					<td>${profilAffiche.getNom()}</td>
+				</tr>
+				<tr>
+					<th scope="row">Prénom :</th>
+					<td>${profilAffiche.getPrenom()}</td>
+				</tr>
+				<tr>
+					<th scope="row">Email :</th>
+					<td>${profilAffiche.getEmail()}</td>
+				</tr>
+				<tr>
+					<th scope="row">Téléphone :</th>
+					<td>${profilAffiche.getTelephone()}</td>
+				</tr>
+				<tr>
+					<th scope="row">Rue :</th>
+					<td>${profilAffiche.getRue()}</td>
+				</tr>
+				<tr>
+					<th scope="row">Code Postal :</th>
+					<td>${profilAffiche.getCodePostal()}</td>
+				</tr>
+				<tr>
+					<th scope="row">Ville :</th>
+					<td>${profilAffiche.getVille()}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</div>
+	</div>
+	<div class="container">
 		<c:if test="${utilisateur.pseudo == profilAffiche.pseudo}">
 		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
+			<div class="col-6 offset-3">
 			<a href="${pageContext.request.contextPath}/utilisateur/modifierProfil">
 				<button type="button" class="btn btn-primary">modifier le profil</button>
 			</a>
@@ -84,6 +86,7 @@
 				
 	</div>
 	</c:if>
+
 
 </body>
 </html>

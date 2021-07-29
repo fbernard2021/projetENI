@@ -100,8 +100,7 @@ public class servletInscription extends HttpServlet {
 		}
 		else
 		{
-			rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
-			rd.forward(request, response);
+			response.sendRedirect(request.getContextPath()+"/accueil");
 		}
 		
 

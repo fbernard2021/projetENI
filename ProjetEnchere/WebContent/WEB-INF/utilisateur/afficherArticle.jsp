@@ -53,55 +53,57 @@
 	<c:if test="${!empty articleVendu}">
 	<form action="${pageContext.request.contextPath}/utilisateur/afficherArticle" method="post">
 	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Article : ${articleVendu.nomArticle}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Description : ${articleVendu.description}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Catégories : ${nomCategorie}</p>
-			</div>
-		</div>
+	<div class="row justify-content-center">
+	<div class="col-8 offset-2">
+		<table class="table table-borderless">
+			<tbody>
+				<tr>
+					<th scope="row">Article :</th>
+					<td>${articleVendu.nomArticle}</td>
+				</tr>
+				<tr>
+					<th scope="row">Description :</th>
+					<td>${articleVendu.description}</td>
+				</tr>
+				<tr>
+					<th scope="row">Catégories :</th>
+					<td>${nomCategorie}</td>
+				</tr>
 		<c:if test="${!empty enchere}">
 		<input type="hidden" name="meilleureOffre" value="<c:out value='${enchere.montantEnchere}' />" />
 		<input type="hidden" name="pseudoMeilleureOffre" value="<c:out value='${pseudoMeilleureOffre}' />" />
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-			<c:if test="${utilisateur.pseudo != pseudoMeilleureOffre}">
-				<p>Meilleur offre par ${pseudoMeilleureOffre} : ${enchere.montantEnchere}</p>
-			</c:if>
-			<c:if test="${utilisateur.pseudo == pseudoMeilleureOffre}">
-				<p>Meilleur offre par vous : ${enchere.montantEnchere}</p>
-			</c:if>
-			</div>
-		</div>
+				<tr>
+				<c:if test="${utilisateur.pseudo != pseudoMeilleureOffre}">
+					<th scope="row">Meilleur offre par ${pseudoMeilleureOffre} :</th>
+				</c:if>
+				<c:if test="${utilisateur.pseudo == pseudoMeilleureOffre}">
+					<th scope="row">Meilleur offre par vous :</th>
+				</c:if>
+					<td>${enchere.montantEnchere}</td>
+				</tr>
 		</c:if>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Mise à prix : ${articleVendu.prixInitial}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Début de l'enchère : ${articleVendu.dateDebutEnchere}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Fin de l'enchère : ${articleVendu.dateFinEnchere}</p>
-			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-8 offset-2">
-				<p>Adresse : ${retrait.rue} ${retrait.codePostal} ${retrait.ville}</p>
-			</div>
-		</div>
+				<tr>
+					<th scope="row">Mise à prix :</th>
+					<td>${articleVendu.prixInitial}</td>
+				</tr>
+				<tr>
+					<th scope="row">Début de l'enchère :</th>
+					<td>${articleVendu.dateDebutEnchere}</td>
+				</tr>
+				<tr>
+					<th scope="row">Fin de l'enchère :</th>
+					<td>${articleVendu.dateFinEnchere}</td>
+				</tr>
+				<tr>
+					<th scope="row">Adresse :</th>
+					<td>${retrait.rue} ${retrait.codePostal} ${retrait.ville}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</div>
+	</div>
+	<div class="container">
 		<c:if test="${articleVendu.etatVente == 'EC'}">
 		<div class="form-group">
 			<label for="prix">Ma proposition :</label>
