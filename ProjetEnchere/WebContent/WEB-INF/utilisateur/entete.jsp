@@ -33,6 +33,7 @@
          </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="${pageContext.request.contextPath}/utilisateur/modifierProfil">modifier le profil</a>
+          <a class="dropdown-item" href="${pageContext.request.contextPath}/utilisateur/suppressionCompte">supprimer le compte</a>
         </div>
         </li>
           <li class="nav-item ">
