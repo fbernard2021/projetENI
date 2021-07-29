@@ -26,9 +26,9 @@
 	</div>
 	
 		<c:if test="${!empty listeCategories }">
-			<div class="row">
+			<form action="${pageContext.request.contextPath}/utilisateur/vendreArticle" method="post">
+				<div class="row">
 				<div class="col-6 offset-3">
-					<form action="${pageContext.request.contextPath}/utilisateur/vendreArticle" method="post">
 					<div class="form-group">
 						<label for="nom">Article :</label>
 						<input type="text" class="form-control" id="nom" name="article" required>
@@ -72,11 +72,16 @@
 							<input type="text" id="ville" name="ville" value="${sessionScope.utilisateur.getVille()}" required>
 						</div>
 					</fieldset>
-					<button type="submit" class="btn btn-default">Enregistrer</button>
-					</form>
 				</div>
-			</div>
+				</div>
+				<div class="row justify-content-center">
+				<div class="col-1">	
+					<button type="submit" class="btn btn-primary">Enregistrer</button>
+				</div>
+				</div>
 		
+			</form>
+
 		
 		</c:if>
 
