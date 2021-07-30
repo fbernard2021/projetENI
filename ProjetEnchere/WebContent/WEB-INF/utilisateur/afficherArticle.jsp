@@ -104,7 +104,9 @@
 	</div>
 	</div>
 	<div class="container">
-		<c:if test="${articleVendu.etatVente == 'EC'}">
+			<div class="row">
+			<div class="col-6 offset-3">
+		<c:if test="${(articleVendu.etatVente == 'EC') && (articleVendu.numUtilisateur != utilisateur.numUtilisateur)}">
 		<div class="form-group">
 			<label for="prix">Ma proposition :</label>
 			<c:if test="${!empty enchere}">
@@ -116,10 +118,11 @@
 		</div>
 		<input type="hidden" name="id" value="<c:out value='${articleVendu.numArticle}' />" />
 		
-		<button type="submit" class="btn btn-default">Enchérir</button>
+		<button type="submit" class="btn btn-primary">Enchérir</button>
 		
 		</c:if>
-		
+		</div>
+		</div>
 	</div>
 
 	

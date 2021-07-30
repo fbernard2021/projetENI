@@ -121,9 +121,16 @@ public class ServletSuppressionCompte extends HttpServlet {
 
 			session.setAttribute("utilisateur", null);
 			
+			response.sendRedirect(request.getContextPath()+"/accueil");
+			
+		}
+		else
+		{
+			doGet(request, response);
 		}
 		
-		response.sendRedirect(request.getContextPath()+"/accueil");
+		
+		
 		
 		
 		}

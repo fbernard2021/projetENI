@@ -20,6 +20,8 @@
 	</div>
 	
       	<c:if test="${!empty listeCodesErreur}">
+      	<div class="row">
+		<div class="col-6 offset-3">
 			<div class="alert alert-danger" role="alert">
 			  <strong>Erreur!</strong>
 			  <ul>
@@ -27,17 +29,21 @@
 			  		<li>${LecteurMessage.getMessageErreur(code)}</li>
 			  	</c:forEach>
 			  </ul>
+			  </div>
+			  </div>
 			</div>
 		</c:if>
 		
-      	<c:if test="${!empty mdpOk}">
+      	<c:if test="${!empty modif}">
+      	<div class="row">
+		<div class="col-6 offset-3">	
 			<div class="alert alert-success" role="alert">
-			  <strong>Modification mot de passe</strong>
-			  <ul>
-			  	<c:if test="${!empty mdpOk}">
-			  		<li>Le mot de passe a été modifié avec succès</li>
-			  	</c:if>
+			  <strong>Modification du profil</strong>
+			  <ul>  	
+			  		<li>Le profil a été modifié avec succès</li>
 			  </ul>
+			  </div>
+			  </div>
 			</div>
 		</c:if>
 	

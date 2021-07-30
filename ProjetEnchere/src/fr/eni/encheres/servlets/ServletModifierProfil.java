@@ -163,10 +163,8 @@ public class ServletModifierProfil extends HttpServlet {
 				
 				session.setAttribute("utilisateur", utilisateur);
 			
-				if(motDePasse.compareTo("") != 0)
-				{
-					request.setAttribute("mdpOk", "true");
-				}
+				request.setAttribute("modif", "ok");
+				
 			}
 		
 			

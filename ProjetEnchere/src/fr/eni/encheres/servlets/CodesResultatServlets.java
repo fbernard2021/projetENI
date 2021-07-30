@@ -9,6 +9,6 @@ public abstract class CodesResultatServlets {
 	public static final int UTILISATEUR_NULL=30004;
 	public static final int ERREUR_FORMAT_DATE = 30005;
 	public static final int PARAM_ARTICLE_NULL = 30006;
-	public static final Integer ERREUR_ARTICLE_EN_VENTE = 30007;
+	public static final int ERREUR_ARTICLE_EN_VENTE = 30007;
 
 }

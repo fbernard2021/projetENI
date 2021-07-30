@@ -33,7 +33,7 @@
 			<form action="${pageContext.request.contextPath}/utilisateur/suppressionCompte" method="post">
 					<label for="mdp">Mot de passe : </label>
 					<input type="password"  class="form-control" name="mdp" required/>
-				<button type="submit" class="btn btn-default">Supprimer</button>
+				<button type="submit" class="btn btn-primary">Supprimer</button>
 			</form>
 		</div>
 

@@ -125,10 +125,14 @@ public class ServletAfficherArticle extends HttpServlet {
 		{
 			meilleureOffre = Integer.parseInt(request.getParameter("meilleureOffre"));
 			pseudoMeilleureOffre = request.getParameter("pseudoMeilleureOffre");
+			utilisateur.setCredit(utilisateur.getCredit()-offre);
 			try {
+				utilisateurManager.modifierCredit(utilisateur);
 				utilisateurMeilleureOffre = utilisateurManager.selectionnerUtilisateur(pseudoMeilleureOffre);
 				utilisateurMeilleureOffre.setCredit(utilisateurMeilleureOffre.getCredit()+ meilleureOffre);
 				utilisateurManager.modifierCredit(utilisateurMeilleureOffre);
+				nouvelEnchere = new Encheres(utilisateur.getNumUtilisateur(),articleId, date, offre);
+				enchereManager.insererEnchere(nouvelEnchere);
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -136,7 +140,8 @@ public class ServletAfficherArticle extends HttpServlet {
 			}
 			
 		}
-		
+		else
+		{
 		utilisateur.setCredit(utilisateur.getCredit()-offre);
 		try {
 			utilisateurManager.modifierCredit(utilisateur);
@@ -147,6 +152,7 @@ public class ServletAfficherArticle extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+		}
 		}
 		
 		doGet(request, response);
