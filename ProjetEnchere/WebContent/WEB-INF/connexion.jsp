@@ -16,8 +16,11 @@
 		<div class="col-6 offset-3">
 			<h2> Page de connexion</h2>
 
-			
+		</div>
+		</div>
 	      	<c:if test="${!empty listeCodesErreur}">
+	      	<div class="row">
+			<div class="col-6 offset-3">
 				<div class="alert alert-danger" role="alert">
 				  <strong>Erreur!</strong>
 				  <ul>
@@ -26,9 +29,10 @@
 				  	</c:forEach>
 				  </ul>
 				</div>
+				</div>
+				</div>
 			</c:if>
-		</div>
-		</div>
+
 
 			<form action="${pageContext.request.contextPath}/connexion" method="post">
 			<div class="row justify-content">

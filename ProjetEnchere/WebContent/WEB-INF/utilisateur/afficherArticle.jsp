@@ -35,12 +35,17 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-8 offset-2">
+				<c:if test="${empty pseudoMeilleureOffre }">
+				<h2>Personne n'a remporté l'enchère</h2>
+				</c:if>
+				<c:if test="${!empty pseudoMeilleureOffre }">
 					<c:if test="${utilisateur.pseudo != pseudoMeilleureOffre}">
 						<h2>${pseudoMeilleureOffre} a remporté l'enchère</h2>
 					</c:if>
 					<c:if test="${utilisateur.pseudo == pseudoMeilleureOffre}">
 						<h2>Vous avez remporté l'enchère</h2>
 					</c:if>
+				</c:if>
 				</div>
 			</div>
 		</div>
