@@ -16,6 +16,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	private static final String selectAll = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES;";
 	private static final String selectLastEnchere = "SELECT TOP 1 no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES WHERE no_article = ? "
 			+ "ORDER BY date_enchere DESC ;";
+	private static final String selectMeilleureOffre = "SELECT MAX(montant_enchere) FROM ENCHERES WHERE no_article = ? ";
 	private static final String insert = "INSERT INTO ENCHERES VALUES (?, ?, ?, ?);";
 	private static final String selectByID = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere  FROM ENCHERES WHERE no_utilisateur = ? "
 			+ "AND no_article = ? ;"; 
@@ -57,11 +58,28 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		return enchere;
 	}
-
+		
+	@Override
+	public Encheres selectMeilleureOffre(int numArticle) {
+		Encheres enchere = null;
+		try(Connection cnx = ConnectionProvider.getConnection())
+		{
+			
+			PreparedStatement pstmt = cnx.prepareStatement(selectMeilleureOffre);
+			pstmt.setInt(1, numArticle);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				enchere = new Encheres(rs.getInt(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return enchere;
+	}
 
 	@Override
 	public void insert(Encheres enchere) {

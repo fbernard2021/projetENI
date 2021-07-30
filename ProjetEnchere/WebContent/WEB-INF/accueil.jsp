@@ -23,48 +23,50 @@
                	<option value="${c.getNomCategorie()}"><h4>${c.getNomCategorie()}</h4></option>
             </c:forEach>
            </select>
-           
-        <div class="row">
-		<div class="col">
-            <div class="form-check">
-            	<input class="form-check-input" type="radio" name="achatsOuVentes"
-            	id="achats"value="achats" onclick="desactiverMesVentes()">
-  				<label class="form-check-label" for="achats"> Achats </label>
-            </div>
-            <div class="form-check">
-  				<input class="form-check-input" type="checkbox" value="encheresOuvertes" id="encheresOuvertes" name="typeEncheres">
-  				<label class="form-check-label" for="encheresOuvertes"> Enchères ouvertes </label>
-  			</div>
-            <div class="form-check">
-  				<input class="form-check-input" type="checkbox" value="encheresEnCours" id="encheresEnCours" name="typeEncheres">
-  				<label class="form-check-label" for="encheresEnCours"> Enchères en cours </label>
-  			</div>
-            <div class="form-check">
-  				<input class="form-check-input" type="checkbox" value="encheresRemportees" id="encheresRemportees" name="typeEncheres">
-  				<label class="form-check-label" for="encheresRemportees"> Enchères remportées </label>
-  			</div>
-  		</div>
-  		<div class="col">
-  			<div class="form-check">
-  				<input class="form-check-input" type="radio" name="achatsOuVentes"
-  				id="ventes"value="ventes" onclick="desactiverAchats()">
-  				<label class="form-check-label" for="ventes"> Mes ventes </label>
-  			</div>
-            <div class="form-check">
-  				<input class="form-check-input" type="checkbox" value="ventesEnCours" id="ventesEnCours" name="typeVentes">
-  				<label class="form-check-label" for="ventesEnCours"> Mes ventes en cours </label>
-  			</div>
-            <div class="form-check">	
-  				<input class="form-check-input" type="checkbox" value="ventesNonDebutees" id="ventesNonDebutees" name="typeVentes">
-  				<label class="form-check-label" for="ventesNonDebutees"> Mes ventes non débutées </label>
-  			</div>
-            <div class="form-check">	
-  				<input class="form-check-input" type="checkbox" value="ventesTerminees" id="ventesTerminees" name="typeVentes">
-  				<label class="form-check-label" for="ventesTerminees"> Mes ventes terminées </label>
-  			</div>
-  		</div>
-  		</div>
-        <button type="submit" class="btn btn-default">Rechercher</button>
+        
+        <c:if test="${!empty utilisateur}">   
+	        <div class="row">
+			<div class="col">
+	            <div class="form-check">
+	            	<input class="form-check-input" type="radio" name="achatsOuVentes"
+	            	id="achats"value="achats" onclick="desactiverMesVentes()">
+	  				<label class="form-check-label" for="achats"> Achats </label>
+	            </div>
+	            <div class="form-check">
+	  				<input class="form-check-input" type="checkbox" value="encheresOuvertes" id="encheresOuvertes" name="typeEncheres">
+	  				<label class="form-check-label" for="encheresOuvertes"> Enchères ouvertes </label>
+	  			</div>
+	            <div class="form-check">
+	  				<input class="form-check-input" type="checkbox" value="encheresEnCours" id="encheresEnCours" name="typeEncheres">
+	  				<label class="form-check-label" for="encheresEnCours"> Enchères en cours </label>
+	  			</div>
+	            <div class="form-check">
+	  				<input class="form-check-input" type="checkbox" value="encheresRemportees" id="encheresRemportees" name="typeEncheres">
+	  				<label class="form-check-label" for="encheresRemportees"> Enchères remportées </label>
+	  			</div>
+	  		</div>
+	  		<div class="col">
+	  			<div class="form-check">
+	  				<input class="form-check-input" type="radio" name="achatsOuVentes"
+	  				id="ventes"value="ventes" onclick="desactiverAchats()">
+	  				<label class="form-check-label" for="ventes"> Mes ventes </label>
+	  			</div>
+	            <div class="form-check">
+	  				<input class="form-check-input" type="checkbox" value="ventesEnCours" id="ventesEnCours" name="typeVentes">
+	  				<label class="form-check-label" for="ventesEnCours"> Mes ventes en cours </label>
+	  			</div>
+	            <div class="form-check">	
+	  				<input class="form-check-input" type="checkbox" value="ventesNonDebutees" id="ventesNonDebutees" name="typeVentes">
+	  				<label class="form-check-label" for="ventesNonDebutees"> Mes ventes non débutées </label>
+	  			</div>
+	            <div class="form-check">	
+	  				<input class="form-check-input" type="checkbox" value="ventesTerminees" id="ventesTerminees" name="typeVentes">
+	  				<label class="form-check-label" for="ventesTerminees"> Mes ventes terminées </label>
+	  			</div>
+	  		</div>
+	  		</div>
+	  	</c:if>
+        <button type="submit" class="btn btn-primary">Rechercher</button>
 	</div>
 </form>
        
@@ -110,6 +112,13 @@
 </c:if>
 
 	<script>
+		document.getElementById("ventesEnCours").disabled = true;
+	    document.getElementById("ventesNonDebutees").disabled = true;
+	    document.getElementById("ventesTerminees").disabled = true;
+	    document.getElementById("encheresOuvertes").disabled = true;
+        document.getElementById("encheresEnCours").disabled = true;
+        document.getElementById("encheresRemportees").disabled = true;
+	
         function desactiverMesVentes()
         {
             document.getElementById("ventesEnCours").disabled = true;

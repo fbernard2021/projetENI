@@ -56,7 +56,7 @@
 						<input type="text" class="form-control" id="rue" name="rue" required>
 					</div>
 					<div class="form-group">
-						<label for="postal">Code postale :</label>
+						<label for="postal">Code postal :</label>
 						<input type="text" class="form-control" id="postal" name="postal" required>
 					</div>
 					<div class="form-group">

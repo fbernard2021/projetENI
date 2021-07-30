@@ -17,6 +17,11 @@ public class Encheres {
 		this.montantEnchere = montantEnchere;
 	}
 	
+	public Encheres(int montantEnchere)
+	{
+		this.montantEnchere = montantEnchere;
+	}
+	
 	public int getNumUtilisateur()
 	{
 		return numUtilisateur;

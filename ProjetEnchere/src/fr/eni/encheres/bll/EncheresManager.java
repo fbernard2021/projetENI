@@ -29,15 +29,13 @@ public class EncheresManager {
 
 		if(!exception.hasErreurs())
 		{
-		this.validerListe(liste, exception);
+			this.validerListe(liste, exception);
+			return liste;
 		}
 		else
 		{
 			throw exception;
 		}
-		
-		return liste;
-		
 	}
 	
 	
@@ -60,10 +58,29 @@ public class EncheresManager {
 		{
 			throw exception;
 		}
-		
-		
 	}
 	
+	public Encheres selectionnerMeilleurOffre(int numArticle) throws BusinessException
+	{
+		Encheres enchere = null;
+		BusinessException exception = new BusinessException();		
+		enchere = encheresDAO.selectMeilleureOffre(numArticle);
+		
+		if(enchere != null)
+		{
+			this.validerMontant(enchere, exception);
+		}
+		
+		if(!exception.hasErreurs())
+		{
+			return enchere;
+		}
+		else
+		{
+			throw exception;
+		}	
+	}
+
 	public void insererEnchere(Encheres enchere) throws BusinessException
 	{
 		BusinessException exception = new BusinessException();
@@ -96,6 +113,14 @@ public class EncheresManager {
 	
 	
 	private void validerEnchere(Encheres enchere, BusinessException exception)
+	{
+		if(enchere == null)
+		{
+			exception.ajouterErreur(CodesResultatBLL.ERREUR_ENCHERES_NULL);
+		}
+	}
+	
+	private void validerMontant(Encheres enchere, BusinessException exception)
 	{
 		if(enchere == null)
 		{

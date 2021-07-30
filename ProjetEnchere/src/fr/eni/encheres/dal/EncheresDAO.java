@@ -7,6 +7,7 @@ import fr.eni.encheres.bo.Encheres;
 public interface EncheresDAO {
 	public List<Encheres> selectAll();
 	public Encheres selectLastEnchere(int numArticle);
+	public Encheres selectMeilleureOffre(int numArticle);
 	public void insert(Encheres enchere);
 	public void updateEnchere(Encheres enchere);
 	public Encheres selectByID(Encheres enchere);

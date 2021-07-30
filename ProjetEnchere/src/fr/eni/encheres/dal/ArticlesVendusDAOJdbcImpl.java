@@ -12,6 +12,7 @@ import java.util.List;
 
 import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.ArticlesVendus;
+import fr.eni.encheres.bo.Encheres;
 
 
 public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
@@ -19,25 +20,8 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie, etat_vente FROM Articles_Vendus;";
 
 	private static final String selectAccueil = "SELECT no_article, nom_article, description, date_fin_encheres,"
-			+ " prix_vente, pseudo FROM Articles_Vendus a INNER JOIN Utilisateurs u"
+			+ " prix_initial, prix_vente, pseudo, etat_vente FROM Articles_Vendus a INNER JOIN Utilisateurs u"
 			+ " ON a.no_utilisateur = u.no_utilisateur;";
-	
-	private static final String selectListeParCategorie = "SELECT no_article, nom_article, description, date_fin_encheres,"
-			+ "prix_vente, pseudo FROM Articles_Vendus a"
-			+ " INNER JOIN Utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
-			+ " INNER JOIN Categories c ON a.no_categorie = c.no_categorie"
-			+ " WHERE c.libelle=?;";
-	
-	private static final String rechercherArticlesParCategorie = "SELECT no_article, nom_article, description, date_fin_encheres,"
-			+ "prix_vente, pseudo FROM Articles_Vendus a"
-			+ " INNER JOIN Utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
-			+ " INNER JOIN Categories c ON a.no_categorie = c.no_categorie"
-			+ " WHERE c.libelle=? AND a.nom_article like ?;";
-	
-	private static final String rechercherArticlesSansCategorie = "SELECT no_article, nom_article, description, date_fin_encheres,"
-			+ "prix_vente, pseudo FROM Articles_Vendus a"
-			+ " INNER JOIN Utilisateurs u ON a.no_utilisateur = u.no_utilisateur"
-			+ " WHERE a.nom_article like ?;";
 	
 	private static final String selectById = "SELECT no_article, nom_article, description, date_debut_encheres,"
 			+ " date_fin_encheres, prix_initial, no_utilisateur, no_categorie, etat_vente "
@@ -82,7 +66,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getString(6)));
+						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -90,26 +74,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 		return donneesArticles;
 	}
 	
-	@Override
-	public List<ArticlesVendus> selectListeParCategorie(String nomCategorie)
-	{
-		List<ArticlesVendus> donneesArticles = new ArrayList<>();
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
-			PreparedStatement pstmt = cnx.prepareStatement(selectListeParCategorie);
-			pstmt.setString(1, nomCategorie);
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next())
-			{
-				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getString(6)));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return donneesArticles;
-	}
-
+	
 	@Override
 	public ArticlesVendus selectById(int numArticle)
 	{
@@ -136,39 +101,61 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO{
 	}
 	
 	@Override
-	public List<ArticlesVendus> rechercherArticlesParCategorie(String recherche, String nomCategorie)
+	public List<ArticlesVendus> rechercherArticles(String recherche, String nomCategorie)
 	{
 		List<ArticlesVendus> donneesArticles = new ArrayList<>();
 		try(Connection cnx = ConnectionProvider.getConnection())
 		{
-			PreparedStatement pstmt = cnx.prepareStatement(rechercherArticlesParCategorie);
-			pstmt.setString(1, nomCategorie);
-			pstmt.setString(2, "%"+recherche+"%");
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next())
+			// on construit une requête
+			String selectFrom ="SELECT no_article, nom_article, description, date_fin_encheres, prix_initial, prix_vente, pseudo, etat_vente FROM Articles_Vendus a"; 	
+			String where ="";
+				
+			String inner =" INNER JOIN Utilisateurs u ON a.no_utilisateur = u.no_utilisateur";
+			if(!recherche.equals(""))
 			{
-				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getString(6)));
+				where = " WHERE a.nom_article like ?";
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return donneesArticles;
-	}
-	
-	@Override
-	public List<ArticlesVendus> rechercherArticlesSansCategorie(String recherche)
-	{
-		List<ArticlesVendus> donneesArticles = new ArrayList<>();
-		try(Connection cnx = ConnectionProvider.getConnection())
-		{
-			PreparedStatement pstmt = cnx.prepareStatement(rechercherArticlesSansCategorie);
-			pstmt.setString(1, "%"+recherche+"%");
+			
+			// Si l'utilisateur a sélectionné une catégorie
+			if (! nomCategorie.equals("toutesCategories"))
+			{
+				inner += " INNER JOIN Categories c ON a.no_categorie = c.no_categorie";
+				if(!recherche.equals(""))
+				{
+					where += " AND c.libelle=?";
+				}
+				else
+				{
+					where = " WHERE c.libelle=?";
+				}
+			}
+			
+			// on concatène les morceaux de requête
+			String requete = selectFrom + inner + where + ";";
+			PreparedStatement pstmt = cnx.prepareStatement(requete);
+			
+			if(!recherche.equals(""))
+			{
+				pstmt.setString(1, "%"+recherche+"%");
+			}
+			if (! nomCategorie.equals("toutesCategories"))
+			{
+				if(!recherche.equals(""))
+				{
+					pstmt.setString(2, nomCategorie);
+				}
+				else
+				{
+					pstmt.setString(1, nomCategorie);
+				}
+			}
+			
+			// on exécute et on récupère les résultats
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 			{
 				donneesArticles.add(new ArticlesVendus(rs.getInt(1), rs.getString(2), rs.getString(3),
-						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getString(6)));
+						rs.getDate(4).toLocalDate(),rs.getInt(5), rs.getInt(6), rs.getString(7), rs.getString(8)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

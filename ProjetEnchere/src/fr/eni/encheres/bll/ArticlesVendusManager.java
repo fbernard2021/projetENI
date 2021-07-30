@@ -3,6 +3,7 @@ package fr.eni.encheres.bll;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import fr.eni.encheres.BusinessException;
 import fr.eni.encheres.bo.ArticlesVendus;
 import fr.eni.encheres.bo.Utilisateurs;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.EncheresDAO;
 import fr.eni.encheres.dal.ArticlesVendusDAO;
 
 public class ArticlesVendusManager {
@@ -47,24 +49,6 @@ public class ArticlesVendusManager {
 		List<ArticlesVendus> liste = new ArrayList<>();
 		
 		liste = articlesVendusDAO.selectAccueil();
-		
-
-		if(!exception.hasErreurs())
-		{
-			return liste;
-		}
-		else
-		{
-			throw exception;
-		}
-	}
-	public List<ArticlesVendus> selectionnerListeArticlesParCategorie(String nomCategorie) throws BusinessException
-	{
-		BusinessException exception = new BusinessException();
-		
-		List<ArticlesVendus> liste = new ArrayList<>();
-		
-		liste = articlesVendusDAO.selectListeParCategorie(nomCategorie);
 		
 
 		if(!exception.hasErreurs())
@@ -117,34 +101,14 @@ public class ArticlesVendusManager {
 		}
 	}
 	
-	public List<ArticlesVendus> rechercherArticlesAvecCategorie(String recherche, String nomCategorie) throws BusinessException
+	public List<ArticlesVendus> rechercherArticles(String recherche, String nomCategorie) throws BusinessException
 	{
 		BusinessException exception = new BusinessException();
-		
 		List<ArticlesVendus> liste = new ArrayList<>();
 		
-		liste = articlesVendusDAO.rechercherArticlesParCategorie(recherche, nomCategorie);
-		
+		liste = articlesVendusDAO.rechercherArticles(recherche, nomCategorie);
 
-		if(!exception.hasErreurs())
-		{
-			return liste;
-		}
-		else
-		{
-			throw exception;
-		}
-	}
-	
-	public List<ArticlesVendus> rechercherArticlesSansCategorie(String recherche) throws BusinessException
-	{
-		BusinessException exception = new BusinessException();
-		
-		List<ArticlesVendus> liste = new ArrayList<>();
-		
-		liste = articlesVendusDAO.rechercherArticlesSansCategorie(recherche);
 		this.validerListe(liste, exception);
-
 		if(!exception.hasErreurs())
 		{
 			return liste;
@@ -169,13 +133,12 @@ public class ArticlesVendusManager {
 		if(!exception.hasErreurs())
 		{
 		articlesVendusDAO.insertArticle(article);
+		return article;
 		}
 		else
 		{
 			throw exception;
 		}
-		
-		return article;
 	}
 	
 	private void validerNomArticle(String nomArticle, BusinessException exception)

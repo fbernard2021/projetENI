@@ -59,7 +59,7 @@ public class ArticlesVendus {
 	}
 	
 	public ArticlesVendus(int numArticle, String nomArticle, String description, LocalDate dateFinEnchere,
-			 int prixVente,String pseudo)
+			 int prixInitial, int prixVente,String pseudo, String etatVente)
 	{
 		this.numArticle = numArticle;
 		this.nomArticle = nomArticle;
@@ -67,6 +67,7 @@ public class ArticlesVendus {
 		this.dateFinEnchere = dateFinEnchere;
 		this.prixVente = prixVente;
 		this.pseudo = pseudo;
+		this.etatVente = etatVente;
 	}
 
 	public int getNumArticle()
