@@ -251,6 +251,8 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		{
 			PreparedStatement pstmt = cnx.prepareStatement(deleteUser);
 			pstmt.setString(1, utilisateur.getPseudo());
+			System.out.println(utilisateur.getPseudo());
+			System.out.println(motDePasse);
 			pstmt.setString(2, motDePasse);
 			pstmt.executeUpdate();
 			

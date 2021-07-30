@@ -88,7 +88,8 @@ public class ServletSuppressionCompte extends HttpServlet {
 				e1.printStackTrace();
 				request.setAttribute("listeCodesErreur", e1.getListeCodesErreur());
 			}
-
+			if(listeArticles != null)
+			{
 			for(ArticlesVendus article : listeArticles)
 			{
 				if(article.getEtatVente().equals("EC") || article.getEtatVente().equals("NC"))
@@ -101,6 +102,7 @@ public class ServletSuppressionCompte extends HttpServlet {
 			
 				try {
 					utilisateurManager.supprimerProfil(utilisateur, motDePasse);
+					request.setAttribute("utilisateur", null);
 				} catch (NoSuchAlgorithmException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -114,20 +116,32 @@ public class ServletSuppressionCompte extends HttpServlet {
 				listeCodesErreur.add(CodesResultatServlets.ERREUR_ARTICLE_EN_VENTE);
 				request.setAttribute("listeCodesErreur", listeCodesErreur);
 			}
+			}
+			else
+			{	
+				try {
+					utilisateurManager.supprimerProfil(utilisateur, motDePasse);
+					session.setAttribute("utilisateur", null);
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (BusinessException e) {
+					e.printStackTrace();
+					request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+				}
+			}
+			
 			
 		
-		if(request.getAttribute("listeCodesErreur") == null)
-		{
-
-			session.setAttribute("utilisateur", null);
-			
-			response.sendRedirect(request.getContextPath()+"/accueil");
-			
-		}
-		else
-		{
+			if(session.getAttribute("utilisateur") == null)
+			{
+				response.sendRedirect(request.getContextPath()+"/accueil");
+			}
+			else
+			{
 			doGet(request, response);
-		}
+			}
+		
 		
 		
 		

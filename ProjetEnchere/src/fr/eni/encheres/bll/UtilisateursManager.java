@@ -201,7 +201,7 @@ public class UtilisateursManager {
 		StringBuffer sb = new StringBuffer();
 		
 		this.validerUtilisateur(utilisateur, exception);
-		this.validerPseudo(motDePasse, exception);
+		this.validerPseudo(utilisateur.getPseudo(), exception);
 		this.validerMotDePasse(motDePasse, exception);
 		
 		sb = this.SHA256(motDePasse);
