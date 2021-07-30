@@ -54,6 +54,7 @@ public class ArticlesVendus {
 		this.dateDebutEnchere = dateDebutEnchere;
 		this.dateFinEnchere = dateFinEnchere;
 		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
 		this.numUtilisateur = numUtilisateur;
 		this.numCategorie = numCategorie;
 	}
@@ -65,6 +66,7 @@ public class ArticlesVendus {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateFinEnchere = dateFinEnchere;
+		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
 		this.pseudo = pseudo;
 		this.etatVente = etatVente;
